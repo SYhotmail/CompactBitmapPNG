@@ -24,7 +24,7 @@ actor ProcessingPipeline {
         }
     }
 
-    func processPNGs(urls: [URL]) async -> [PNGCompressionResult] {
+    func processPNGs(urls: [URL], settings: PNGCompressionSettings) async -> [PNGCompressionResult] {
         guard !urls.isEmpty else { return [] }
 
         return await withTaskGroup(of: (Int, PNGCompressionResult).self, returning: [PNGCompressionResult].self) { group in
@@ -33,7 +33,7 @@ actor ProcessingPipeline {
                     let result: PNGCompressionResult
 
                     do {
-                        result = try PNGOptimizer.optimize(url: url)
+                        result = try PNGOptimizer.optimize(url: url, settings: settings)
                     } catch {
                         result = PNGCompressionResult(
                             sourceURL: url,

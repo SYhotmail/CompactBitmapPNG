@@ -1,175 +1,17 @@
 import AppKit
-import Observation
+import ComposableArchitecture
 import SwiftUI
 import UniformTypeIdentifiers
 
-@Observable
-@MainActor
-final class AppViewModel {
-    private let pipeline = ProcessingPipeline()
-    private var processingTask: Task<Void, Never>?
-
-    var processingState: ProcessingState = .idle
-    var pngResults: [PNGCompressionResult] = []
-    var pdfResults: [PDFAnalysisResult] = []
-    var enablePNGCompression = true
-    var enablePDFCheck = true
-    var intakeMessage = "Drop PNG or PDF files here, or choose files or a folder to process."
-    var selectedFolderPath: String?
-
-    func chooseFiles() {
-        let panel = NSOpenPanel()
-        panel.allowedContentTypes = [.png, .pdf]
-        panel.allowsMultipleSelection = true
-        panel.canChooseDirectories = false
-
-        guard panel.runModal() == .OK else { return }
-        startProcessing(panel.urls, sourceFolderPath: nil)
-    }
-
-    func chooseFolder() {
-        let panel = NSOpenPanel()
-        panel.allowedContentTypes = [.folder]
-        panel.allowsMultipleSelection = false
-        panel.canChooseDirectories = true
-        panel.canChooseFiles = false
-
-        guard panel.runModal() == .OK, let folderURL = panel.url else { return }
-        selectedFolderPath = folderURL.path
-        startProcessing([folderURL], sourceFolderPath: folderURL.path)
-    }
-
-    func processDroppedItems(_ providers: [NSItemProvider]) -> Bool {
-        let supported = providers.filter { $0.hasItemConformingToTypeIdentifier(UTType.fileURL.identifier) }
-        guard !supported.isEmpty else { return false }
-
-        Task {
-            let urls = await loadURLs(from: supported)
-            guard !urls.isEmpty else { return }
-            await processInputs(urls, sourceFolderPath: nil)
-        }
-
-        return true
-    }
-
-    func clearResults() {
-        processingTask?.cancel()
-        pngResults = []
-        pdfResults = []
-        processingState = .idle
-        selectedFolderPath = nil
-        intakeMessage = "Drop PNG or PDF files here, or choose files or a folder to process."
-    }
-
-    private func startProcessing(_ urls: [URL], sourceFolderPath: String?) {
-        processingTask?.cancel()
-        processingTask = Task {
-            await processInputs(urls, sourceFolderPath: sourceFolderPath)
-        }
-    }
-
-    private func processInputs(_ urls: [URL], sourceFolderPath: String?) async {
-        let discovered = await pipeline.discoverSupportedFiles(from: urls)
-        let summary = summarize(files: discovered)
-        intakeMessage = summary.description
-        selectedFolderPath = sourceFolderPath
-
-        let pngURLs = enablePNGCompression ? discovered.compactMap { $0.kind == .png ? $0.url : nil } : []
-        let pdfURLs = enablePDFCheck ? discovered.compactMap { $0.kind == .pdf ? $0.url : nil } : []
-
-        guard !Task.isCancelled else { return }
-
-        guard !pngURLs.isEmpty || !pdfURLs.isEmpty else {
-            processingState = .idle
-            return
-        }
-
-        processingState = .running(statusMessage(pngCount: pngURLs.count, pdfCount: pdfURLs.count))
-
-        async let pngTask = pipeline.processPNGs(urls: pngURLs)
-        async let pdfTask = pipeline.processPDFs(urls: pdfURLs)
-        let (pngResults, pdfResults) = await (pngTask, pdfTask)
-
-        guard !Task.isCancelled else { return }
-
-        self.pngResults = pngResults
-        self.pdfResults = pdfResults
-        self.processingState = .idle
-    }
-
-    private func summarize(files: [DiscoveredFile]) -> IntakeSummary {
-        let pngCount = files.filter { $0.kind == .png }.count
-        let pdfCount = files.filter { $0.kind == .pdf }.count
-        let unsupportedCount = files.filter { $0.kind == nil }.count
-
-        let disabledCount =
-            (enablePNGCompression ? 0 : pngCount) +
-            (enablePDFCheck ? 0 : pdfCount)
-
-        return IntakeSummary(
-            acceptedPNGCount: enablePNGCompression ? pngCount : 0,
-            acceptedPDFCount: enablePDFCheck ? pdfCount : 0,
-            skippedUnsupportedCount: unsupportedCount,
-            skippedDisabledCount: disabledCount
-        )
-    }
-
-    private func statusMessage(pngCount: Int, pdfCount: Int) -> String {
-        if pngCount > 0 && pdfCount > 0 {
-            return "Compressing \(pngCount) PNG file(s) and checking \(pdfCount) PDF file(s)..."
-        }
-
-        if pngCount > 0 {
-            return "Compressing \(pngCount) PNG file(s)..."
-        }
-
-        return "Checking \(pdfCount) PDF file(s)..."
-    }
-
-    private func loadURLs(from providers: [NSItemProvider]) async -> [URL] {
-        var urls: [URL] = []
-        for provider in providers {
-            if let url = await loadURL(from: provider) {
-                urls.append(url)
-            }
-        }
-
-        return urls
-    }
-
-    private func loadURL(from provider: NSItemProvider) async -> URL? {
-        await withCheckedContinuation { continuation in
-            provider.loadDataRepresentation(forTypeIdentifier: UTType.fileURL.identifier) { data, _ in
-                guard
-                    let data,
-                    let url = URL(dataRepresentation: data, relativeTo: nil)
-                else {
-                    continuation.resume(returning: nil)
-                    return
-                }
-
-                continuation.resume(returning: url)
-            }
-        }
-    }
-
-}
-
 struct ContentView: View {
-    @State private var viewModel = AppViewModel()
+    @Bindable var store: StoreOf<AppFeature>
     @State private var isDropTargeted = false
 
     var body: some View {
-        @Bindable var bindableViewModel = viewModel
-
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 header
-                controlPanel(
-                    viewModel: viewModel,
-                    enablePNGCompression: $bindableViewModel.enablePNGCompression,
-                    enablePDFCheck: $bindableViewModel.enablePDFCheck
-                )
+                controlPanel
                 dropZone
                 resultsSummary
                 pngResultsSection
@@ -189,29 +31,64 @@ struct ContentView: View {
         }
     }
 
-    private func controlPanel(
-        viewModel: AppViewModel,
-        enablePNGCompression: Binding<Bool>,
-        enablePDFCheck: Binding<Bool>
-    ) -> some View {
+    private var controlPanel: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack(spacing: 18) {
-                Toggle("Enable PNG compression", isOn: enablePNGCompression)
-                Toggle("Enable PDF check", isOn: enablePDFCheck)
+                Toggle("Enable PNG compression", isOn: $store.enablePNGCompression)
+                    .accessibilityIdentifier("enable-png-compression-toggle")
+                Toggle("Enable PDF check", isOn: $store.enablePDFCheck)
+                    .accessibilityIdentifier("enable-pdf-check-toggle")
             }
             .toggleStyle(.switch)
 
-            HStack(spacing: 12) {
-                Button("Choose Files", action: viewModel.chooseFiles)
-                Button("Choose Folder", action: viewModel.chooseFolder)
-                Button("Clear Results", action: viewModel.clearResults)
+            VStack(alignment: .leading, spacing: 10) {
+                Toggle("Enable lossy PNG quantization", isOn: $store.pngCompressionSettings.enableAdaptiveQuantization)
+                    .toggleStyle(.switch)
+                    .disabled(!store.enablePNGCompression)
+                    .accessibilityIdentifier("enable-lossy-quantization-toggle")
+
+                if store.pngCompressionSettings.enableAdaptiveQuantization {
+                    HStack(spacing: 12) {
+                        Text("Quantization target")
+                            .font(.caption.weight(.medium))
+                            .foregroundStyle(.secondary)
+
+                        Picker("Quantization target", selection: $store.pngCompressionSettings.quantizationLevel) {
+                            ForEach(PNGQuantizationLevel.allCases) { level in
+                                Text(level.label).tag(level)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                        .frame(maxWidth: 320)
+                        .accessibilityIdentifier("quantization-target-picker")
+                    }
+                }
+
+                Text(store.pngCompressionSettings.enableAdaptiveQuantization
+                     ? "Lossless PNG optimization will run first, then the selected lossy quantization level will be tried and only kept if it makes the file smaller."
+                     : "Only lossless PNG optimization will run. Quantization is off by default.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .accessibilityIdentifier("quantization-mode-description")
             }
 
-            if let folderPath = viewModel.selectedFolderPath {
+            HStack(spacing: 12) {
+                Button("Choose Files", action: chooseFiles)
+                    .accessibilityIdentifier("choose-files-button")
+                Button("Choose Folder", action: chooseFolder)
+                    .accessibilityIdentifier("choose-folder-button")
+                Button("Clear Results") {
+                    store.send(.clearResults)
+                }
+                .accessibilityIdentifier("clear-results-button")
+            }
+
+            if let folderPath = store.selectedFolderPath {
                 Text("Selected folder: \(folderPath)")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .textSelection(.enabled)
+                    .accessibilityIdentifier("selected-folder-label")
             }
         }
         .padding(18)
@@ -232,9 +109,10 @@ struct ContentView: View {
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
 
-            if case let .running(message) = viewModel.processingState {
+            if case let .running(message) = store.processingState {
                 ProgressView(message)
                     .padding(.top, 6)
+                    .accessibilityIdentifier("processing-progress-view")
             }
         }
         .frame(maxWidth: .infinity)
@@ -244,8 +122,9 @@ struct ContentView: View {
             RoundedRectangle(cornerRadius: 18, style: .continuous)
                 .strokeBorder(isDropTargeted ? Color.accentColor : Color.secondary.opacity(0.3), style: StrokeStyle(lineWidth: 2, dash: [8]))
         )
+        .accessibilityIdentifier("drop-zone")
         .onDrop(of: [UTType.fileURL], isTargeted: $isDropTargeted) { providers in
-            viewModel.processDroppedItems(providers)
+            processDroppedItems(providers)
         }
     }
 
@@ -264,12 +143,13 @@ struct ContentView: View {
             Text("Status")
                 .font(.title3.weight(.semibold))
 
-            Text(viewModel.intakeMessage)
+            Text(store.intakeMessage)
                 .foregroundStyle(.secondary)
+                .accessibilityIdentifier("intake-message-label")
 
             HStack(spacing: 16) {
-                statusPill(title: "PNG Results", count: viewModel.pngResults.count, tint: .green)
-                statusPill(title: "PDF Results", count: viewModel.pdfResults.count, tint: .blue)
+                statusPill(title: "PNG Results", count: store.pngResults.count, tint: .green)
+                statusPill(title: "PDF Results", count: store.pdfResults.count, tint: .blue)
             }
         }
     }
@@ -279,7 +159,7 @@ struct ContentView: View {
             Text("PNG Compression")
                 .font(.title3.weight(.semibold))
 
-            if viewModel.pngResults.isEmpty {
+            if store.pngResults.isEmpty {
                 EmptyStateView(
                     title: "No PNG Status Yet",
                     systemImage: "photo",
@@ -287,7 +167,7 @@ struct ContentView: View {
                 )
             } else {
                 LazyVStack(spacing: 10) {
-                    ForEach(viewModel.pngResults) { result in
+                    ForEach(store.pngResults) { result in
                         ResultCard {
                             VStack(alignment: .leading, spacing: 6) {
                                 HStack {
@@ -334,7 +214,7 @@ struct ContentView: View {
             Text("PDF Check")
                 .font(.title3.weight(.semibold))
 
-            if viewModel.pdfResults.isEmpty {
+            if store.pdfResults.isEmpty {
                 EmptyStateView(
                     title: "No PDF Status Yet",
                     systemImage: "doc.text.image",
@@ -342,7 +222,7 @@ struct ContentView: View {
                 )
             } else {
                 LazyVStack(spacing: 10) {
-                    ForEach(viewModel.pdfResults) { result in
+                    ForEach(store.pdfResults) { result in
                         ResultCard {
                             VStack(alignment: .leading, spacing: 6) {
                                 HStack {
@@ -394,6 +274,67 @@ struct ContentView: View {
             return .gray
         case .failed:
             return .red
+        }
+    }
+
+    private func chooseFiles() {
+        let panel = NSOpenPanel()
+        panel.allowedContentTypes = [.png, .pdf]
+        panel.allowsMultipleSelection = true
+        panel.canChooseDirectories = false
+
+        guard panel.runModal() == .OK else { return }
+        store.send(.processURLs(panel.urls, sourceFolderPath: nil))
+    }
+
+    private func chooseFolder() {
+        let panel = NSOpenPanel()
+        panel.allowedContentTypes = [.folder]
+        panel.allowsMultipleSelection = false
+        panel.canChooseDirectories = true
+        panel.canChooseFiles = false
+
+        guard panel.runModal() == .OK, let folderURL = panel.url else { return }
+        store.send(.processURLs([folderURL], sourceFolderPath: folderURL.path))
+    }
+
+    private func processDroppedItems(_ providers: [NSItemProvider]) -> Bool {
+        let supported = providers.filter { $0.hasItemConformingToTypeIdentifier(UTType.fileURL.identifier) }
+        guard !supported.isEmpty else { return false }
+
+        Task {
+            let urls = await loadURLs(from: supported)
+            guard !urls.isEmpty else { return }
+            store.send(.processURLs(urls, sourceFolderPath: nil))
+        }
+
+        return true
+    }
+
+    private func loadURLs(from providers: [NSItemProvider]) async -> [URL] {
+        var urls: [URL] = []
+        for provider in providers {
+            if let url = await loadURL(from: provider) {
+                urls.append(url)
+            }
+        }
+
+        return urls
+    }
+
+    private func loadURL(from provider: NSItemProvider) async -> URL? {
+        await withCheckedContinuation { continuation in
+            provider.loadDataRepresentation(forTypeIdentifier: UTType.fileURL.identifier) { data, _ in
+                guard
+                    let data,
+                    let url = URL(dataRepresentation: data, relativeTo: nil)
+                else {
+                    continuation.resume(returning: nil)
+                    return
+                }
+
+                continuation.resume(returning: url)
+            }
         }
     }
 }

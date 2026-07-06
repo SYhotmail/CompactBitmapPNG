@@ -1,9 +1,10 @@
 import AppKit
+import ComposableArchitecture
 import SwiftUI
 import Testing
 @testable import PNGCompressorPDFVectorCheck
 
-@Suite("ContentView UI")
+@Suite("ContentView Rendering")
 @MainActor
 struct ContentViewUITests {
     @Test("Content view can be hosted in a window and laid out")
@@ -14,7 +15,13 @@ struct ContentViewUITests {
             backing: .buffered,
             defer: false
         )
-        let controller = NSHostingController(rootView: ContentView())
+        let controller = NSHostingController(
+            rootView: ContentView(
+                store: Store(initialState: AppFeature.State()) {
+                    AppFeature()
+                }
+            )
+        )
 
         window.contentViewController = controller
         controller.view.frame = NSRect(x: 0, y: 0, width: 1024, height: 900)
@@ -29,7 +36,13 @@ struct ContentViewUITests {
 
     @Test("Content view renders into a bitmap")
     func rendersIntoBitmap() {
-        let controller = NSHostingController(rootView: ContentView())
+        let controller = NSHostingController(
+            rootView: ContentView(
+                store: Store(initialState: AppFeature.State()) {
+                    AppFeature()
+                }
+            )
+        )
         controller.loadView()
         controller.view.frame = NSRect(x: 0, y: 0, width: 1024, height: 900)
         controller.view.layoutSubtreeIfNeeded()

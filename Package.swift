@@ -12,9 +12,15 @@ let package = Package(
             targets: ["PNGCompressorPDFVectorCheck"]
         )
     ],
+    dependencies: [
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.26.0")
+    ],
     targets: [
         .executableTarget(
             name: "PNGCompressorPDFVectorCheck",
+            dependencies: [
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+            ],
             exclude: ["Info.plist"],
             linkerSettings: [
                 // Embed an Info.plist so macOS sees a main bundle identifier
@@ -29,7 +35,10 @@ let package = Package(
         ),
         .testTarget(
             name: "PNGCompressorPDFVectorCheckTests",
-            dependencies: ["PNGCompressorPDFVectorCheck"]
+            dependencies: [
+                "PNGCompressorPDFVectorCheck",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+            ]
         )
     ]
 )

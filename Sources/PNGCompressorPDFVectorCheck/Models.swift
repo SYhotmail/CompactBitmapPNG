@@ -1,18 +1,35 @@
 import Foundation
 
-enum SupportedFileKind: String, Sendable {
+enum SupportedFileKind: String, Sendable, Equatable {
     case png = "PNG"
     case pdf = "PDF"
 }
 
-enum PNGCompressionStatus: Sendable {
+enum PNGCompressionStatus: Sendable, Equatable {
     case optimized
     case unchanged
     case failed
 }
 
-struct PNGCompressionResult: Identifiable, Sendable {
-    let id = UUID()
+enum PNGQuantizationLevel: Int, CaseIterable, Identifiable, Sendable, Equatable {
+    case colors256 = 256
+    case colors128 = 128
+    case colors64 = 64
+
+    var id: Int { rawValue }
+
+    var label: String {
+        "\(rawValue) colors"
+    }
+}
+
+struct PNGCompressionSettings: Sendable, Equatable {
+    var enableAdaptiveQuantization = false
+    var quantizationLevel: PNGQuantizationLevel = .colors256
+}
+
+struct PNGCompressionResult: Identifiable, Sendable, Equatable {
+    var id: URL { sourceURL }
     let sourceURL: URL
     let outputURL: URL?
     let originalBytes: Int
@@ -48,7 +65,7 @@ struct PNGCompressionResult: Identifiable, Sendable {
     }
 }
 
-enum PDFContentStatus: Sendable {
+enum PDFContentStatus: Sendable, Equatable {
     case mixed
     case vectorOnly
     case rasterOnly
@@ -56,8 +73,8 @@ enum PDFContentStatus: Sendable {
     case failed
 }
 
-struct PDFAnalysisResult: Identifiable, Sendable {
-    let id = UUID()
+struct PDFAnalysisResult: Identifiable, Sendable, Equatable {
+    var id: URL { pdfURL }
     let pdfURL: URL
     let pageCount: Int
     let hasVectorContent: Bool
@@ -82,12 +99,12 @@ struct PDFAnalysisResult: Identifiable, Sendable {
     }
 }
 
-enum ProcessingState: Sendable {
+enum ProcessingState: Sendable, Equatable {
     case idle
     case running(String)
 }
 
-struct IntakeSummary: Sendable {
+struct IntakeSummary: Sendable, Equatable {
     let acceptedPNGCount: Int
     let acceptedPDFCount: Int
     let skippedUnsupportedCount: Int
@@ -107,7 +124,7 @@ struct IntakeSummary: Sendable {
     }
 }
 
-struct DiscoveredFile: Sendable {
+struct DiscoveredFile: Sendable, Equatable {
     let url: URL
     let kind: SupportedFileKind?
 }
