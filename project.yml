@@ -13,6 +13,9 @@ packages:
   CasePaths:
     url: https://github.com/pointfreeco/swift-case-paths
     exactVersion: 1.8.0
+  Perception:
+    url: https://github.com/pointfreeco/swift-perception
+    exactVersion: 2.0.10
 settings:
   base:
     SWIFT_VERSION: 6.0
@@ -28,9 +31,9 @@ targets:
     sources:
       - path: Sources/PNGCompressorPDFVectorCheck
         excludes:
-          - Info.plist
+          - Resources/Info.plist
     info:
-      path: Sources/PNGCompressorPDFVectorCheck/Info.plist
+      path: Sources/PNGCompressorPDFVectorCheck/Resources/Info.plist
     dependencies:
       - package: ComposableArchitecture
         product: ComposableArchitecture
@@ -38,6 +41,8 @@ targets:
         product: Dependencies
       - package: CasePaths
         product: CasePaths
+      - package: Perception
+        product: Perception
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.siarheiy.PNGCompressorPDFVectorCheck
@@ -61,6 +66,8 @@ targets:
         product: Dependencies
       - package: CasePaths
         product: CasePaths
+      - package: Perception
+        product: Perception
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.siarheiy.PNGCompressorPDFVectorCheckTests

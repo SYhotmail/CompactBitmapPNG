@@ -8,6 +8,8 @@ struct AppFeature {
         var processingState: ProcessingState = .idle
         var pngResults: [PNGCompressionResult] = []
         var pdfResults: [PDFAnalysisResult] = []
+        var pendingPNGURLs: [URL] = []
+        var pendingPDFURLs: [URL] = []
         var enablePNGCompression = true
         var enablePDFCheck = true
         var pngCompressionSettings = PNGCompressionSettings()
@@ -71,6 +73,8 @@ struct AppFeature {
                 state.selectedFolderPath = sourceFolderPath
                 state.pngResults = []
                 state.pdfResults = []
+                state.pendingPNGURLs = pngURLs
+                state.pendingPDFURLs = pdfURLs
                 state.processingState = pngURLs.isEmpty && pdfURLs.isEmpty
                     ? .idle
                     : .running(statusMessage(pngCount: pngURLs.count, pdfCount: pdfURLs.count))
@@ -79,6 +83,8 @@ struct AppFeature {
             case let .processingFinished(pngResults, pdfResults):
                 state.pngResults = pngResults
                 state.pdfResults = pdfResults
+                state.pendingPNGURLs = []
+                state.pendingPDFURLs = []
                 state.processingState = .idle
                 return .none
             }

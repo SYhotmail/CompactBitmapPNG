@@ -5,7 +5,7 @@ import SwiftUI
 struct PNGCompressorPDFVectorCheckApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(
+            AppView(
                 store: Store(initialState: initialState()) {
                     AppFeature()
                 }

@@ -3,7 +3,7 @@ import ComposableArchitecture
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct ContentView: View {
+struct AppView: View {
     @Bindable var store: StoreOf<AppFeature>
     @State private var isDropTargeted = false
 
@@ -13,9 +13,7 @@ struct ContentView: View {
                 header
                 controlPanel
                 dropZone
-                resultsSummary
-                pngResultsSection
-                pdfResultsSection
+                fileListSection
             }
             .padding(24)
         }
@@ -138,143 +136,100 @@ struct ContentView: View {
         )
     }
 
-    private var resultsSummary: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Status")
-                .font(.title3.weight(.semibold))
+    private var fileRows: [FileRow] {
+        var rows: [FileRow] = []
+        rows.append(contentsOf: store.pendingPNGURLs.map { FileRow(id: $0, kind: .png, status: .pending) })
+        rows.append(contentsOf: store.pendingPDFURLs.map { FileRow(id: $0, kind: .pdf, status: .pending) })
+        rows.append(contentsOf: store.pngResults.map { FileRow(id: $0.sourceURL, kind: .png, status: .png($0)) })
+        rows.append(contentsOf: store.pdfResults.map { FileRow(id: $0.pdfURL, kind: .pdf, status: .pdf($0)) })
+
+        return rows.sorted {
+            $0.displayName.localizedCaseInsensitiveCompare($1.displayName) == .orderedAscending
+        }
+    }
+
+    private var folderTitle: String {
+        if let path = store.selectedFolderPath {
+            return URL(fileURLWithPath: path).lastPathComponent
+        }
+        return "Dropped Files"
+    }
+
+    private var fileListSection: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(spacing: 10) {
+                Image(systemName: "folder.fill")
+                    .font(.system(size: 18))
+                    .foregroundStyle(Color.accentColor)
+
+                Text(folderTitle)
+                    .font(.headline)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
+
+                Spacer()
+
+                Text("\(fileRows.count) item\(fileRows.count == 1 ? "" : "s")")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .accessibilityIdentifier("file-list-item-count")
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
 
             Text(store.intakeMessage)
+                .font(.caption)
                 .foregroundStyle(.secondary)
+                .padding(.horizontal, 16)
+                .padding(.bottom, 12)
                 .accessibilityIdentifier("intake-message-label")
 
-            HStack(spacing: 16) {
-                statusPill(title: "PNG Results", count: store.pngResults.count, tint: .green)
-                statusPill(title: "PDF Results", count: store.pdfResults.count, tint: .blue)
-            }
-        }
-    }
-
-    private var pngResultsSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("PNG Compression")
-                .font(.title3.weight(.semibold))
-
-            if store.pngResults.isEmpty {
+            if fileRows.isEmpty {
                 EmptyStateView(
-                    title: "No PNG Status Yet",
-                    systemImage: "photo",
-                    message: "Enable PNG compression and choose files, a folder, or drop PNGs here."
+                    title: "No Files Yet",
+                    systemImage: "folder",
+                    message: "Choose files or a folder, or drop PNGs and PDFs above to see their status here."
                 )
+                .padding(16)
             } else {
-                LazyVStack(spacing: 10) {
-                    ForEach(store.pngResults) { result in
-                        ResultCard {
-                            VStack(alignment: .leading, spacing: 6) {
-                                HStack {
-                                    Text(result.sourceURL.lastPathComponent)
-                                        .font(.headline)
-                                    Spacer()
-                                    BadgeView(text: result.statusLabel, tint: result.status == .failed ? .red : (result.status == .optimized ? .green : .orange))
-                                }
+                Divider()
+                fileListHeader
+                Divider()
 
-                                Text(result.message)
-                                    .foregroundStyle(.secondary)
-
-                                HStack(spacing: 14) {
-                                    Text("Original: \(byteCountDescription(result.originalBytes))")
-
-                                    if let compressedBytes = result.compressedBytes {
-                                        Text("Compressed: \(byteCountDescription(compressedBytes))")
-                                    }
-
-                                    if let savingsBytes = result.savingsBytes,
-                                       let savingsPercent = result.savingsPercent {
-                                        Text("Saved: \(byteCountDescription(savingsBytes)) (\(savingsPercent.formatted(.number.precision(.fractionLength(1))))%)")
-                                            .foregroundStyle(.green)
-                                    }
-                                }
-                                .font(.caption)
-
-                                if let outputURL = result.outputURL {
-                                    Text(outputURL.path)
-                                        .font(.caption2)
-                                        .foregroundStyle(.tertiary)
-                                        .textSelection(.enabled)
-                                }
+                ScrollView {
+                    LazyVStack(spacing: 0) {
+                        ForEach(Array(fileRows.enumerated()), id: \.element.id) { index, row in
+                            if index > 0 {
+                                Divider().opacity(0.5)
                             }
+                            FileRowView(row: row, isAlternate: !index.isMultiple(of: 2))
                         }
                     }
                 }
+                .frame(minHeight: 220, maxHeight: 440)
+                .accessibilityIdentifier("file-results-list")
             }
         }
+        .background(.background, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .strokeBorder(.quaternary, lineWidth: 1)
+        )
     }
 
-    private var pdfResultsSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("PDF Check")
-                .font(.title3.weight(.semibold))
-
-            if store.pdfResults.isEmpty {
-                EmptyStateView(
-                    title: "No PDF Status Yet",
-                    systemImage: "doc.text.image",
-                    message: "Enable PDF check and choose files, a folder, or drop PDFs here."
-                )
-            } else {
-                LazyVStack(spacing: 10) {
-                    ForEach(store.pdfResults) { result in
-                        ResultCard {
-                            VStack(alignment: .leading, spacing: 6) {
-                                HStack {
-                                    Text(result.pdfURL.lastPathComponent)
-                                        .font(.headline)
-                                    Spacer()
-                                    BadgeView(text: result.statusLabel, tint: pdfTint(for: result.status))
-                                }
-
-                                Text(result.message)
-                                    .foregroundStyle(.secondary)
-
-                                HStack(spacing: 14) {
-                                    Text("Pages: \(result.pageCount)")
-                                    Text(result.hasVectorContent ? "Vector/Text: Yes" : "Vector/Text: No")
-                                    Text(result.hasRasterImages ? "Raster Data: Yes" : "Raster Data: No")
-                                }
-                                .font(.caption)
-                            }
-                        }
-                    }
-                }
-            }
+    private var fileListHeader: some View {
+        HStack(spacing: 12) {
+            Color.clear.frame(width: 20)
+            Text("Name").frame(minWidth: 160, alignment: .leading)
+            Text("Kind").frame(width: 40, alignment: .leading)
+            Text("Status").frame(width: 150, alignment: .leading)
+            Text("Details").frame(maxWidth: .infinity, alignment: .leading)
         }
-    }
-
-    private func statusPill(title: String, count: Int, tint: Color) -> some View {
-        HStack(spacing: 8) {
-            Circle()
-                .fill(tint)
-                .frame(width: 8, height: 8)
-            Text("\(title): \(count)")
-                .font(.caption.weight(.medium))
-        }
-        .padding(.horizontal, 12)
+        .font(.caption.weight(.semibold))
+        .foregroundStyle(.secondary)
+        .padding(.horizontal, 16)
         .padding(.vertical, 8)
-        .background(tint.opacity(0.12), in: Capsule())
-    }
-
-    private func pdfTint(for status: PDFContentStatus) -> Color {
-        switch status {
-        case .mixed:
-            return .blue
-        case .vectorOnly:
-            return .green
-        case .rasterOnly:
-            return .orange
-        case .noDrawingData:
-            return .gray
-        case .failed:
-            return .red
-        }
+        .background(.quaternary.opacity(0.3))
     }
 
     private func chooseFiles() {
@@ -339,32 +294,139 @@ struct ContentView: View {
     }
 }
 
-private struct ResultCard<Content: View>: View {
-    @ViewBuilder let content: Content
+private struct FileRow: Identifiable {
+    enum Kind {
+        case png
+        case pdf
+    }
 
-    var body: some View {
-        content
-            .padding(14)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(.background, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .strokeBorder(.quaternary, lineWidth: 1)
-            )
+    enum Status {
+        case pending
+        case png(PNGCompressionResult)
+        case pdf(PDFAnalysisResult)
+    }
+
+    let id: URL
+    let kind: Kind
+    let status: Status
+
+    var displayName: String { id.lastPathComponent }
+
+    var kindLabel: String {
+        switch kind {
+        case .png: return "PNG"
+        case .pdf: return "PDF"
+        }
+    }
+
+    var kindIcon: String {
+        switch kind {
+        case .png: return "photo"
+        case .pdf: return "doc.text.image"
+        }
+    }
+
+    var statusPresentation: StatusPresentation {
+        switch status {
+        case .pending:
+            return StatusPresentation(label: "Processing…", tint: .secondary, symbolName: nil, isPending: true, detail: "—")
+
+        case let .png(result):
+            switch result.status {
+            case .optimized:
+                let detail: String
+                if let compressedBytes = result.compressedBytes, let percent = result.savingsPercent {
+                    detail = "\(byteCountDescription(result.originalBytes)) → \(byteCountDescription(compressedBytes)) (-\(percent.formatted(.number.precision(.fractionLength(1))))%)"
+                } else {
+                    detail = result.message
+                }
+                return StatusPresentation(label: result.statusLabel, tint: .green, symbolName: "checkmark.circle.fill", isPending: false, detail: detail)
+
+            case .unchanged:
+                return StatusPresentation(label: result.statusLabel, tint: .orange, symbolName: "minus.circle.fill", isPending: false, detail: byteCountDescription(result.originalBytes))
+
+            case .failed:
+                return StatusPresentation(label: result.statusLabel, tint: .red, symbolName: "xmark.circle.fill", isPending: false, detail: result.message)
+            }
+
+        case let .pdf(result):
+            let detail = "\(result.pageCount) page\(result.pageCount == 1 ? "" : "s")"
+
+            switch result.status {
+            case .mixed:
+                return StatusPresentation(label: result.statusLabel, tint: .blue, symbolName: "circle.lefthalf.filled", isPending: false, detail: detail)
+            case .vectorOnly:
+                return StatusPresentation(label: result.statusLabel, tint: .green, symbolName: "checkmark.circle.fill", isPending: false, detail: detail)
+            case .rasterOnly:
+                return StatusPresentation(label: result.statusLabel, tint: .orange, symbolName: "photo.circle.fill", isPending: false, detail: detail)
+            case .noDrawingData:
+                return StatusPresentation(label: result.statusLabel, tint: .gray, symbolName: "questionmark.circle.fill", isPending: false, detail: detail)
+            case .failed:
+                return StatusPresentation(label: result.statusLabel, tint: .red, symbolName: "xmark.circle.fill", isPending: false, detail: result.message)
+            }
+        }
     }
 }
 
-private struct BadgeView: View {
-    let text: String
+private struct StatusPresentation {
+    let label: String
     let tint: Color
+    let symbolName: String?
+    let isPending: Bool
+    let detail: String
+}
+
+private struct FileRowView: View {
+    let row: FileRow
+    let isAlternate: Bool
 
     var body: some View {
-        Text(text)
-            .font(.caption.weight(.semibold))
-            .padding(.horizontal, 10)
-            .padding(.vertical, 5)
-            .background(tint.opacity(0.14), in: Capsule())
-            .foregroundStyle(tint)
+        let presentation = row.statusPresentation
+
+        HStack(spacing: 12) {
+            Image(systemName: row.kindIcon)
+                .font(.system(size: 15))
+                .foregroundStyle(.secondary)
+                .frame(width: 20)
+
+            Text(row.displayName)
+                .font(.callout)
+                .lineLimit(1)
+                .truncationMode(.middle)
+                .frame(minWidth: 160, alignment: .leading)
+
+            Text(row.kindLabel)
+                .font(.caption.weight(.medium))
+                .foregroundStyle(.secondary)
+                .frame(width: 40, alignment: .leading)
+
+            HStack(spacing: 6) {
+                if presentation.isPending {
+                    ProgressView()
+                        .controlSize(.small)
+                } else if let symbolName = presentation.symbolName {
+                    Image(systemName: symbolName)
+                        .foregroundStyle(presentation.tint)
+                }
+
+                Text(presentation.label)
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(presentation.tint)
+                    .lineLimit(1)
+            }
+            .frame(width: 150, alignment: .leading)
+
+            Text(presentation.detail)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+                .truncationMode(.tail)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
+        .background(isAlternate ? Color.gray.opacity(0.06) : Color.clear)
+        .accessibilityIdentifier("file-row-\(row.displayName)")
     }
 }
 

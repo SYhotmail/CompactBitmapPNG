@@ -1,7 +1,7 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-`Sources/PNGCompressorPDFVectorCheck/` contains the macOS SwiftUI app, including `ContentView.swift`, the `@Observable` view model, the processing pipeline actor, and PNG/PDF utilities. `Tests/PNGCompressorPDFVectorCheckTests/` holds Swift Testing coverage plus lightweight UI rendering tests. `Package.swift` supports SwiftPM builds, while `project.yml` defines the Xcode app project that generates `PNGCompressorPDFVectorCheck.xcodeproj`.
+`Sources/PNGCompressorPDFVectorCheck/App/` holds the app entry point. `Features/AppFeature/` contains the TCA reducer and `AppView`, `Clients/` wires dependencies, `Services/` contains the PNG/PDF processing engines, `Models/` holds shared domain types, and `Resources/Info.plist` stores bundle metadata. `Tests/PNGCompressorPDFVectorCheckTests/Features/AppFeature/` covers reducer and rendering behavior with Swift Testing, while `UITests/PNGCompressorPDFVectorCheckUITests/Features/AppFeature/` covers macOS UI flows. `Package.swift` supports SwiftPM builds, and `project.yml` generates `PNGCompressorPDFVectorCheck.xcodeproj`.
 
 ## Build, Test, and Development Commands
 Use SwiftPM for fast iteration:
@@ -21,7 +21,7 @@ xcodebuild -project PNGCompressorPDFVectorCheck.xcodeproj -scheme PNGCompressorP
 If `project.yml` changes, regenerate the project with `xcodegen generate` before opening Xcode.
 
 ## Coding Style & Naming Conventions
-Follow Swift 6 conventions with 4-space indentation and small, focused types. Use `UpperCamelCase` for types, `lowerCamelCase` for methods and properties, and descriptive enum cases such as `vectorOnly` or `rasterOnly`. Prefer Swift concurrency (`async`, `await`, actors) over callback-heavy logic, and keep UI state in `@Observable` models. Avoid adding dependencies unless the standard Apple frameworks are insufficient.
+Follow Swift 6 conventions with 4-space indentation and small, focused types. Use `UpperCamelCase` for types, `lowerCamelCase` for methods and properties, and descriptive enum cases such as `vectorOnly` or `rasterOnly`. Prefer Swift concurrency (`async`, `await`, actors) over callback-heavy logic, and keep UI state in TCA `@ObservableState` reducers. Avoid adding dependencies unless the standard Apple frameworks are insufficient.
 
 ## Testing Guidelines
 Tests use the `Testing` framework, not XCTest. Name tests with sentence-style descriptions via `@Test("...")`, and group related coverage in suites. Add tests for new optimizer branches, PDF detection behavior, and any UI-state regressions. Run `swift test` before committing; run the `xcodebuild ... test` command when app wiring or bundle behavior changes.

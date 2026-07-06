@@ -21,7 +21,7 @@ let package = Package(
             dependencies: [
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
             ],
-            exclude: ["Info.plist"],
+            exclude: ["Resources/Info.plist"],
             linkerSettings: [
                 // Embed an Info.plist so macOS sees a main bundle identifier
                 // when the SwiftPM app is launched directly.
@@ -29,7 +29,7 @@ let package = Package(
                     "-Xlinker", "-sectcreate",
                     "-Xlinker", "__TEXT",
                     "-Xlinker", "__info_plist",
-                    "-Xlinker", "Sources/PNGCompressorPDFVectorCheck/Info.plist"
+                    "-Xlinker", "Sources/PNGCompressorPDFVectorCheck/Resources/Info.plist"
                 ])
             ]
         ),

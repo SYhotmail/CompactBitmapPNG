@@ -9,21 +9,23 @@
 /* Begin PBXBuildFile section */
 		0355368571DA7DDA80B819DD /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = D9E1D6BEE3E88566E123A692 /* Dependencies */; };
 		09287A01585F834812F0C0EE /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = 77EC0975F21E6147561A4624 /* CasePaths */; };
-		10104F7973A191A069BA9B9F /* PNGCompressorPDFVectorCheckApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A346085C6E42D3AE4BCF92 /* PNGCompressorPDFVectorCheckApp.swift */; };
-		159483C7ED05AE30447A666F /* PNGCompressorPDFVectorCheckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455FED3A360C973B4F41B54F /* PNGCompressorPDFVectorCheckTests.swift */; };
-		1BCB2E14A7EA85EE34647183 /* ProcessingPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDF1C10BF15CEB9034E1839 /* ProcessingPipeline.swift */; };
+		2B44FB3EC12B951D92B4628A /* AppFeatureUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8431D7D5D9FDA06DB89C4ABD /* AppFeatureUITests.swift */; };
+		3327E1BA09C10B63CB2102B0 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D90295D62C2113B62380 /* AppView.swift */; };
+		43F6DF72E0E31D439D63B894 /* ProcessingPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F2FC48786FBE5F21DF648 /* ProcessingPipeline.swift */; };
 		4FDC360D44EDCD3E95393A26 /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = 5EF230E2DCB37649DF2ED475 /* CasePaths */; };
 		53F6D1D614D4AAFFE75F0B25 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = C7F59D15D246DBDA5932212B /* Dependencies */; };
-		5451DA9FC99F416594EBEC32 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B1624E25917A96A0E4141C /* Models.swift */; };
 		58A35F632ADAB768024A31EB /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = F8EB4E8A790863C91629AB21 /* ComposableArchitecture */; };
-		6BEAE43EA2C054A7E3B8BDAB /* ContentViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244172C8EA343FDCD758759F /* ContentViewUITests.swift */; };
-		A0D31A110210BFC3B1DC3655 /* PNGOptimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B48D333B47A0C27E7F33EC /* PNGOptimizer.swift */; };
-		A93AF1CEF6793D233BCFD323 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39A16E5C7012A2B6FDEFB35 /* ContentView.swift */; };
+		60A08BDC2404ABB3E4FBBB83 /* AppFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652AD3007EAC57CA7A4616F0 /* AppFeatureTests.swift */; };
+		721189BAA1CE01C5B232D6E2 /* Perception in Frameworks */ = {isa = PBXBuildFile; productRef = B5957904683C78835DF5E723 /* Perception */; };
+		792749B5FDED6B9580503408 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36BCA187CDB36B029F88764C /* Models.swift */; };
+		7E6644872EB729819B17643C /* Perception in Frameworks */ = {isa = PBXBuildFile; productRef = 6894B4BAE3728CF93F042E3E /* Perception */; };
+		8E9DDDB3A62DBEC1D55C36BB /* PNGOptimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39CB5BE38F3CBEA7E4B147B /* PNGOptimizer.swift */; };
+		A1ADDFB696AE38F5AF37A248 /* PDFVectorAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6BDD3B40C7193D63CBF996 /* PDFVectorAnalyzer.swift */; };
 		A96690E777043FA1DB43CD5F /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 92CB7A562EA40C6B0F24E4C5 /* ComposableArchitecture */; };
-		B1B2A9C774DFE208C6637659 /* PDFVectorAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A8818DF5E59E90444A152C /* PDFVectorAnalyzer.swift */; };
-		DAEFF66778DF7CB4B025497B /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947D10F3B6F5ED747296543C /* AppFeature.swift */; };
-		E78F65232888986B66A13BFA /* PNGCompressorPDFVectorCheckUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42C65A6C6D28B9A0AA6A0E0 /* PNGCompressorPDFVectorCheckUITests.swift */; };
-		F1B0360AFF5413B3B8693164 /* ProcessingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5C64EC57E97B3B21802399 /* ProcessingClient.swift */; };
+		C62C8CC1F9A436454DC7546B /* AppViewRenderingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD460F909E08768C027E38E /* AppViewRenderingTests.swift */; };
+		D1296A361EDF347EA9545791 /* PNGCompressorPDFVectorCheckApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3DCDB0D78305DBE4F346BC /* PNGCompressorPDFVectorCheckApp.swift */; };
+		DFDFAEF41E6FC32247B280F5 /* ProcessingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50BF0F6AEB7EB40A8AADC9B /* ProcessingClient.swift */; };
+		F56B1D6F4418EA6195B4E4C4 /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218DA72FE303F71080E0DF0 /* AppFeature.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,20 +46,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		244172C8EA343FDCD758759F /* ContentViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewUITests.swift; sourceTree = "<group>"; };
 		29AA7E0302D1FEA6FC6ABD65 /* PNGCompressorPDFVectorCheckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PNGCompressorPDFVectorCheckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		455FED3A360C973B4F41B54F /* PNGCompressorPDFVectorCheckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNGCompressorPDFVectorCheckTests.swift; sourceTree = "<group>"; };
-		49A346085C6E42D3AE4BCF92 /* PNGCompressorPDFVectorCheckApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNGCompressorPDFVectorCheckApp.swift; sourceTree = "<group>"; };
-		4EDF1C10BF15CEB9034E1839 /* ProcessingPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingPipeline.swift; sourceTree = "<group>"; };
-		7C5C64EC57E97B3B21802399 /* ProcessingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingClient.swift; sourceTree = "<group>"; };
-		947D10F3B6F5ED747296543C /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
-		A1B1624E25917A96A0E4141C /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
-		A4B48D333B47A0C27E7F33EC /* PNGOptimizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNGOptimizer.swift; sourceTree = "<group>"; };
-		B0A8818DF5E59E90444A152C /* PDFVectorAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFVectorAnalyzer.swift; sourceTree = "<group>"; };
+		36BCA187CDB36B029F88764C /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		3DD460F909E08768C027E38E /* AppViewRenderingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewRenderingTests.swift; sourceTree = "<group>"; };
+		4B6BDD3B40C7193D63CBF996 /* PDFVectorAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFVectorAnalyzer.swift; sourceTree = "<group>"; };
+		594F2FC48786FBE5F21DF648 /* ProcessingPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingPipeline.swift; sourceTree = "<group>"; };
+		5A3DCDB0D78305DBE4F346BC /* PNGCompressorPDFVectorCheckApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNGCompressorPDFVectorCheckApp.swift; sourceTree = "<group>"; };
+		652AD3007EAC57CA7A4616F0 /* AppFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeatureTests.swift; sourceTree = "<group>"; };
+		8431D7D5D9FDA06DB89C4ABD /* AppFeatureUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeatureUITests.swift; sourceTree = "<group>"; };
 		B3B1511B54521080DE0A0054 /* PNGCompressorPDFVectorCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PNGCompressorPDFVectorCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B42C65A6C6D28B9A0AA6A0E0 /* PNGCompressorPDFVectorCheckUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNGCompressorPDFVectorCheckUITests.swift; sourceTree = "<group>"; };
+		BA00D90295D62C2113B62380 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		BA81F3DB1F392063AE8604A5 /* PNGCompressorPDFVectorCheckUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PNGCompressorPDFVectorCheckUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C39A16E5C7012A2B6FDEFB35 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C218DA72FE303F71080E0DF0 /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
+		D50BF0F6AEB7EB40A8AADC9B /* ProcessingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingClient.swift; sourceTree = "<group>"; };
+		E39CB5BE38F3CBEA7E4B147B /* PNGOptimizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNGOptimizer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				A96690E777043FA1DB43CD5F /* ComposableArchitecture in Frameworks */,
 				0355368571DA7DDA80B819DD /* Dependencies in Frameworks */,
 				09287A01585F834812F0C0EE /* CasePaths in Frameworks */,
+				721189BAA1CE01C5B232D6E2 /* Perception in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +81,7 @@
 				58A35F632ADAB768024A31EB /* ComposableArchitecture in Frameworks */,
 				53F6D1D614D4AAFFE75F0B25 /* Dependencies in Frameworks */,
 				4FDC360D44EDCD3E95393A26 /* CasePaths in Frameworks */,
+				7E6644872EB729819B17643C /* Perception in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,27 +91,107 @@
 		0D31D7B3A8D7AC83C0B7D0A2 /* PNGCompressorPDFVectorCheckTests */ = {
 			isa = PBXGroup;
 			children = (
-				244172C8EA343FDCD758759F /* ContentViewUITests.swift */,
-				455FED3A360C973B4F41B54F /* PNGCompressorPDFVectorCheckTests.swift */,
+				40C9423F3914C1ED68B6AF08 /* Features */,
 			);
 			name = PNGCompressorPDFVectorCheckTests;
 			path = Tests/PNGCompressorPDFVectorCheckTests;
 			sourceTree = "<group>";
 		};
+		40C9423F3914C1ED68B6AF08 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				8DA6A6CA5F52D95D36B23C00 /* AppFeature */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		551C28410C79FC4F97C68505 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				5A3DCDB0D78305DBE4F346BC /* PNGCompressorPDFVectorCheckApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		6BA746664031223FC6ACD534 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				7F877CB2EDF80EA7B9956D31 /* AppFeature */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
 		6F1E9145E17F322B24380EEF /* PNGCompressorPDFVectorCheck */ = {
 			isa = PBXGroup;
 			children = (
-				947D10F3B6F5ED747296543C /* AppFeature.swift */,
-				C39A16E5C7012A2B6FDEFB35 /* ContentView.swift */,
-				A1B1624E25917A96A0E4141C /* Models.swift */,
-				B0A8818DF5E59E90444A152C /* PDFVectorAnalyzer.swift */,
-				49A346085C6E42D3AE4BCF92 /* PNGCompressorPDFVectorCheckApp.swift */,
-				A4B48D333B47A0C27E7F33EC /* PNGOptimizer.swift */,
-				7C5C64EC57E97B3B21802399 /* ProcessingClient.swift */,
-				4EDF1C10BF15CEB9034E1839 /* ProcessingPipeline.swift */,
+				551C28410C79FC4F97C68505 /* App */,
+				786B1200F9E91A32BED14B91 /* Clients */,
+				88CA08BF828E0AF154936370 /* Features */,
+				968095545290B9AE63CF405D /* Models */,
+				844ED3816750AA57CB0495F1 /* Services */,
 			);
 			name = PNGCompressorPDFVectorCheck;
 			path = Sources/PNGCompressorPDFVectorCheck;
+			sourceTree = "<group>";
+		};
+		786B1200F9E91A32BED14B91 /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				D50BF0F6AEB7EB40A8AADC9B /* ProcessingClient.swift */,
+			);
+			path = Clients;
+			sourceTree = "<group>";
+		};
+		7F877CB2EDF80EA7B9956D31 /* AppFeature */ = {
+			isa = PBXGroup;
+			children = (
+				8431D7D5D9FDA06DB89C4ABD /* AppFeatureUITests.swift */,
+			);
+			path = AppFeature;
+			sourceTree = "<group>";
+		};
+		844ED3816750AA57CB0495F1 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4B6BDD3B40C7193D63CBF996 /* PDFVectorAnalyzer.swift */,
+				E39CB5BE38F3CBEA7E4B147B /* PNGOptimizer.swift */,
+				594F2FC48786FBE5F21DF648 /* ProcessingPipeline.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		88CA08BF828E0AF154936370 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				C9BD521222C71FA5510EBCCF /* AppFeature */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		8DA6A6CA5F52D95D36B23C00 /* AppFeature */ = {
+			isa = PBXGroup;
+			children = (
+				652AD3007EAC57CA7A4616F0 /* AppFeatureTests.swift */,
+				3DD460F909E08768C027E38E /* AppViewRenderingTests.swift */,
+			);
+			path = AppFeature;
+			sourceTree = "<group>";
+		};
+		968095545290B9AE63CF405D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				36BCA187CDB36B029F88764C /* Models.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C9BD521222C71FA5510EBCCF /* AppFeature */ = {
+			isa = PBXGroup;
+			children = (
+				C218DA72FE303F71080E0DF0 /* AppFeature.swift */,
+				BA00D90295D62C2113B62380 /* AppView.swift */,
+			);
+			path = AppFeature;
 			sourceTree = "<group>";
 		};
 		E1BCD4C276EEAFA92D47AF2D /* Products */ = {
@@ -133,7 +217,7 @@
 		F5B6AD2EC839AC6C268CC8F6 /* PNGCompressorPDFVectorCheckUITests */ = {
 			isa = PBXGroup;
 			children = (
-				B42C65A6C6D28B9A0AA6A0E0 /* PNGCompressorPDFVectorCheckUITests.swift */,
+				6BA746664031223FC6ACD534 /* Features */,
 			);
 			name = PNGCompressorPDFVectorCheckUITests;
 			path = UITests/PNGCompressorPDFVectorCheckUITests;
@@ -158,6 +242,7 @@
 				92CB7A562EA40C6B0F24E4C5 /* ComposableArchitecture */,
 				D9E1D6BEE3E88566E123A692 /* Dependencies */,
 				77EC0975F21E6147561A4624 /* CasePaths */,
+				B5957904683C78835DF5E723 /* Perception */,
 			);
 			productName = PNGCompressorPDFVectorCheck;
 			productReference = B3B1511B54521080DE0A0054 /* PNGCompressorPDFVectorCheck.app */;
@@ -180,6 +265,7 @@
 				F8EB4E8A790863C91629AB21 /* ComposableArchitecture */,
 				C7F59D15D246DBDA5932212B /* Dependencies */,
 				5EF230E2DCB37649DF2ED475 /* CasePaths */,
+				6894B4BAE3728CF93F042E3E /* Perception */,
 			);
 			productName = PNGCompressorPDFVectorCheckTests;
 			productReference = 29AA7E0302D1FEA6FC6ABD65 /* PNGCompressorPDFVectorCheckTests.xctest */;
@@ -234,6 +320,7 @@
 				5D61DCCCC9B22C26FE196CED /* XCRemoteSwiftPackageReference "swift-case-paths" */,
 				F20452911D2B137FF34C61B5 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				F6F0A2086D7A930FAEB67331 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
+				817D91FEDC89792C628735CF /* XCRemoteSwiftPackageReference "swift-perception" */,
 			);
 			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
@@ -251,14 +338,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAEFF66778DF7CB4B025497B /* AppFeature.swift in Sources */,
-				A93AF1CEF6793D233BCFD323 /* ContentView.swift in Sources */,
-				5451DA9FC99F416594EBEC32 /* Models.swift in Sources */,
-				B1B2A9C774DFE208C6637659 /* PDFVectorAnalyzer.swift in Sources */,
-				10104F7973A191A069BA9B9F /* PNGCompressorPDFVectorCheckApp.swift in Sources */,
-				A0D31A110210BFC3B1DC3655 /* PNGOptimizer.swift in Sources */,
-				F1B0360AFF5413B3B8693164 /* ProcessingClient.swift in Sources */,
-				1BCB2E14A7EA85EE34647183 /* ProcessingPipeline.swift in Sources */,
+				F56B1D6F4418EA6195B4E4C4 /* AppFeature.swift in Sources */,
+				3327E1BA09C10B63CB2102B0 /* AppView.swift in Sources */,
+				792749B5FDED6B9580503408 /* Models.swift in Sources */,
+				A1ADDFB696AE38F5AF37A248 /* PDFVectorAnalyzer.swift in Sources */,
+				D1296A361EDF347EA9545791 /* PNGCompressorPDFVectorCheckApp.swift in Sources */,
+				8E9DDDB3A62DBEC1D55C36BB /* PNGOptimizer.swift in Sources */,
+				DFDFAEF41E6FC32247B280F5 /* ProcessingClient.swift in Sources */,
+				43F6DF72E0E31D439D63B894 /* ProcessingPipeline.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,8 +353,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6BEAE43EA2C054A7E3B8BDAB /* ContentViewUITests.swift in Sources */,
-				159483C7ED05AE30447A666F /* PNGCompressorPDFVectorCheckTests.swift in Sources */,
+				60A08BDC2404ABB3E4FBBB83 /* AppFeatureTests.swift in Sources */,
+				C62C8CC1F9A436454DC7546B /* AppViewRenderingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,7 +362,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E78F65232888986B66A13BFA /* PNGCompressorPDFVectorCheckUITests.swift in Sources */,
+				2B44FB3EC12B951D92B4628A /* AppFeatureUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,7 +423,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = Sources/PNGCompressorPDFVectorCheck/Info.plist;
+				INFOPLIST_FILE = Sources/PNGCompressorPDFVectorCheck/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -436,7 +523,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = Sources/PNGCompressorPDFVectorCheck/Info.plist;
+				INFOPLIST_FILE = Sources/PNGCompressorPDFVectorCheck/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -572,6 +659,14 @@
 				version = 1.8.0;
 			};
 		};
+		817D91FEDC89792C628735CF /* XCRemoteSwiftPackageReference "swift-perception" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-perception";
+			requirement = {
+				kind = exactVersion;
+				version = 2.0.10;
+			};
+		};
 		F20452911D2B137FF34C61B5 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
@@ -596,6 +691,11 @@
 			package = 5D61DCCCC9B22C26FE196CED /* XCRemoteSwiftPackageReference "swift-case-paths" */;
 			productName = CasePaths;
 		};
+		6894B4BAE3728CF93F042E3E /* Perception */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 817D91FEDC89792C628735CF /* XCRemoteSwiftPackageReference "swift-perception" */;
+			productName = Perception;
+		};
 		77EC0975F21E6147561A4624 /* CasePaths */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5D61DCCCC9B22C26FE196CED /* XCRemoteSwiftPackageReference "swift-case-paths" */;
@@ -605,6 +705,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F20452911D2B137FF34C61B5 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		B5957904683C78835DF5E723 /* Perception */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 817D91FEDC89792C628735CF /* XCRemoteSwiftPackageReference "swift-perception" */;
+			productName = Perception;
 		};
 		C7F59D15D246DBDA5932212B /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;

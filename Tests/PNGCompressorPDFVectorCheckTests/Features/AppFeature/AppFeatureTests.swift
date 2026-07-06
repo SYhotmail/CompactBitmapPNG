@@ -97,11 +97,15 @@ struct PNGCompressorPDFVectorCheckTests {
         )) {
             $0.intakeMessage = "Queued 1 PNG and 1 PDF."
             $0.selectedFolderPath = "/tmp"
+            $0.pendingPNGURLs = [pngURL]
+            $0.pendingPDFURLs = [pdfURL]
             $0.processingState = .running("Compressing 1 PNG file(s) and checking 1 PDF file(s)...")
         }
         await store.receive(.processingFinished([pngResult], [pdfResult])) {
             $0.pngResults = [pngResult]
             $0.pdfResults = [pdfResult]
+            $0.pendingPNGURLs = []
+            $0.pendingPDFURLs = []
             $0.processingState = .idle
         }
     }
