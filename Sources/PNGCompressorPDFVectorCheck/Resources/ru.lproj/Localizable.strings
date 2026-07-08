@@ -8,8 +8,9 @@
 "header.subtitle.none" = "Включите сжатие PNG или проверку PDF ниже, затем выберите файлы или папку для обработки.";
 
 /* Settings bar toggles */
-"toggle.enablePngCompression" = "Включить сжатие PNG";
-"toggle.enablePdfCheck" = "Включить проверку PDF";
+"compression.sectionLabel" = "Сжатие";
+"toggle.enablePngCompression" = "PNG";
+"toggle.enablePdfCheck" = "PDF";
 "toggle.overwriteOriginal" = "Перезаписывать исходные файлы";
 
 /* Quantization controls */
@@ -30,7 +31,7 @@
 "emptyState.subtitle.both" = "Папки рекурсивно сканируются на файлы `.png` и `.pdf`.";
 "emptyState.subtitle.pngOnly" = "Папки рекурсивно сканируются на файлы `.png`.";
 "emptyState.subtitle.pdfOnly" = "Папки рекурсивно сканируются на файлы `.pdf`.";
-"emptyState.subtitle.none" = "Включите «Включить сжатие PNG» или «Включить проверку PDF» выше, чтобы обрабатывать перетащенные файлы.";
+"emptyState.subtitle.none" = "Включите «PNG» или «PDF» в разделе «Сжатие» выше, чтобы обрабатывать перетащенные файлы.";
 
 /* Per-file row status labels */
 "status.processing" = "Обработка…";
@@ -41,6 +42,7 @@
 "status.pdf.vectorOnly" = "Вектор/Текст";
 "status.pdf.rasterOnly" = "Только растр";
 "status.pdf.noDrawingData" = "Нет данных отрисовки";
+"status.pdf.compressed" = "Сжато";
 
 /* Status bar processing messages; %@ placeholders are pre-pluralized file-count fragments */
 "status.compressingAndChecking" = "Сжимаем %@ и проверяем %@…";
@@ -99,6 +101,12 @@
 "pdf.summary.rasterOnly" = "Похоже, этот PDF состоит только из растровых изображений.";
 "pdf.summary.none" = "Векторные или растровые операторы отрисовки не обнаружены.";
 "error.pdf.openFailed" = "Не удалось открыть PDF-файл.";
+
+/* PDF bitmap compression */
+"pdf.compression.success" = "Встроенные растровые изображения PDF успешно сжаты.";
+"pdf.compression.unchanged.notEligible" = "Этот PDF не является простым документом с одним изображением на страницу, поэтому его изображения не были изменены.";
+"pdf.compression.unchanged.unsupportedFormat" = "Встроенные изображения этого PDF используют неподдерживаемый цветовой формат, поэтому они не были изменены.";
+"pdf.compression.unchanged.noSmaller" = "Сжатие не позволило уменьшить размер PDF.";
 "pdf.pageCount.one" = "%d страница";
 "pdf.pageCount.few" = "%d страницы";
 "pdf.pageCount.many" = "%d страниц";

@@ -8,11 +8,12 @@ struct AppFeature {
         var processingState = ProcessingState.idle
         var pngResults = [PNGCompressionResult]()
         var pdfResults = [PDFAnalysisResult]()
+        var pdfCompressionResults = [PDFCompressionResult]()
         var pendingPNGURLs = [URL]()
         var pendingPDFURLs = [URL]()
         var enablePNGCompression = true
         var enablePDFCheck = true
-        var pngCompressionSettings = PNGCompressionSettings()
+        var compressionSettings = CompressionSettings()
         var intakeMessage = L10n.string("intake.defaultMessage")
         var rootSelections = [URL]()
         @Presents var alert: AlertState<Action.Alert>?
@@ -24,7 +25,7 @@ struct AppFeature {
         case clearResults
         case processURLs([URL])
         case preparationFinished(IntakeSummary, pngURLs: [URL], pdfURLs: [URL])
-        case processingFinished([PNGCompressionResult], [PDFAnalysisResult])
+        case processingFinished([PNGCompressionResult], [PDFAnalysisResult], [PDFCompressionResult])
 
         enum Alert: Equatable {}
     }
@@ -56,7 +57,8 @@ struct AppFeature {
 
                 let enablePNGCompression = state.enablePNGCompression
                 let enablePDFCheck = state.enablePDFCheck
-                let pngCompressionSettings = state.pngCompressionSettings
+                let enablePDFBitmapCompression = state.enablePDFCheck
+                let compressionSettings = state.compressionSettings
 
                 return .run { send in
                     let discovered = await processingClient.discoverSupportedFiles(urls)
@@ -72,10 +74,13 @@ struct AppFeature {
 
                     guard !pngURLs.isEmpty || !pdfURLs.isEmpty else { return }
 
-                    async let pngResults = processingClient.processPNGs(pngURLs, pngCompressionSettings)
+                    async let pngResults = processingClient.processPNGs(pngURLs, compressionSettings)
                     async let pdfResults = processingClient.processPDFs(pdfURLs)
-                    let results = await (pngResults, pdfResults)
-                    await send(.processingFinished(results.0, results.1))
+                    async let pdfCompressionResults: [PDFCompressionResult] = enablePDFBitmapCompression
+                        ? await processingClient.compressPDFBitmaps(pdfURLs, compressionSettings)
+                        : []
+                    let results = await (pngResults, pdfResults, pdfCompressionResults)
+                    await send(.processingFinished(results.0, results.1, results.2))
                 }
                 .cancellable(id: CancelID.processing, cancelInFlight: true)
 
@@ -83,6 +88,7 @@ struct AppFeature {
                 state.intakeMessage = summary.description
                 state.pngResults = []
                 state.pdfResults = []
+                state.pdfCompressionResults = []
                 state.pendingPNGURLs = pngURLs
                 state.pendingPDFURLs = pdfURLs
 
@@ -103,9 +109,10 @@ struct AppFeature {
 
                 return .none
 
-            case let .processingFinished(pngResults, pdfResults):
+            case let .processingFinished(pngResults, pdfResults, pdfCompressionResults):
                 state.pngResults = pngResults
                 state.pdfResults = pdfResults
+                state.pdfCompressionResults = pdfCompressionResults
                 state.pendingPNGURLs = []
                 state.pendingPDFURLs = []
                 state.processingState = .idle

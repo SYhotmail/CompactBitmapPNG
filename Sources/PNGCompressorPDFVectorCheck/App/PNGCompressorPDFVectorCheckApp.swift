@@ -20,7 +20,7 @@ struct PNGCompressorPDFVectorCheckApp: App {
         let arguments = Set(ProcessInfo.processInfo.arguments)
 
         if arguments.contains("UITestDisableQuantization") {
-            state.pngCompressionSettings.quantizationLevel = nil
+            state.compressionSettings.quantizationLevel = nil
         }
 
         if arguments.contains("UITestDisablePDFCheck") {

@@ -4,7 +4,7 @@ import ImageIO
 import UniformTypeIdentifiers
 
 enum PNGOptimizer {
-    static func optimize(url: URL, settings: PNGCompressionSettings = PNGCompressionSettings()) throws -> PNGCompressionResult {
+    static func optimize(url: URL, settings: CompressionSettings = CompressionSettings()) throws -> PNGCompressionResult {
         let originalData = try Data(contentsOf: url)
 
         guard let source = CGImageSourceCreateWithData(originalData as CFData, nil),

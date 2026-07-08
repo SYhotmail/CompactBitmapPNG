@@ -11,7 +11,7 @@ enum PNGCompressionStatus: Sendable, Equatable {
     case failed
 }
 
-enum PNGQuantizationLevel: Int, CaseIterable, Identifiable, Sendable, Equatable {
+enum QuantizationLevel: Int, CaseIterable, Identifiable, Sendable, Equatable {
     case colors256 = 256
     case colors128 = 128
     case colors64 = 64
@@ -23,8 +23,11 @@ enum PNGQuantizationLevel: Int, CaseIterable, Identifiable, Sendable, Equatable 
     }
 }
 
-struct PNGCompressionSettings: Sendable, Equatable {
-    var quantizationLevel: PNGQuantizationLevel? = .colors256
+/// Shared by both the PNG optimizer and the PDF bitmap compressor — both write a smaller output
+/// file only when the quantized/re-encoded candidate beats the original, using the same
+/// quantization levels and overwrite behavior.
+struct CompressionSettings: Sendable, Equatable {
+    var quantizationLevel: QuantizationLevel? = .colors256
     var overwriteOriginal = true
 }
 
@@ -57,6 +60,49 @@ struct PNGCompressionResult: Identifiable, Sendable, Equatable {
         switch status {
         case .optimized:
             return L10n.string("status.png.compressed")
+        case .unchanged:
+            return L10n.string("status.png.noChange")
+        case .failed:
+            return L10n.string("status.failed")
+        }
+    }
+}
+
+enum PDFCompressionStatus: Sendable, Equatable {
+    case compressed
+    case unchanged
+    case failed
+}
+
+struct PDFCompressionResult: Identifiable, Sendable, Equatable {
+    var id: URL { sourceURL }
+    let sourceURL: URL
+    let outputURL: URL?
+    let originalBytes: UInt64
+    let compressedBytes: UInt64?
+    let status: PDFCompressionStatus
+    let message: String
+
+    var savingsBytes: Int64? {
+        guard let compressedBytes else { return nil }
+        return Int64(originalBytes - compressedBytes)
+    }
+
+    var savingsPercent: Double? {
+        guard
+            let savingsBytes,
+            originalBytes > 0
+        else {
+            return nil
+        }
+
+        return (Double(savingsBytes) / Double(originalBytes)) * 100
+    }
+
+    var statusLabel: String {
+        switch status {
+        case .compressed:
+            return L10n.string("status.pdf.compressed")
         case .unchanged:
             return L10n.string("status.png.noChange")
         case .failed:

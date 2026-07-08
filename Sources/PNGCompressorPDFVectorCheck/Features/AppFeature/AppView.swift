@@ -58,38 +58,42 @@ struct AppView: View {
 
     private var settingsBar: some View {
         VStack(alignment: .leading, spacing: 10) {
+            Text(L10n.string("compression.sectionLabel"))
+                .font(.caption.weight(.medium))
+                .foregroundStyle(.secondary)
+
             HStack(spacing: 18) {
                 Toggle(L10n.string("toggle.enablePngCompression"), isOn: $store.enablePNGCompression)
                     .accessibilityIdentifier("enable-png-compression-toggle")
                 Toggle(L10n.string("toggle.enablePdfCheck"), isOn: $store.enablePDFCheck)
                     .accessibilityIdentifier("enable-pdf-check-toggle")
-                Toggle(L10n.string("toggle.overwriteOriginal"), isOn: $store.pngCompressionSettings.overwriteOriginal)
-                    .disabled(!store.enablePNGCompression)
+                Toggle(L10n.string("toggle.overwriteOriginal"), isOn: $store.compressionSettings.overwriteOriginal)
                     .accessibilityIdentifier("overwrite-original-files-toggle")
             }
             .toggleStyle(.checkbox)
 
-            if store.enablePNGCompression {
-                HStack(spacing: 12) {
-                    Text(L10n.string("quantization.sectionLabel"))
-                        .font(.caption.weight(.medium))
+            if store.enablePNGCompression || store.enablePDFCheck {
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack(spacing: 12) {
+                        Text(L10n.string("quantization.sectionLabel"))
+                            .font(.caption.weight(.medium))
+                            .foregroundStyle(.secondary)
+
+                        QuantizationLevelControl(selection: $store.compressionSettings.quantizationLevel)
+                            .accessibilityIdentifier("quantization-target-picker")
+                    }
+
+                    Text(store.compressionSettings.quantizationLevel != nil
+                         ? L10n.string("quantization.description.enabled")
+                         : L10n.string("quantization.description.disabled"))
+                        .font(.caption)
                         .foregroundStyle(.secondary)
-
-                    QuantizationLevelControl(selection: $store.pngCompressionSettings.quantizationLevel)
-                        .accessibilityIdentifier("quantization-target-picker")
-
-                    Spacer()
+                        .accessibilityIdentifier("quantization-mode-description")
                 }
-
-                Text(store.pngCompressionSettings.quantizationLevel != nil
-                     ? L10n.string("quantization.description.enabled")
-                     : L10n.string("quantization.description.disabled"))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .accessibilityIdentifier("quantization-mode-description")
             }
         }
         .padding(14)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(.quaternary.opacity(0.35), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
     }
 
@@ -239,11 +243,15 @@ struct AppView: View {
     }
 
     private var fileRows: [FileRow] {
+        let compressionResultsByURL = Dictionary(uniqueKeysWithValues: store.pdfCompressionResults.map { ($0.sourceURL, $0) })
+
         var rows: [FileRow] = []
         rows.append(contentsOf: store.pendingPNGURLs.map { FileRow(id: $0, kind: .png, status: .pending) })
         rows.append(contentsOf: store.pendingPDFURLs.map { FileRow(id: $0, kind: .pdf, status: .pending) })
         rows.append(contentsOf: store.pngResults.map { FileRow(id: $0.sourceURL, kind: .png, status: .png($0)) })
-        rows.append(contentsOf: store.pdfResults.map { FileRow(id: $0.pdfURL, kind: .pdf, status: .pdf($0)) })
+        rows.append(contentsOf: store.pdfResults.map {
+            FileRow(id: $0.pdfURL, kind: .pdf, status: .pdf($0, compressionResultsByURL[$0.pdfURL]))
+        })
 
         return rows.sorted {
             $0.displayName.localizedCaseInsensitiveCompare($1.displayName) == .orderedAscending
@@ -306,11 +314,11 @@ struct AppView: View {
 /// which SwiftUI's built-in `Picker(selection:)` doesn't support since it always requires
 /// a non-nil selection.
 private struct QuantizationLevelControl: View {
-    @Binding var selection: PNGQuantizationLevel?
+    @Binding var selection: QuantizationLevel?
 
     var body: some View {
         HStack(spacing: 1) {
-            ForEach(PNGQuantizationLevel.allCases) { level in
+            ForEach(QuantizationLevel.allCases) { level in
                 let isSelected = selection == level
 
                 Button {
@@ -342,7 +350,7 @@ private struct FileRow: Identifiable {
     enum Status {
         case pending
         case png(PNGCompressionResult)
-        case pdf(PDFAnalysisResult)
+        case pdf(PDFAnalysisResult, PDFCompressionResult?)
     }
 
     let id: URL
@@ -388,8 +396,13 @@ private struct FileRow: Identifiable {
                 return StatusPresentation(label: result.statusLabel, tint: .red, symbolName: "xmark.circle.fill", isPending: false, detail: result.message)
             }
 
-        case let .pdf(result):
-            let detail = L10n.plural("pdf.pageCount", result.pageCount)
+        case let .pdf(result, compression):
+            let detail: String
+            if let compression, compression.status == .compressed, let compressedBytes = compression.compressedBytes {
+                detail = "\(byteCountDescription(compression.originalBytes)) → \(byteCountDescription(compressedBytes)) (-\(compression.savingsPercent?.formatted(.number.precision(.fractionLength(1))) ?? "0")%)"
+            } else {
+                detail = L10n.plural("pdf.pageCount", result.pageCount)
+            }
 
             switch result.status {
             case .mixed:

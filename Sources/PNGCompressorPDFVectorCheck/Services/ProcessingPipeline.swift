@@ -37,7 +37,7 @@ struct ProcessingPipeline: @unchecked Sendable {
     }
 
     @concurrent
-    func processPNGs(urls: [URL], settings: PNGCompressionSettings) async -> [PNGCompressionResult] {
+    func processPNGs(urls: [URL], settings: CompressionSettings) async -> [PNGCompressionResult] {
         guard !urls.isEmpty else { return [] }
 
         return await withTaskGroup(of: (Int, PNGCompressionResult).self, returning: [PNGCompressionResult].self) { group in
@@ -101,6 +101,43 @@ struct ProcessingPipeline: @unchecked Sendable {
             }
 
             var ordered = Array<PDFAnalysisResult?>(repeating: nil, count: urls.count)
+            for await (index, result) in group {
+                ordered[index] = result
+            }
+
+            return ordered.compactMap { $0 }
+        }
+    }
+
+    @concurrent
+    func compressPDFBitmaps(urls: [URL], settings: CompressionSettings) async -> [PDFCompressionResult] {
+        guard !urls.isEmpty else { return [] }
+
+        return await withTaskGroup(of: (Int, PDFCompressionResult).self, returning: [PDFCompressionResult].self) { group in
+            for (index, url) in urls.enumerated() {
+                group.addTask {
+                    let result: PDFCompressionResult
+
+                    do {
+                        result = try PDFBitmapCompressor.compress(url: url, settings: settings)
+                    } catch {
+                        let originalBytes = (try? url.fileSizeInBytes(fileManager: fileManager)) ?? UInt64((try? Data(contentsOf: url).count) ?? 0)
+
+                        result = PDFCompressionResult(
+                            sourceURL: url,
+                            outputURL: nil,
+                            originalBytes: originalBytes,
+                            compressedBytes: nil,
+                            status: .failed,
+                            message: error.localizedDescription
+                        )
+                    }
+
+                    return (index, result)
+                }
+            }
+
+            var ordered = Array<PDFCompressionResult?>(repeating: nil, count: urls.count)
             for await (index, result) in group {
                 ordered[index] = result
             }

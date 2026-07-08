@@ -38,9 +38,9 @@ struct PNGCompressorPDFVectorCheckTests {
         #expect(result.statusLabel == "No Change")
     }
 
-    @Test("PNG quantization settings default to 256 colors, active")
+    @Test("Compression settings default to 256 colors, active")
     func pngQuantizationDefaults() {
-        let settings = PNGCompressionSettings()
+        let settings = CompressionSettings()
 
         #expect(settings.quantizationLevel == .colors256)
         #expect(settings.overwriteOriginal == true)
@@ -101,10 +101,68 @@ struct PNGCompressorPDFVectorCheckTests {
             $0.pendingPDFURLs = [pdfURL]
             $0.processingState = .running("Compressing 1 PNG file and checking 1 PDF file...")
         }
-        await store.receive(.processingFinished([pngResult], [pdfResult])) {
+        await store.receive(.processingFinished([pngResult], [pdfResult], [])) {
             $0.pngResults = [pngResult]
             $0.pdfResults = [pdfResult]
             $0.pendingPNGURLs = []
+            $0.pendingPDFURLs = []
+            $0.processingState = .idle
+        }
+    }
+
+    @Test("App reducer runs PDF bitmap compression whenever PDF check is enabled")
+    func appReducerCompressesPDFBitmapsWhenEnabled() async {
+        let pdfURL = URL(fileURLWithPath: "/tmp/scan.pdf")
+        let pdfResult = PDFAnalysisResult(
+            pdfURL: pdfURL,
+            pageCount: 1,
+            hasVectorContent: false,
+            hasRasterImages: true,
+            hasText: false,
+            status: .rasterOnly,
+            message: "This PDF appears to be raster-image based only."
+        )
+        let compressionResult = PDFCompressionResult(
+            sourceURL: pdfURL,
+            outputURL: pdfURL,
+            originalBytes: 1_000,
+            compressedBytes: 400,
+            status: .compressed,
+            message: "Compressed embedded PDF bitmaps successfully."
+        )
+
+        let store = await MainActor.run {
+            TestStore(initialState: AppFeature.State()) {
+                AppFeature()
+            } withDependencies: {
+                $0.processingClient.discoverSupportedFiles = { _ in
+                    [DiscoveredFile(url: pdfURL, kind: .pdf)]
+                }
+                $0.processingClient.processPDFs = { _ in [pdfResult] }
+                $0.processingClient.compressPDFBitmaps = { _, _ in [compressionResult] }
+            }
+        }
+
+        await store.send(.processURLs([pdfURL])) {
+            $0.rootSelections = [pdfURL]
+        }
+        await store.receive(.preparationFinished(
+            IntakeSummary(
+                acceptedPNGCount: 0,
+                acceptedPDFCount: 1,
+                skippedUnsupportedCount: 0,
+                skippedDisabledCount: 0
+            ),
+            pngURLs: [],
+            pdfURLs: [pdfURL]
+        )) {
+            $0.intakeMessage = "Queued 1 PDF."
+            $0.pendingPDFURLs = [pdfURL]
+            $0.processingState = .running("Checking 1 PDF file...")
+        }
+        await store.receive(.processingFinished([], [pdfResult], [compressionResult])) {
+            $0.pdfResults = [pdfResult]
+            $0.pdfCompressionResults = [compressionResult]
             $0.pendingPDFURLs = []
             $0.processingState = .idle
         }
@@ -176,7 +234,7 @@ struct PNGCompressorPDFVectorCheckTests {
                     )],
                     enablePNGCompression: false,
                     enablePDFCheck: false,
-                    pngCompressionSettings: PNGCompressionSettings(quantizationLevel: .colors64),
+                    compressionSettings: CompressionSettings(quantizationLevel: .colors64),
                     intakeMessage: "Custom",
                     rootSelections: [URL(fileURLWithPath: "/tmp")]
                 )

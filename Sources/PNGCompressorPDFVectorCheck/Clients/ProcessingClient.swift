@@ -3,8 +3,9 @@ import Foundation
 
 struct ProcessingClient: Sendable {
     var discoverSupportedFiles: @Sendable ([URL]) async -> [DiscoveredFile]
-    var processPNGs: @Sendable ([URL], PNGCompressionSettings) async -> [PNGCompressionResult]
+    var processPNGs: @Sendable ([URL], CompressionSettings) async -> [PNGCompressionResult]
     var processPDFs: @Sendable ([URL]) async -> [PDFAnalysisResult]
+    var compressPDFBitmaps: @Sendable ([URL], CompressionSettings) async -> [PDFCompressionResult]
 }
 
 private enum ProcessingClientKey: DependencyKey {
@@ -19,6 +20,9 @@ private enum ProcessingClientKey: DependencyKey {
             },
             processPDFs: { urls in
                 await pipeline.processPDFs(urls: urls)
+            },
+            compressPDFBitmaps: { urls, settings in
+                await pipeline.compressPDFBitmaps(urls: urls, settings: settings)
             }
         )
     }()
@@ -26,7 +30,8 @@ private enum ProcessingClientKey: DependencyKey {
     static let testValue = ProcessingClient(
         discoverSupportedFiles: { _ in [] },
         processPNGs: { _, _ in [] },
-        processPDFs: { _ in [] }
+        processPDFs: { _ in [] },
+        compressPDFBitmaps: { _, _ in [] }
     )
 }
 

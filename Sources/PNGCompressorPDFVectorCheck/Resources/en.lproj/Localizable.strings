@@ -8,8 +8,9 @@
 "header.subtitle.none" = "Enable PNG compression or PDF check below, then select files or a folder to process.";
 
 /* Settings bar toggles */
-"toggle.enablePngCompression" = "Enable PNG compression";
-"toggle.enablePdfCheck" = "Enable PDF check";
+"compression.sectionLabel" = "Compression";
+"toggle.enablePngCompression" = "PNG";
+"toggle.enablePdfCheck" = "PDF";
 "toggle.overwriteOriginal" = "Overwrite original files";
 
 /* Quantization controls */
@@ -30,7 +31,7 @@
 "emptyState.subtitle.both" = "Folders are scanned recursively for `.png` and `.pdf` files.";
 "emptyState.subtitle.pngOnly" = "Folders are scanned recursively for `.png` files.";
 "emptyState.subtitle.pdfOnly" = "Folders are scanned recursively for `.pdf` files.";
-"emptyState.subtitle.none" = "Turn on “Enable PNG compression” or “Enable PDF check” above to process dropped files.";
+"emptyState.subtitle.none" = "Turn on “PNG” or “PDF” in the Compression section above to process dropped files.";
 
 /* Per-file row status labels */
 "status.processing" = "Processing…";
@@ -41,6 +42,7 @@
 "status.pdf.vectorOnly" = "Vector/Text";
 "status.pdf.rasterOnly" = "Raster Only";
 "status.pdf.noDrawingData" = "No Drawing Data";
+"status.pdf.compressed" = "Compressed";
 
 /* Status bar processing messages; %@ placeholders are pre-pluralized file-count fragments */
 "status.compressingAndChecking" = "Compressing %@ and checking %@...";
@@ -92,6 +94,12 @@
 "pdf.summary.rasterOnly" = "This PDF appears to be raster-image based only.";
 "pdf.summary.none" = "No vector or raster drawing operators were detected.";
 "error.pdf.openFailed" = "The PDF file could not be opened.";
+
+/* PDF bitmap compression */
+"pdf.compression.success" = "Compressed embedded PDF bitmaps successfully.";
+"pdf.compression.unchanged.notEligible" = "This PDF isn't a simple one-image-per-page document, so its bitmaps were left unchanged.";
+"pdf.compression.unchanged.unsupportedFormat" = "This PDF's embedded images use an unsupported color format, so they were left unchanged.";
+"pdf.compression.unchanged.noSmaller" = "Recompressing did not produce a smaller PDF.";
 "pdf.pageCount.one" = "%d page";
 "pdf.pageCount.other" = "%d pages";
 

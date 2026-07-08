@@ -8,8 +8,9 @@
 "header.subtitle.none" = "Уключыце сціск PNG або праверку PDF ніжэй, затым выберыце файлы або папку для апрацоўкі.";
 
 /* Settings bar toggles */
-"toggle.enablePngCompression" = "Уключыць сціск PNG";
-"toggle.enablePdfCheck" = "Уключыць праверку PDF";
+"compression.sectionLabel" = "Сцісканне";
+"toggle.enablePngCompression" = "PNG";
+"toggle.enablePdfCheck" = "PDF";
 "toggle.overwriteOriginal" = "Перазапісваць зыходныя файлы";
 
 /* Quantization controls */
@@ -30,7 +31,7 @@
 "emptyState.subtitle.both" = "Папкі рэкурсіўна сканіруюцца на файлы `.png` і `.pdf`.";
 "emptyState.subtitle.pngOnly" = "Папкі рэкурсіўна сканіруюцца на файлы `.png`.";
 "emptyState.subtitle.pdfOnly" = "Папкі рэкурсіўна сканіруюцца на файлы `.pdf`.";
-"emptyState.subtitle.none" = "Уключыце «Уключыць сціск PNG» або «Уключыць праверку PDF» вышэй, каб апрацоўваць перацягнутыя файлы.";
+"emptyState.subtitle.none" = "Уключыце «PNG» або «PDF» у раздзеле «Сцісканне» вышэй, каб апрацоўваць перацягнутыя файлы.";
 
 /* Per-file row status labels */
 "status.processing" = "Апрацоўка…";
@@ -41,6 +42,7 @@
 "status.pdf.vectorOnly" = "Вектар/Тэкст";
 "status.pdf.rasterOnly" = "Толькі растр";
 "status.pdf.noDrawingData" = "Няма даных адлюстравання";
+"status.pdf.compressed" = "Сціснута";
 
 /* Status bar processing messages; %@ placeholders are pre-pluralized file-count fragments */
 "status.compressingAndChecking" = "Сціскаем %@ і правяраем %@…";
@@ -99,6 +101,12 @@
 "pdf.summary.rasterOnly" = "Падобна, гэты PDF складаецца толькі з растравых выяў.";
 "pdf.summary.none" = "Вектарныя або растравыя аператары адлюстравання не выяўлены.";
 "error.pdf.openFailed" = "Не ўдалося адкрыць PDF-файл.";
+
+/* PDF bitmap compression */
+"pdf.compression.success" = "Убудаваныя растравыя выявы PDF паспяхова сціснуты.";
+"pdf.compression.unchanged.notEligible" = "Гэты PDF не з'яўляецца простым дакументам з адной выявай на старонку, таму яго выявы не былі зменены.";
+"pdf.compression.unchanged.unsupportedFormat" = "Убудаваныя выявы гэтага PDF выкарыстоўваюць непадтрымліваны фармат колеру, таму яны не былі зменены.";
+"pdf.compression.unchanged.noSmaller" = "Сцісканне не дазволіла паменшыць памер PDF.";
 "pdf.pageCount.one" = "%d старонка";
 "pdf.pageCount.few" = "%d старонкі";
 "pdf.pageCount.many" = "%d старонак";

@@ -29,14 +29,13 @@ enum PDFVectorAnalyzer {
         )
     }
 
-    private static func scan(page: CGPDFPage) -> PageScanState {
+    static func scan(page: CGPDFPage) -> PageScanState {
         let state = PageScanState(resources: resourcesDictionary(for: page))
 
         let contentStream = CGPDFContentStreamCreateWithPage(page)
         guard let operatorTable = CGPDFOperatorTableCreate() else {
             return state
         }
-        let scanner = CGPDFScannerCreate(contentStream, operatorTable, state.pointer)
 
         let markVector: CGPDFOperatorCallback = { _, info in
             guard let info else { return }
@@ -62,9 +61,11 @@ enum PDFVectorAnalyzer {
             var objectName: UnsafePointer<CChar>?
             guard CGPDFScannerPopName(scanner, &objectName), let objectName else { return }
 
-            switch state.subtypeForXObject(named: String(cString: objectName)) {
+            let name = String(cString: objectName)
+            switch state.subtypeForXObject(named: name) {
             case "Image":
                 state.hasRasterImages = true
+                state.imageXObjectNames.insert(name)
             case "Form":
                 state.hasVectorContent = true
             default:
@@ -72,7 +73,13 @@ enum PDFVectorAnalyzer {
             }
         }
 
-        for op in ["m", "l", "c", "v", "y", "h", "re", "S", "s", "f", "F", "f*", "B", "B*", "b", "b*", "n", "sh"] {
+        // Only operators that actually paint a mark count as vector content. Path-construction
+        // operators (m, l, c, v, y, h, re) and the no-op path terminator `n` don't by themselves
+        // draw anything — `re W n` (build a rect, clip to it, discard the path unpainted) is the
+        // standard boilerplate macOS's own Quartz PDF writer wraps every embedded image in, so
+        // counting it as vector content would misclassify practically every screenshot-saved-as-
+        // PDF as "mixed" instead of "raster only".
+        for op in ["S", "s", "f", "F", "f*", "B", "B*", "b", "b*", "sh"] {
             CGPDFOperatorTableSetCallback(operatorTable, op, markVector)
         }
 
@@ -82,6 +89,11 @@ enum PDFVectorAnalyzer {
 
         CGPDFOperatorTableSetCallback(operatorTable, "BI", markInlineImage)
         CGPDFOperatorTableSetCallback(operatorTable, "Do", markDo)
+
+        // The operator table must be fully populated *before* the scanner is created — the
+        // scanner captures its own reference to the table's registered callbacks at creation
+        // time, so registering callbacks afterward is silently a no-op and nothing ever fires.
+        let scanner = CGPDFScannerCreate(contentStream, operatorTable, state.pointer)
         CGPDFScannerScan(scanner)
 
         return state
@@ -147,6 +159,7 @@ final class PageScanState {
     var hasVectorContent = false
     var hasRasterImages = false
     var hasText = false
+    var imageXObjectNames: Set<String> = []
 
     private let resources: CGPDFDictionaryRef?
 
@@ -165,7 +178,26 @@ final class PageScanState {
     }
 
     func subtypeForXObject(named name: String) -> String? {
-        guard let resources else { return nil }
+        guard let stream = imageStream(named: name),
+              let dictionary = CGPDFStreamGetDictionary(stream) else {
+            return nil
+        }
+
+        var subtypeName: UnsafePointer<CChar>?
+        guard CGPDFDictionaryGetName(dictionary, "Subtype", &subtypeName),
+              let subtypeName else {
+            return nil
+        }
+
+        return String(cString: subtypeName)
+    }
+
+    /// Looks up the raw stream backing an `XObject` (image or form) by name, regardless of its
+    /// subtype — used by `PDFBitmapCompressor` to pull the actual image bytes for recompression.
+    func imageStream(named name: String) -> CGPDFStreamRef? {
+        guard let resources else {
+            return nil
+        }
 
         var xObjects: CGPDFDictionaryRef?
         guard CGPDFDictionaryGetDictionary(resources, "XObject", &xObjects),
@@ -179,16 +211,6 @@ final class PageScanState {
             return nil
         }
 
-        guard let dictionary = CGPDFStreamGetDictionary(stream) else {
-            return nil
-        }
-
-        var subtypeName: UnsafePointer<CChar>?
-        guard CGPDFDictionaryGetName(dictionary, "Subtype", &subtypeName),
-              let subtypeName else {
-            return nil
-        }
-
-        return String(cString: subtypeName)
+        return stream
     }
 }
