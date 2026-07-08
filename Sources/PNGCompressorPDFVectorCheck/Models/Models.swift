@@ -1,8 +1,8 @@
 import Foundation
 
 enum SupportedFileKind: String, Sendable, Equatable {
-    case png = "PNG"
-    case pdf = "PDF"
+    case png
+    case pdf
 }
 
 enum PNGCompressionStatus: Sendable, Equatable {
@@ -25,21 +25,21 @@ enum PNGQuantizationLevel: Int, CaseIterable, Identifiable, Sendable, Equatable 
 
 struct PNGCompressionSettings: Sendable, Equatable {
     var quantizationLevel: PNGQuantizationLevel? = .colors256
-    var overwriteOriginal: Bool = true
+    var overwriteOriginal = true
 }
 
 struct PNGCompressionResult: Identifiable, Sendable, Equatable {
     var id: URL { sourceURL }
     let sourceURL: URL
     let outputURL: URL?
-    let originalBytes: Int
-    let compressedBytes: Int?
+    let originalBytes: UInt64
+    let compressedBytes: UInt64?
     let status: PNGCompressionStatus
     let message: String
 
-    var savingsBytes: Int? {
+    var savingsBytes: Int64? {
         guard let compressedBytes else { return nil }
-        return originalBytes - compressedBytes
+        return Int64(originalBytes - compressedBytes)
     }
 
     var savingsPercent: Double? {
@@ -137,6 +137,6 @@ struct DiscoveredFile: Sendable, Equatable {
     let kind: SupportedFileKind?
 }
 
-func byteCountDescription(_ bytes: Int) -> String {
+func byteCountDescription(_ bytes: UInt64) -> String {
     ByteCountFormatter.string(fromByteCount: Int64(bytes), countStyle: .file)
 }

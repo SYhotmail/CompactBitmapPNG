@@ -107,3 +107,7 @@
 "files.itemCount.one" = "%d элемент";
 "files.itemCount.few" = "%d элемента";
 "files.itemCount.many" = "%d элементов";
+
+/* Alert shown when a selection/drop yields nothing to process */
+"alert.nothingProcessed.title" = "Нечего обрабатывать";
+"alert.ok" = "ОК";

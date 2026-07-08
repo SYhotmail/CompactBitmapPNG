@@ -42,7 +42,7 @@ enum PNGOptimizer {
             return PNGCompressionResult(
                 sourceURL: url,
                 outputURL: nil,
-                originalBytes: originalData.count,
+                originalBytes: UInt64(originalData.count),
                 compressedBytes: nil,
                 status: .unchanged,
                 message: settings.quantizationLevel != nil
@@ -59,8 +59,8 @@ enum PNGOptimizer {
         return PNGCompressionResult(
             sourceURL: url,
             outputURL: outputURL,
-            originalBytes: originalData.count,
-            compressedBytes: bestCandidate.data.count,
+            originalBytes: UInt64(originalData.count),
+            compressedBytes: UInt64(bestCandidate.data.count),
             status: .optimized,
             message: bestCandidate.message + strategySuffix
         )

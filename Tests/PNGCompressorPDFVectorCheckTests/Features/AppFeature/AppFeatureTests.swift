@@ -110,6 +110,47 @@ struct PNGCompressorPDFVectorCheckTests {
         }
     }
 
+    @Test("App reducer shows an alert when a selection yields nothing to process")
+    func appReducerShowsAlertWhenNothingProcessed() async {
+        let unsupportedURL = URL(fileURLWithPath: "/tmp/notes.txt")
+
+        let store = await MainActor.run {
+            TestStore(initialState: AppFeature.State()) {
+                AppFeature()
+            } withDependencies: {
+                $0.processingClient.discoverSupportedFiles = { _ in
+                    [DiscoveredFile(url: unsupportedURL, kind: nil)]
+                }
+            }
+        }
+
+        await store.send(.processURLs([unsupportedURL])) {
+            $0.rootSelections = [unsupportedURL]
+        }
+        await store.receive(.preparationFinished(
+            IntakeSummary(
+                acceptedPNGCount: 0,
+                acceptedPDFCount: 0,
+                skippedUnsupportedCount: 1,
+                skippedDisabledCount: 0
+            ),
+            pngURLs: [],
+            pdfURLs: []
+        )) {
+            $0.intakeMessage = "No supported files were queued. Ignored 1 unsupported item."
+            $0.processingState = .idle
+            $0.alert = AlertState {
+                TextState("Nothing to Process")
+            } actions: {
+                ButtonState(role: .cancel) {
+                    TextState("OK")
+                }
+            } message: {
+                TextState("No supported files were queued. Ignored 1 unsupported item.")
+            }
+        }
+    }
+
     @Test("App reducer clears accumulated results")
     func appReducerClearsState() async {
         let store = await MainActor.run {

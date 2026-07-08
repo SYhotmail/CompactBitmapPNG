@@ -1,17 +1,29 @@
 import Foundation
 
-actor ProcessingPipeline {
-    func discoverSupportedFiles(from urls: [URL]) -> [DiscoveredFile] {
+struct ProcessingPipeline: @unchecked Sendable {
+    
+    let fileManager: FileManager = .default
+
+    @concurrent
+    func discoverSupportedFiles(from urls: [URL]) async -> [DiscoveredFile] {
+        let task = Task {
+            discoverSupportedFilesCore(from: urls)
+        }
+        
+        return await task.value
+    }
+    
+    private func discoverSupportedFilesCore(from urls: [URL]) -> [DiscoveredFile] {
         var results: [DiscoveredFile] = []
         var seen: Set<URL> = []
 
         for url in urls {
-            if isDirectory(url) {
+            if Self.isDirectory(url) {
                 let files = enumerateSupportedFiles(in: url)
                 for file in files where seen.insert(file.url.standardizedFileURL).inserted {
                     results.append(file)
                 }
-            } else if let file = makeDiscoveredFile(for: url),
+            } else if let file = Self.makeDiscoveredFile(for: url),
                       seen.insert(file.url.standardizedFileURL).inserted {
                 results.append(file)
             } else if seen.insert(url.standardizedFileURL).inserted {
@@ -24,6 +36,7 @@ actor ProcessingPipeline {
         }
     }
 
+    @concurrent
     func processPNGs(urls: [URL], settings: PNGCompressionSettings) async -> [PNGCompressionResult] {
         guard !urls.isEmpty else { return [] }
 
@@ -35,10 +48,12 @@ actor ProcessingPipeline {
                     do {
                         result = try PNGOptimizer.optimize(url: url, settings: settings)
                     } catch {
+                        let originalBytes = (try? url.fileSizeInBytes(fileManager: fileManager)) ?? UInt64((try? Data(contentsOf: url).count) ?? 0)
+                                             
                         result = PNGCompressionResult(
                             sourceURL: url,
                             outputURL: nil,
-                            originalBytes: (try? Data(contentsOf: url).count) ?? 0,
+                            originalBytes: originalBytes,
                             compressedBytes: nil,
                             status: .failed,
                             message: error.localizedDescription
@@ -58,6 +73,7 @@ actor ProcessingPipeline {
         }
     }
 
+    @concurrent
     func processPDFs(urls: [URL]) async -> [PDFAnalysisResult] {
         guard !urls.isEmpty else { return [] }
 
@@ -94,7 +110,7 @@ actor ProcessingPipeline {
     }
 
     private func enumerateSupportedFiles(in folderURL: URL) -> [DiscoveredFile] {
-        guard let enumerator = FileManager.default.enumerator(
+        guard let enumerator = fileManager.enumerator(
             at: folderURL,
             includingPropertiesForKeys: [.isRegularFileKey],
             options: [.skipsHiddenFiles]
@@ -104,7 +120,7 @@ actor ProcessingPipeline {
 
         var results: [DiscoveredFile] = []
         for case let fileURL as URL in enumerator {
-            if let file = makeDiscoveredFile(for: fileURL) {
+            if let file = Self.makeDiscoveredFile(for: fileURL) {
                 results.append(file)
             }
         }
@@ -112,20 +128,23 @@ actor ProcessingPipeline {
         return results
     }
 
-    private func makeDiscoveredFile(for url: URL) -> DiscoveredFile? {
-        guard !isDirectory(url) else { return nil }
-
-        switch url.pathExtension.lowercased() {
-        case "png":
-            return DiscoveredFile(url: url, kind: .png)
-        case "pdf":
-            return DiscoveredFile(url: url, kind: .pdf)
-        default:
+    private static func makeDiscoveredFile(for url: URL) -> DiscoveredFile? {
+        let ext = url.pathExtension.lowercased()
+        
+        guard let kind = SupportedFileKind(rawValue: ext) else {
             return nil
         }
+        
+        guard !isDirectory(url) else { return nil }
+        
+        return DiscoveredFile(url: url, kind: kind)
     }
 
-    private func isDirectory(_ url: URL) -> Bool {
-        (try? url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) == true
+    private static func isDirectoryCore(_ url: URL) throws -> Bool? {
+        try url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory
+    }
+    
+    private static func isDirectory(_ url: URL) -> Bool {
+        (try? isDirectoryCore(url)) == true
     }
 }

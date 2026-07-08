@@ -98,3 +98,7 @@
 /* File tree item counts */
 "files.itemCount.one" = "%d item";
 "files.itemCount.other" = "%d items";
+
+/* Alert shown when a selection/drop yields nothing to process */
+"alert.nothingProcessed.title" = "Nothing to Process";
+"alert.ok" = "OK";

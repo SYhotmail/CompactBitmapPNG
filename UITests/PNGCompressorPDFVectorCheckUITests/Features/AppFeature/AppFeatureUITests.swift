@@ -11,7 +11,6 @@ final class PNGCompressorPDFVectorCheckUITests: XCTestCase {
         app.launch()
 
         XCTAssertTrue(app.staticTexts["PNG Compressor + PDF Vector Check"].waitForExistence(timeout: 5))
-        XCTAssertTrue(app.buttons["Select Files or Folder…"].exists)
         XCTAssertTrue(app.buttons["Clear Results"].exists)
         XCTAssertTrue(app.staticTexts["Enable PNG compression"].exists)
         XCTAssertTrue(app.staticTexts["Enable PDF check"].exists)

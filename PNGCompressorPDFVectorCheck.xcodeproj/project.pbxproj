@@ -10,6 +10,7 @@
 		0355368571DA7DDA80B819DD /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = D9E1D6BEE3E88566E123A692 /* Dependencies */; };
 		09287A01585F834812F0C0EE /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = 77EC0975F21E6147561A4624 /* CasePaths */; };
 		1C135FED351445E4919D7F9C /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC22FE2BD962CADDEFAEA89 /* LocalizationTests.swift */; };
+		2185F22A2FFE938300223786 /* URL+FileSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2185F2292FFE937C00223786 /* URL+FileSize.swift */; };
 		2B44FB3EC12B951D92B4628A /* AppFeatureUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8431D7D5D9FDA06DB89C4ABD /* AppFeatureUITests.swift */; };
 		3327E1BA09C10B63CB2102B0 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D90295D62C2113B62380 /* AppView.swift */; };
 		43F6DF72E0E31D439D63B894 /* ProcessingPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F2FC48786FBE5F21DF648 /* ProcessingPipeline.swift */; };
@@ -49,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2185F2292FFE937C00223786 /* URL+FileSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+FileSize.swift"; sourceTree = "<group>"; };
 		29AA7E0302D1FEA6FC6ABD65 /* PNGCompressorPDFVectorCheckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PNGCompressorPDFVectorCheckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		31D0B61CB43053C93D5CE1FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		36BCA187CDB36B029F88764C /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
@@ -106,6 +108,14 @@
 			path = Tests/PNGCompressorPDFVectorCheckTests;
 			sourceTree = "<group>";
 		};
+		2185F2282FFE937400223786 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2185F2292FFE937C00223786 /* URL+FileSize.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		40C9423F3914C1ED68B6AF08 /* Features */ = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +143,7 @@
 		6F1E9145E17F322B24380EEF /* PNGCompressorPDFVectorCheck */ = {
 			isa = PBXGroup;
 			children = (
+				2185F2282FFE937400223786 /* Extensions */,
 				551C28410C79FC4F97C68505 /* App */,
 				786B1200F9E91A32BED14B91 /* Clients */,
 				88CA08BF828E0AF154936370 /* Features */,
@@ -381,6 +392,7 @@
 				3327E1BA09C10B63CB2102B0 /* AppView.swift in Sources */,
 				C2F7426E2996E5ABC1A4156D /* Localization.swift in Sources */,
 				792749B5FDED6B9580503408 /* Models.swift in Sources */,
+				2185F22A2FFE938300223786 /* URL+FileSize.swift in Sources */,
 				A1ADDFB696AE38F5AF37A248 /* PDFVectorAnalyzer.swift in Sources */,
 				D1296A361EDF347EA9545791 /* PNGCompressorPDFVectorCheckApp.swift in Sources */,
 				8E9DDDB3A62DBEC1D55C36BB /* PNGOptimizer.swift in Sources */,

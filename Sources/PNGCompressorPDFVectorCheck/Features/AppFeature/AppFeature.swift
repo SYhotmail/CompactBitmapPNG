@@ -5,24 +5,28 @@ import Foundation
 struct AppFeature {
     @ObservableState
     struct State: Equatable {
-        var processingState: ProcessingState = .idle
-        var pngResults: [PNGCompressionResult] = []
-        var pdfResults: [PDFAnalysisResult] = []
-        var pendingPNGURLs: [URL] = []
-        var pendingPDFURLs: [URL] = []
+        var processingState = ProcessingState.idle
+        var pngResults = [PNGCompressionResult]()
+        var pdfResults = [PDFAnalysisResult]()
+        var pendingPNGURLs = [URL]()
+        var pendingPDFURLs = [URL]()
         var enablePNGCompression = true
         var enablePDFCheck = true
         var pngCompressionSettings = PNGCompressionSettings()
         var intakeMessage = L10n.string("intake.defaultMessage")
-        var rootSelections: [URL] = []
+        var rootSelections = [URL]()
+        @Presents var alert: AlertState<Action.Alert>?
     }
 
     enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
+        case alert(PresentationAction<Alert>)
         case clearResults
         case processURLs([URL])
         case preparationFinished(IntakeSummary, pngURLs: [URL], pdfURLs: [URL])
         case processingFinished([PNGCompressionResult], [PDFAnalysisResult])
+
+        enum Alert: Equatable {}
     }
 
     @Dependency(\.processingClient) var processingClient
@@ -38,7 +42,11 @@ struct AppFeature {
             switch action {
             case .binding:
                 return .none
-
+            case .alert(.dismiss):
+                state = State() // reset..
+                fallthrough
+            case .alert:
+                return .none
             case .clearResults:
                 state = State()
                 return .cancel(id: CancelID.processing)
@@ -66,7 +74,8 @@ struct AppFeature {
 
                     async let pngResults = processingClient.processPNGs(pngURLs, pngCompressionSettings)
                     async let pdfResults = processingClient.processPDFs(pdfURLs)
-                    await send(.processingFinished(await pngResults, await pdfResults))
+                    let results = await (pngResults, pdfResults)
+                    await send(.processingFinished(results.0, results.1))
                 }
                 .cancellable(id: CancelID.processing, cancelInFlight: true)
 
@@ -76,9 +85,22 @@ struct AppFeature {
                 state.pdfResults = []
                 state.pendingPNGURLs = pngURLs
                 state.pendingPDFURLs = pdfURLs
-                state.processingState = pngURLs.isEmpty && pdfURLs.isEmpty
-                    ? .idle
-                    : .running(statusMessage(pngCount: pngURLs.count, pdfCount: pdfURLs.count))
+
+                if pngURLs.isEmpty && pdfURLs.isEmpty {
+                    state.processingState = .idle
+                    state.alert = AlertState {
+                        TextState(L10n.string("alert.nothingProcessed.title"))
+                    } actions: {
+                        ButtonState(role: .cancel) {
+                            TextState(L10n.string("alert.ok"))
+                        }
+                    } message: {
+                        TextState(summary.description)
+                    }
+                } else {
+                    state.processingState = .running(statusMessage(pngCount: pngURLs.count, pdfCount: pdfURLs.count))
+                }
+
                 return .none
 
             case let .processingFinished(pngResults, pdfResults):
@@ -90,6 +112,7 @@ struct AppFeature {
                 return .none
             }
         }
+        .ifLet(\.$alert, action: \.alert)
     }
 }
 
@@ -100,7 +123,7 @@ private func summarize(
 ) -> IntakeSummary {
     let pngCount = files.filter { $0.kind == .png }.count
     let pdfCount = files.filter { $0.kind == .pdf }.count
-    let unsupportedCount = files.filter { $0.kind == nil }.count
+    let unsupportedCount = files.count - pngCount - pdfCount
 
     let disabledCount =
         (enablePNGCompression ? 0 : pngCount) +

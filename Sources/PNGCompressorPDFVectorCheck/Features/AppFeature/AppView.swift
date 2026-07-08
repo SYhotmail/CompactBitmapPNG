@@ -16,6 +16,7 @@ struct AppView: View {
         }
         .padding(24)
         .frame(minWidth: 720, minHeight: 640)
+        .alert($store.scope(state: \.alert, action: \.alert))
     }
 
     private var header: some View {
