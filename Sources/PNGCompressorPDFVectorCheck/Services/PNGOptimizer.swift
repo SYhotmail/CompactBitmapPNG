@@ -18,19 +18,20 @@ enum PNGOptimizer {
         candidates.append(
             PNGCompressionCandidate(
                 data: losslessData,
-                message: "Optimized successfully with a lossless re-encode.",
-                strategy: "Lossless re-encode"
+                message: L10n.string("optimizer.losslessSuccess"),
+                strategy: L10n.string("optimizer.losslessStrategy")
             )
         )
 
-        if settings.enableAdaptiveQuantization,
-           let quantizedImage = try quantizedImage(from: image, maxColors: settings.quantizationLevel.rawValue) {
+        if let quantizationLevel = settings.quantizationLevel,
+           let quantizedImage = try quantizedImage(from: image, maxColors: quantizationLevel.rawValue) {
             let quantizedData = try encodePNG(from: quantizedImage)
+            let colorsCount = L10n.plural("quantization.colorsCount", quantizationLevel.rawValue)
             candidates.append(
                 PNGCompressionCandidate(
                     data: quantizedData,
-                    message: "Optimized successfully with adaptive color quantization (lossy, \(settings.quantizationLevel.rawValue) colors).",
-                    strategy: "Adaptive quantization (\(settings.quantizationLevel.rawValue) colors)"
+                    message: L10n.format("optimizer.quantizedSuccess", colorsCount),
+                    strategy: L10n.format("optimizer.quantizedStrategy", colorsCount)
                 )
             )
         }
@@ -44,14 +45,16 @@ enum PNGOptimizer {
                 originalBytes: originalData.count,
                 compressedBytes: nil,
                 status: .unchanged,
-                message: settings.enableAdaptiveQuantization
-                    ? "No smaller PNG variant was produced with the current quantization settings."
-                    : "No smaller PNG variant was produced with lossless compression."
+                message: settings.quantizationLevel != nil
+                    ? L10n.string("optimizer.noSmaller.quantization")
+                    : L10n.string("optimizer.noSmaller.lossless")
             )
         }
 
-        let outputURL = optimizedOutputURL(for: url)
+        let outputURL = settings.overwriteOriginal ? url : optimizedOutputURL(for: url)
         try bestCandidate.data.write(to: outputURL, options: .atomic)
+
+        let strategySuffix = L10n.format("optimizer.bestStrategySuffix", bestCandidate.strategy)
 
         return PNGCompressionResult(
             sourceURL: url,
@@ -59,7 +62,7 @@ enum PNGOptimizer {
             originalBytes: originalData.count,
             compressedBytes: bestCandidate.data.count,
             status: .optimized,
-            message: bestCandidate.message + " Best strategy: \(bestCandidate.strategy)."
+            message: bestCandidate.message + strategySuffix
         )
     }
 
@@ -299,17 +302,17 @@ enum PNGOptimizerError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .failedToDecode:
-            return "The PNG file could not be decoded."
+            return L10n.string("error.png.decodeFailed")
         case .failedToCreateDestination:
-            return "The optimized PNG destination could not be created."
+            return L10n.string("error.png.destinationFailed")
         case .failedToEncode:
-            return "The optimized PNG could not be encoded."
+            return L10n.string("error.png.encodeFailed")
         case .failedToCreateBitmapContext:
-            return "The optimizer could not create a bitmap context for PNG processing."
+            return L10n.string("error.png.bitmapContextFailed")
         case .failedToCreateDataProvider:
-            return "The optimizer could not create a PNG data provider."
+            return L10n.string("error.png.dataProviderFailed")
         case .failedToCreateImage:
-            return "The optimizer could not create the optimized image."
+            return L10n.string("error.png.imageCreationFailed")
         }
     }
 }

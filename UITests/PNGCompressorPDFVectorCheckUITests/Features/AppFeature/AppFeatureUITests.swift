@@ -11,21 +11,27 @@ final class PNGCompressorPDFVectorCheckUITests: XCTestCase {
         app.launch()
 
         XCTAssertTrue(app.staticTexts["PNG Compressor + PDF Vector Check"].waitForExistence(timeout: 5))
-        XCTAssertTrue(app.buttons["Choose Files"].exists)
-        XCTAssertTrue(app.buttons["Choose Folder"].exists)
+        XCTAssertTrue(app.buttons["Select Files or Folder…"].exists)
         XCTAssertTrue(app.buttons["Clear Results"].exists)
         XCTAssertTrue(app.staticTexts["Enable PNG compression"].exists)
         XCTAssertTrue(app.staticTexts["Enable PDF check"].exists)
-        XCTAssertTrue(app.staticTexts["Enable lossy PNG quantization"].exists)
-        XCTAssertTrue(app.staticTexts["Only lossless PNG optimization will run. Quantization is off by default."].exists)
+        XCTAssertTrue(app.staticTexts["Quantization"].exists)
+        XCTAssertTrue(app.buttons["256 colors"].exists)
+        XCTAssertTrue(app.buttons["128 colors"].exists)
+        XCTAssertTrue(app.buttons["64 colors"].exists)
     }
 
     @MainActor
-    func testQuantizationUIAppearsWhenLaunchedEnabled() throws {
+    func testQuantizationDefaultsToActiveAndCanBeDeselected() throws {
         let app = XCUIApplication()
-        app.launchArguments.append("UITestEnableQuantization")
         app.launch()
 
-        XCTAssertTrue(app.staticTexts["Quantization target"].waitForExistence(timeout: 5))
+        let colors256Button = app.buttons["256 colors"]
+        XCTAssertTrue(colors256Button.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Lossless PNG optimization will run first, then the selected lossy quantization level will be tried and only kept if it makes the file smaller."].exists)
+
+        colors256Button.click()
+
+        XCTAssertTrue(app.staticTexts["Only lossless PNG optimization will run."].waitForExistence(timeout: 5))
     }
 }

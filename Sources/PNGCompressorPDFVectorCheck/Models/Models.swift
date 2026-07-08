@@ -19,13 +19,13 @@ enum PNGQuantizationLevel: Int, CaseIterable, Identifiable, Sendable, Equatable 
     var id: Int { rawValue }
 
     var label: String {
-        "\(rawValue) colors"
+        L10n.plural("quantization.colorsCount", rawValue)
     }
 }
 
 struct PNGCompressionSettings: Sendable, Equatable {
-    var enableAdaptiveQuantization = false
-    var quantizationLevel: PNGQuantizationLevel = .colors256
+    var quantizationLevel: PNGQuantizationLevel? = .colors256
+    var overwriteOriginal: Bool = true
 }
 
 struct PNGCompressionResult: Identifiable, Sendable, Equatable {
@@ -56,11 +56,11 @@ struct PNGCompressionResult: Identifiable, Sendable, Equatable {
     var statusLabel: String {
         switch status {
         case .optimized:
-            return "Compressed"
+            return L10n.string("status.png.compressed")
         case .unchanged:
-            return "No Change"
+            return L10n.string("status.png.noChange")
         case .failed:
-            return "Failed"
+            return L10n.string("status.failed")
         }
     }
 }
@@ -86,15 +86,15 @@ struct PDFAnalysisResult: Identifiable, Sendable, Equatable {
     var statusLabel: String {
         switch status {
         case .mixed:
-            return "Vector + Raster"
+            return L10n.string("status.pdf.mixed")
         case .vectorOnly:
-            return "Vector/Text"
+            return L10n.string("status.pdf.vectorOnly")
         case .rasterOnly:
-            return "Raster Only"
+            return L10n.string("status.pdf.rasterOnly")
         case .noDrawingData:
-            return "No Drawing Data"
+            return L10n.string("status.pdf.noDrawingData")
         case .failed:
-            return "Failed"
+            return L10n.string("status.failed")
         }
     }
 }
@@ -112,13 +112,21 @@ struct IntakeSummary: Sendable, Equatable {
 
     var description: String {
         let parts = [
-            acceptedPNGCount > 0 ? "\(acceptedPNGCount) PNG" + (acceptedPNGCount == 1 ? "" : "s") : nil,
-            acceptedPDFCount > 0 ? "\(acceptedPDFCount) PDF" + (acceptedPDFCount == 1 ? "" : "s") : nil
+            acceptedPNGCount > 0 ? L10n.plural("intake.pngCount", acceptedPNGCount) : nil,
+            acceptedPDFCount > 0 ? L10n.plural("intake.pdfCount", acceptedPDFCount) : nil
         ].compactMap { $0 }
 
-        let acceptedText = parts.isEmpty ? "No supported files were queued." : "Queued " + parts.joined(separator: " and ") + "."
-        let unsupportedText = skippedUnsupportedCount > 0 ? " Ignored \(skippedUnsupportedCount) unsupported item" + (skippedUnsupportedCount == 1 ? "." : "s.") : ""
-        let disabledText = skippedDisabledCount > 0 ? " Skipped \(skippedDisabledCount) file" + (skippedDisabledCount == 1 ? "" : "s") + " because their operation is disabled." : ""
+        let acceptedText = parts.isEmpty
+            ? L10n.string("intake.noneQueued")
+            : L10n.format("intake.queued", parts.joined(separator: L10n.string("intake.joiner")))
+
+        let unsupportedText = skippedUnsupportedCount > 0
+            ? L10n.format("intake.ignoredUnsupported", L10n.plural("intake.unsupportedCount", skippedUnsupportedCount))
+            : ""
+
+        let disabledText = skippedDisabledCount > 0
+            ? L10n.format("intake.skippedDisabled", L10n.plural("intake.disabledCount", skippedDisabledCount))
+            : ""
 
         return acceptedText + unsupportedText + disabledText
     }

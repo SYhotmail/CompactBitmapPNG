@@ -7,14 +7,17 @@ Small macOS SwiftUI app for two desktop workflows:
 
 ## Run
 
-Open the package in Xcode and run the macOS target, or build from Terminal:
+Open `PNGCompressorPDFVectorCheck.xcodeproj` in Xcode and run the macOS target, or build from Terminal:
 
 ```bash
-swift build
+xcodebuild -project PNGCompressorPDFVectorCheck.xcodeproj -scheme PNGCompressorPDFVectorCheck -configuration Debug build
 ```
+
+If `project.yml` changes, regenerate the project first with `xcodegen generate`.
 
 ## Notes
 
 - PNG optimization is intentionally conservative in this first version. It only writes a new file if the re-encoded PNG is smaller than the original.
-- Optimized files are written next to the original using the `-optimized.png` suffix.
+- By default, optimized PNGs overwrite the original file; disabling "Overwrite original files" writes them alongside the original using the `-optimized.png` suffix instead.
 - PDF detection treats text drawing as vector-style content because it is stored as drawing instructions rather than a flat raster image.
+- The app is localized in English, Russian, and Belarusian, following the system's preferred language.

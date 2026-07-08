@@ -3,12 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		0355368571DA7DDA80B819DD /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = D9E1D6BEE3E88566E123A692 /* Dependencies */; };
 		09287A01585F834812F0C0EE /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = 77EC0975F21E6147561A4624 /* CasePaths */; };
+		1C135FED351445E4919D7F9C /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC22FE2BD962CADDEFAEA89 /* LocalizationTests.swift */; };
 		2B44FB3EC12B951D92B4628A /* AppFeatureUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8431D7D5D9FDA06DB89C4ABD /* AppFeatureUITests.swift */; };
 		3327E1BA09C10B63CB2102B0 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA00D90295D62C2113B62380 /* AppView.swift */; };
 		43F6DF72E0E31D439D63B894 /* ProcessingPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F2FC48786FBE5F21DF648 /* ProcessingPipeline.swift */; };
@@ -22,7 +23,9 @@
 		8E9DDDB3A62DBEC1D55C36BB /* PNGOptimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39CB5BE38F3CBEA7E4B147B /* PNGOptimizer.swift */; };
 		A1ADDFB696AE38F5AF37A248 /* PDFVectorAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6BDD3B40C7193D63CBF996 /* PDFVectorAnalyzer.swift */; };
 		A96690E777043FA1DB43CD5F /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 92CB7A562EA40C6B0F24E4C5 /* ComposableArchitecture */; };
+		C2F7426E2996E5ABC1A4156D /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6ACC4540C88B280D0D0CD8 /* Localization.swift */; };
 		C62C8CC1F9A436454DC7546B /* AppViewRenderingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD460F909E08768C027E38E /* AppViewRenderingTests.swift */; };
+		CAB80574F055AFB6FC711D4F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BDAF5CC76A49859FF2993302 /* Localizable.strings */; };
 		D1296A361EDF347EA9545791 /* PNGCompressorPDFVectorCheckApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3DCDB0D78305DBE4F346BC /* PNGCompressorPDFVectorCheckApp.swift */; };
 		DFDFAEF41E6FC32247B280F5 /* ProcessingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50BF0F6AEB7EB40A8AADC9B /* ProcessingClient.swift */; };
 		F56B1D6F4418EA6195B4E4C4 /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218DA72FE303F71080E0DF0 /* AppFeature.swift */; };
@@ -47,19 +50,24 @@
 
 /* Begin PBXFileReference section */
 		29AA7E0302D1FEA6FC6ABD65 /* PNGCompressorPDFVectorCheckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PNGCompressorPDFVectorCheckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		31D0B61CB43053C93D5CE1FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		36BCA187CDB36B029F88764C /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		3DD460F909E08768C027E38E /* AppViewRenderingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewRenderingTests.swift; sourceTree = "<group>"; };
 		4B6BDD3B40C7193D63CBF996 /* PDFVectorAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFVectorAnalyzer.swift; sourceTree = "<group>"; };
 		594F2FC48786FBE5F21DF648 /* ProcessingPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingPipeline.swift; sourceTree = "<group>"; };
 		5A3DCDB0D78305DBE4F346BC /* PNGCompressorPDFVectorCheckApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNGCompressorPDFVectorCheckApp.swift; sourceTree = "<group>"; };
 		652AD3007EAC57CA7A4616F0 /* AppFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeatureTests.swift; sourceTree = "<group>"; };
+		6B6ACC4540C88B280D0D0CD8 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
+		8359D6F46CA046E19DA0B3C8 /* be */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = be; path = be.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8431D7D5D9FDA06DB89C4ABD /* AppFeatureUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeatureUITests.swift; sourceTree = "<group>"; };
 		B3B1511B54521080DE0A0054 /* PNGCompressorPDFVectorCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PNGCompressorPDFVectorCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA00D90295D62C2113B62380 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		BA81F3DB1F392063AE8604A5 /* PNGCompressorPDFVectorCheckUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PNGCompressorPDFVectorCheckUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDC22FE2BD962CADDEFAEA89 /* LocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
 		C218DA72FE303F71080E0DF0 /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
 		D50BF0F6AEB7EB40A8AADC9B /* ProcessingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingClient.swift; sourceTree = "<group>"; };
 		E39CB5BE38F3CBEA7E4B147B /* PNGOptimizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNGOptimizer.swift; sourceTree = "<group>"; };
+		F81561FD3B03276E7C1A7098 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +99,7 @@
 		0D31D7B3A8D7AC83C0B7D0A2 /* PNGCompressorPDFVectorCheckTests */ = {
 			isa = PBXGroup;
 			children = (
+				BDC22FE2BD962CADDEFAEA89 /* LocalizationTests.swift */,
 				40C9423F3914C1ED68B6AF08 /* Features */,
 			);
 			name = PNGCompressorPDFVectorCheckTests;
@@ -127,7 +136,9 @@
 				551C28410C79FC4F97C68505 /* App */,
 				786B1200F9E91A32BED14B91 /* Clients */,
 				88CA08BF828E0AF154936370 /* Features */,
+				B330B2277D3E8FE127958D34 /* Localization */,
 				968095545290B9AE63CF405D /* Models */,
+				8223A89F3C9DB008A1EFE5FB /* Resources */,
 				844ED3816750AA57CB0495F1 /* Services */,
 			);
 			name = PNGCompressorPDFVectorCheck;
@@ -148,6 +159,14 @@
 				8431D7D5D9FDA06DB89C4ABD /* AppFeatureUITests.swift */,
 			);
 			path = AppFeature;
+			sourceTree = "<group>";
+		};
+		8223A89F3C9DB008A1EFE5FB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BDAF5CC76A49859FF2993302 /* Localizable.strings */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		844ED3816750AA57CB0495F1 /* Services */ = {
@@ -183,6 +202,14 @@
 				36BCA187CDB36B029F88764C /* Models.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		B330B2277D3E8FE127958D34 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				6B6ACC4540C88B280D0D0CD8 /* Localization.swift */,
+			);
+			path = Localization;
 			sourceTree = "<group>";
 		};
 		C9BD521222C71FA5510EBCCF /* AppFeature */ = {
@@ -231,6 +258,7 @@
 			buildConfigurationList = BAA5D08FD92EAE04D3EC60CD /* Build configuration list for PBXNativeTarget "PNGCompressorPDFVectorCheck" */;
 			buildPhases = (
 				36E26492B24C31C9316110E9 /* Sources */,
+				FD515812BBA99E2FFE54DA86 /* Resources */,
 				1755467BADCFDBA92D7DF331 /* Frameworks */,
 			);
 			buildRules = (
@@ -308,11 +336,12 @@
 			};
 			buildConfigurationList = 49F7F71100609C3CC5987C56 /* Build configuration list for PBXProject "PNGCompressorPDFVectorCheck" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = be;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				Base,
+				be,
 				en,
+				ru,
 			);
 			mainGroup = F36E9F8C3F3278DEDAC9F145;
 			minimizedProjectReferenceProxies = 1;
@@ -322,7 +351,6 @@
 				F6F0A2086D7A930FAEB67331 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
 				817D91FEDC89792C628735CF /* XCRemoteSwiftPackageReference "swift-perception" */,
 			);
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -333,6 +361,17 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		FD515812BBA99E2FFE54DA86 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CAB80574F055AFB6FC711D4F /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		36E26492B24C31C9316110E9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -340,6 +379,7 @@
 			files = (
 				F56B1D6F4418EA6195B4E4C4 /* AppFeature.swift in Sources */,
 				3327E1BA09C10B63CB2102B0 /* AppView.swift in Sources */,
+				C2F7426E2996E5ABC1A4156D /* Localization.swift in Sources */,
 				792749B5FDED6B9580503408 /* Models.swift in Sources */,
 				A1ADDFB696AE38F5AF37A248 /* PDFVectorAnalyzer.swift in Sources */,
 				D1296A361EDF347EA9545791 /* PNGCompressorPDFVectorCheckApp.swift in Sources */,
@@ -355,6 +395,7 @@
 			files = (
 				60A08BDC2404ABB3E4FBBB83 /* AppFeatureTests.swift in Sources */,
 				C62C8CC1F9A436454DC7546B /* AppViewRenderingTests.swift in Sources */,
+				1C135FED351445E4919D7F9C /* LocalizationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,6 +421,19 @@
 			targetProxy = E0C1A9636AB98937454B9486 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BDAF5CC76A49859FF2993302 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8359D6F46CA046E19DA0B3C8 /* be */,
+				31D0B61CB43053C93D5CE1FB /* en */,
+				F81561FD3B03276E7C1A7098 /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		21CB24AA031BA5EECE07A553 /* Debug */ = {

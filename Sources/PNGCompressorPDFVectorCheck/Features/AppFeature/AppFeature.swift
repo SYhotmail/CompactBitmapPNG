@@ -13,15 +13,15 @@ struct AppFeature {
         var enablePNGCompression = true
         var enablePDFCheck = true
         var pngCompressionSettings = PNGCompressionSettings()
-        var intakeMessage = "Drop PNG or PDF files here, or choose files or a folder to process."
-        var selectedFolderPath: String?
+        var intakeMessage = L10n.string("intake.defaultMessage")
+        var rootSelections: [URL] = []
     }
 
     enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         case clearResults
-        case processURLs([URL], sourceFolderPath: String?)
-        case preparationFinished(IntakeSummary, sourceFolderPath: String?, pngURLs: [URL], pdfURLs: [URL])
+        case processURLs([URL])
+        case preparationFinished(IntakeSummary, pngURLs: [URL], pdfURLs: [URL])
         case processingFinished([PNGCompressionResult], [PDFAnalysisResult])
     }
 
@@ -43,7 +43,9 @@ struct AppFeature {
                 state = State()
                 return .cancel(id: CancelID.processing)
 
-            case let .processURLs(urls, sourceFolderPath):
+            case let .processURLs(urls):
+                state.rootSelections = urls
+
                 let enablePNGCompression = state.enablePNGCompression
                 let enablePDFCheck = state.enablePDFCheck
                 let pngCompressionSettings = state.pngCompressionSettings
@@ -58,7 +60,7 @@ struct AppFeature {
                     let pngURLs = enablePNGCompression ? discovered.compactMap { $0.kind == .png ? $0.url : nil } : []
                     let pdfURLs = enablePDFCheck ? discovered.compactMap { $0.kind == .pdf ? $0.url : nil } : []
 
-                    await send(.preparationFinished(summary, sourceFolderPath: sourceFolderPath, pngURLs: pngURLs, pdfURLs: pdfURLs))
+                    await send(.preparationFinished(summary, pngURLs: pngURLs, pdfURLs: pdfURLs))
 
                     guard !pngURLs.isEmpty || !pdfURLs.isEmpty else { return }
 
@@ -68,9 +70,8 @@ struct AppFeature {
                 }
                 .cancellable(id: CancelID.processing, cancelInFlight: true)
 
-            case let .preparationFinished(summary, sourceFolderPath, pngURLs, pdfURLs):
+            case let .preparationFinished(summary, pngURLs, pdfURLs):
                 state.intakeMessage = summary.description
-                state.selectedFolderPath = sourceFolderPath
                 state.pngResults = []
                 state.pdfResults = []
                 state.pendingPNGURLs = pngURLs
@@ -115,12 +116,16 @@ private func summarize(
 
 private func statusMessage(pngCount: Int, pdfCount: Int) -> String {
     if pngCount > 0 && pdfCount > 0 {
-        return "Compressing \(pngCount) PNG file(s) and checking \(pdfCount) PDF file(s)..."
+        return L10n.format(
+            "status.compressingAndChecking",
+            L10n.plural("status.pngFileCount", pngCount),
+            L10n.plural("status.pdfFileCount", pdfCount)
+        )
     }
 
     if pngCount > 0 {
-        return "Compressing \(pngCount) PNG file(s)..."
+        return L10n.format("status.compressingOnly", L10n.plural("status.pngFileCount", pngCount))
     }
 
-    return "Checking \(pdfCount) PDF file(s)..."
+    return L10n.format("status.checkingOnly", L10n.plural("status.pdfFileCount", pdfCount))
 }

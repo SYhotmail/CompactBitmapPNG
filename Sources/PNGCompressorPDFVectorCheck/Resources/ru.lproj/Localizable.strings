@@ -1,0 +1,109 @@
+/* App title */
+"app.title" = "PNG Компрессор + Проверка PDF на векторность";
+
+/* Header subtitle, depending on which toggles are enabled */
+"header.subtitle.both" = "Выберите файлы или папку либо перетащите их сюда, чтобы сжать PNG и/или проверить PDF на растровое содержимое.";
+"header.subtitle.pngOnly" = "Выберите файлы или папку либо перетащите их сюда, чтобы сжать PNG.";
+"header.subtitle.pdfOnly" = "Выберите файлы или папку либо перетащите их сюда, чтобы проверить PDF на растровое содержимое.";
+"header.subtitle.none" = "Включите сжатие PNG или проверку PDF ниже, затем выберите файлы или папку для обработки.";
+
+/* Settings bar toggles */
+"toggle.enablePngCompression" = "Включить сжатие PNG";
+"toggle.enablePdfCheck" = "Включить проверку PDF";
+"toggle.overwriteOriginal" = "Перезаписывать исходные файлы";
+
+/* Quantization controls */
+"quantization.sectionLabel" = "Квантование";
+"quantization.description.enabled" = "Сначала выполняется оптимизация PNG без потерь, затем применяется выбранный уровень квантования с потерями — и сохраняется, только если файл становится меньше.";
+"quantization.description.disabled" = "Будет выполнена только оптимизация PNG без потерь.";
+
+/* Files panel header */
+"files.title" = "Файлы";
+"files.selectHelp" = "Выбрать файлы или папку…";
+"files.clearHelp" = "Очистить результаты";
+
+/* Empty drop-zone state, depending on which toggles are enabled */
+"emptyState.title.both" = "Перетащите файлы или папки PNG/PDF либо нажмите, чтобы выбрать";
+"emptyState.title.pngOnly" = "Перетащите файлы или папки PNG либо нажмите, чтобы выбрать";
+"emptyState.title.pdfOnly" = "Перетащите файлы или папки PDF либо нажмите, чтобы выбрать";
+"emptyState.title.none" = "Ни один тип файлов не включён";
+"emptyState.subtitle.both" = "Папки рекурсивно сканируются на файлы `.png` и `.pdf`.";
+"emptyState.subtitle.pngOnly" = "Папки рекурсивно сканируются на файлы `.png`.";
+"emptyState.subtitle.pdfOnly" = "Папки рекурсивно сканируются на файлы `.pdf`.";
+"emptyState.subtitle.none" = "Включите «Включить сжатие PNG» или «Включить проверку PDF» выше, чтобы обрабатывать перетащенные файлы.";
+
+/* Per-file row status labels */
+"status.processing" = "Обработка…";
+"status.png.compressed" = "Сжато";
+"status.png.noChange" = "Без изменений";
+"status.failed" = "Ошибка";
+"status.pdf.mixed" = "Вектор + Растр";
+"status.pdf.vectorOnly" = "Вектор/Текст";
+"status.pdf.rasterOnly" = "Только растр";
+"status.pdf.noDrawingData" = "Нет данных отрисовки";
+
+/* Status bar processing messages; %@ placeholders are pre-pluralized file-count fragments */
+"status.compressingAndChecking" = "Сжимаем %@ и проверяем %@…";
+"status.compressingOnly" = "Сжимаем %@…";
+"status.checkingOnly" = "Проверяем %@…";
+"status.pngFileCount.one" = "%d файл PNG";
+"status.pngFileCount.few" = "%d файла PNG";
+"status.pngFileCount.many" = "%d файлов PNG";
+"status.pdfFileCount.one" = "%d файл PDF";
+"status.pdfFileCount.few" = "%d файла PDF";
+"status.pdfFileCount.many" = "%d файлов PDF";
+
+/* Intake summary shown in the status bar after a drop/selection */
+"intake.defaultMessage" = "Перетащите сюда файлы или папки PNG/PDF либо выберите файлы или папку для обработки.";
+"intake.noneQueued" = "Нет файлов подходящего типа для обработки.";
+"intake.queued" = "В очередь добавлено: %@.";
+"intake.joiner" = " и ";
+"intake.ignoredUnsupported" = " Проигнорировано %@.";
+"intake.skippedDisabled" = " Пропущено %@: соответствующая функция отключена.";
+"intake.pngCount.one" = "%d PNG-файл";
+"intake.pngCount.few" = "%d PNG-файла";
+"intake.pngCount.many" = "%d PNG-файлов";
+"intake.pdfCount.one" = "%d PDF-файл";
+"intake.pdfCount.few" = "%d PDF-файла";
+"intake.pdfCount.many" = "%d PDF-файлов";
+"intake.unsupportedCount.one" = "%d неподдерживаемый элемент";
+"intake.unsupportedCount.few" = "%d неподдерживаемых элемента";
+"intake.unsupportedCount.many" = "%d неподдерживаемых элементов";
+"intake.disabledCount.one" = "%d файл";
+"intake.disabledCount.few" = "%d файла";
+"intake.disabledCount.many" = "%d файлов";
+
+/* PNG optimizer result/strategy messages */
+"optimizer.losslessSuccess" = "Успешно оптимизировано с помощью перекодирования без потерь.";
+"optimizer.losslessStrategy" = "Перекодирование без потерь";
+"optimizer.quantizedSuccess" = "Успешно оптимизировано с помощью адаптивного квантования цвета (с потерями, %@).";
+"optimizer.quantizedStrategy" = "Адаптивное квантование (%@)";
+"optimizer.noSmaller.quantization" = "Не удалось получить файл меньшего размера с текущими настройками квантования.";
+"optimizer.noSmaller.lossless" = "Не удалось получить файл меньшего размера при сжатии без потерь.";
+"optimizer.bestStrategySuffix" = " Лучшая стратегия: %@.";
+"quantization.colorsCount.one" = "%d цвет";
+"quantization.colorsCount.few" = "%d цвета";
+"quantization.colorsCount.many" = "%d цветов";
+
+/* PNG optimizer errors */
+"error.png.decodeFailed" = "Не удалось декодировать PNG-файл.";
+"error.png.destinationFailed" = "Не удалось создать место назначения для оптимизированного PNG.";
+"error.png.encodeFailed" = "Не удалось закодировать оптимизированный PNG.";
+"error.png.bitmapContextFailed" = "Не удалось создать битовый контекст для обработки PNG.";
+"error.png.dataProviderFailed" = "Не удалось создать поставщик данных PNG.";
+"error.png.imageCreationFailed" = "Не удалось создать оптимизированное изображение.";
+
+/* PDF analyzer summary and errors */
+"pdf.summary.mixed" = "Этот PDF содержит векторное/текстовое содержимое и растровые изображения.";
+"pdf.summary.vectorOnly" = "Этот PDF содержит векторные или текстовые команды отрисовки.";
+"pdf.summary.rasterOnly" = "Похоже, этот PDF состоит только из растровых изображений.";
+"pdf.summary.none" = "Векторные или растровые операторы отрисовки не обнаружены.";
+"error.pdf.openFailed" = "Не удалось открыть PDF-файл.";
+"pdf.pageCount.one" = "%d страница";
+"pdf.pageCount.few" = "%d страницы";
+"pdf.pageCount.many" = "%d страниц";
+
+/* File tree item counts */
+"files.itemCount.one" = "%d элемент";
+"files.itemCount.few" = "%d элемента";
+"files.itemCount.many" = "%d элементов";

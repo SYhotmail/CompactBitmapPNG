@@ -11,24 +11,17 @@ A macOS SwiftUI app with two independent workflows over user-dropped files:
 
 ## Build, Test, and Development Commands
 
-SwiftPM for fast iteration:
+This is an Xcode-only app target — there is no SwiftPM package/executable here, only `project.yml` (the XcodeGen source of truth) and the generated `.xcodeproj`.
 
 ```bash
-swift build
-swift test
+xcodebuild -project PNGCompressorPDFVectorCheck.xcodeproj -scheme PNGCompressorPDFVectorCheck -configuration Debug build
+xcodebuild -project PNGCompressorPDFVectorCheck.xcodeproj -scheme PNGCompressorPDFVectorCheck -configuration Debug test
 ```
 
 Run a single test (Swift Testing, not XCTest):
 
 ```bash
-swift test --filter <TestName-or-SuiteName>
-```
-
-Xcode tooling for validating the app target (bundle wiring, UI tests):
-
-```bash
-xcodebuild -project PNGCompressorPDFVectorCheck.xcodeproj -scheme PNGCompressorPDFVectorCheck -configuration Debug build
-xcodebuild -project PNGCompressorPDFVectorCheck.xcodeproj -scheme PNGCompressorPDFVectorCheck -configuration Debug test
+xcodebuild -project PNGCompressorPDFVectorCheck.xcodeproj -scheme PNGCompressorPDFVectorCheck -configuration Debug test -only-testing:PNGCompressorPDFVectorCheckTests/<TestName-or-SuiteName>
 ```
 
 If `project.yml` changes, regenerate the Xcode project before opening it: `xcodegen generate`.
@@ -62,4 +55,4 @@ When adding a new file-processing capability, the pattern to follow is: pure `Se
 
 ## Configuration Notes
 
-Targets macOS 14+, Swift tools 6.3. Keep bundle identifiers and `Info.plist` settings aligned across `Package.swift`, `project.yml`, and the generated Xcode project — `project.yml` is the source of truth for the Xcode project and must be regenerated with `xcodegen generate` after edits.
+Targets macOS 14+, Swift 6. Keep bundle identifiers and `Info.plist` settings aligned between `project.yml` and the generated Xcode project — `project.yml` is the source of truth and must be regenerated with `xcodegen generate` after edits.

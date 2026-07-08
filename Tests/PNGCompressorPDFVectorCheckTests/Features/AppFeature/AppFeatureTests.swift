@@ -38,12 +38,12 @@ struct PNGCompressorPDFVectorCheckTests {
         #expect(result.statusLabel == "No Change")
     }
 
-    @Test("PNG quantization settings default to off")
+    @Test("PNG quantization settings default to 256 colors, active")
     func pngQuantizationDefaults() {
         let settings = PNGCompressionSettings()
 
-        #expect(settings.enableAdaptiveQuantization == false)
         #expect(settings.quantizationLevel == .colors256)
+        #expect(settings.overwriteOriginal == true)
     }
 
     @Test("App reducer processes discovered files with TCA")
@@ -83,7 +83,9 @@ struct PNGCompressorPDFVectorCheckTests {
             }
         }
 
-        await store.send(.processURLs([pngURL, pdfURL], sourceFolderPath: "/tmp"))
+        await store.send(.processURLs([pngURL, pdfURL])) {
+            $0.rootSelections = [pngURL, pdfURL]
+        }
         await store.receive(.preparationFinished(
             IntakeSummary(
                 acceptedPNGCount: 1,
@@ -91,15 +93,13 @@ struct PNGCompressorPDFVectorCheckTests {
                 skippedUnsupportedCount: 0,
                 skippedDisabledCount: 0
             ),
-            sourceFolderPath: "/tmp",
             pngURLs: [pngURL],
             pdfURLs: [pdfURL]
         )) {
             $0.intakeMessage = "Queued 1 PNG and 1 PDF."
-            $0.selectedFolderPath = "/tmp"
             $0.pendingPNGURLs = [pngURL]
             $0.pendingPDFURLs = [pdfURL]
-            $0.processingState = .running("Compressing 1 PNG file(s) and checking 1 PDF file(s)...")
+            $0.processingState = .running("Compressing 1 PNG file and checking 1 PDF file...")
         }
         await store.receive(.processingFinished([pngResult], [pdfResult])) {
             $0.pngResults = [pngResult]
@@ -135,9 +135,9 @@ struct PNGCompressorPDFVectorCheckTests {
                     )],
                     enablePNGCompression: false,
                     enablePDFCheck: false,
-                    pngCompressionSettings: PNGCompressionSettings(enableAdaptiveQuantization: true, quantizationLevel: .colors64),
+                    pngCompressionSettings: PNGCompressionSettings(quantizationLevel: .colors64),
                     intakeMessage: "Custom",
-                    selectedFolderPath: "/tmp"
+                    rootSelections: [URL(fileURLWithPath: "/tmp")]
                 )
             ) {
                 AppFeature()

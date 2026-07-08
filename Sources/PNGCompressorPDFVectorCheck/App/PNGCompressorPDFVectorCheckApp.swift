@@ -19,8 +19,8 @@ struct PNGCompressorPDFVectorCheckApp: App {
         var state = AppFeature.State()
         let arguments = Set(ProcessInfo.processInfo.arguments)
 
-        if arguments.contains("UITestEnableQuantization") {
-            state.pngCompressionSettings.enableAdaptiveQuantization = true
+        if arguments.contains("UITestDisableQuantization") {
+            state.pngCompressionSettings.quantizationLevel = nil
         }
 
         if arguments.contains("UITestDisablePDFCheck") {

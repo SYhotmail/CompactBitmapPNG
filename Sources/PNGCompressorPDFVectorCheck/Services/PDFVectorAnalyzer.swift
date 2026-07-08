@@ -101,18 +101,18 @@ enum PDFVectorAnalyzer {
 
     private static func summaryMessage(for state: PageScanState) -> String {
         if state.hasVectorContent && state.hasRasterImages {
-            return "This PDF contains vector/text content and raster images."
+            return L10n.string("pdf.summary.mixed")
         }
 
         if state.hasVectorContent {
-            return "This PDF contains vector or text drawing commands."
+            return L10n.string("pdf.summary.vectorOnly")
         }
 
         if state.hasRasterImages {
-            return "This PDF appears to be raster-image based only."
+            return L10n.string("pdf.summary.rasterOnly")
         }
 
-        return "No vector or raster drawing operators were detected."
+        return L10n.string("pdf.summary.none")
     }
 
     private static func status(for state: PageScanState) -> PDFContentStatus {
@@ -138,7 +138,7 @@ enum PDFVectorAnalyzerError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .failedToOpen:
-            return "The PDF file could not be opened."
+            return L10n.string("error.pdf.openFailed")
         }
     }
 }
