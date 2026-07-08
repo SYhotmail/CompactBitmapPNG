@@ -129,7 +129,6 @@ struct AppView: View {
                     style: StrokeStyle(lineWidth: isDropTargeted ? 2 : 1, dash: fileRows.isEmpty ? [8] : [])
                 )
         )
-        .accessibilityIdentifier("file-tree-window")
         .onDrop(of: [UTType.fileURL], isTargeted: $isDropTargeted) { providers in
             processDroppedItems(providers)
         }
