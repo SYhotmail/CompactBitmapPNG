@@ -14,14 +14,14 @@ A macOS SwiftUI app with two independent workflows over user-dropped files:
 This is an Xcode-only app target — there is no SwiftPM package/executable here, only `project.yml` (the XcodeGen source of truth) and the generated `.xcodeproj`.
 
 ```bash
-xcodebuild -project PNGCompressorPDFVectorCheck.xcodeproj -scheme PNGCompressorPDFVectorCheck -configuration Debug build
-xcodebuild -project PNGCompressorPDFVectorCheck.xcodeproj -scheme PNGCompressorPDFVectorCheck -configuration Debug test
+xcodebuild -project CompactBitmapPNG.xcodeproj -scheme CompactBitmapPNG -configuration Debug build
+xcodebuild -project CompactBitmapPNG.xcodeproj -scheme CompactBitmapPNG -configuration Debug test
 ```
 
 Run a single test (Swift Testing, not XCTest):
 
 ```bash
-xcodebuild -project PNGCompressorPDFVectorCheck.xcodeproj -scheme PNGCompressorPDFVectorCheck -configuration Debug test -only-testing:PNGCompressorPDFVectorCheckTests/<TestName-or-SuiteName>
+xcodebuild -project CompactBitmapPNG.xcodeproj -scheme CompactBitmapPNG -configuration Debug test -only-testing:CompactBitmapPNGTests/<TestName-or-SuiteName>
 ```
 
 If `project.yml` changes, regenerate the Xcode project before opening it: `xcodegen generate`.
@@ -44,7 +44,7 @@ When adding a new file-processing capability, the pattern to follow is: pure `Se
 
 - Reducer/state tests use TCA's `TestStore` against `AppFeature`, with `processingClient` overridden per test (see `Tests/.../AppFeatureTests.swift`) — no real files needed.
 - Tests use the **Swift Testing** framework (`@Test("description")`, `#expect`), not XCTest.
-- `UITests/.../AppFeatureUITests.swift` drives the real app process; `PNGCompressorPDFVectorCheckApp.swift` reads launch arguments (`UITestEnableQuantization`, `UITestDisablePDFCheck`) to preset state for these UI tests.
+- `UITests/.../AppFeatureUITests.swift` drives the real app process; `CompactBitmapPNGApp.swift` reads launch arguments (`UITestEnableQuantization`, `UITestDisablePDFCheck`) to preset state for these UI tests.
 
 ## Coding Style
 

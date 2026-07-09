@@ -1,14 +1,14 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-`Sources/PNGCompressorPDFVectorCheck/App/` holds the app entry point. `Features/AppFeature/` contains the TCA reducer and `AppView`, `Clients/` wires dependencies, `Services/` contains the PNG/PDF processing engines, `Models/` holds shared domain types, and `Resources/` stores `Info.plist` plus the `en`/`ru`/`be` `.lproj` localization tables. `Tests/PNGCompressorPDFVectorCheckTests/Features/AppFeature/` covers reducer and rendering behavior with Swift Testing, while `UITests/PNGCompressorPDFVectorCheckUITests/Features/AppFeature/` covers macOS UI flows. This is an Xcode-only app target — no SwiftPM package — and `project.yml` (XcodeGen) is the source of truth that generates `PNGCompressorPDFVectorCheck.xcodeproj`.
+`Sources/CompactBitmapPNG/App/` holds the app entry point. `Features/AppFeature/` contains the TCA reducer and `AppView`, `Clients/` wires dependencies, `Services/` contains the PNG/PDF processing engines, `Models/` holds shared domain types, and `Resources/` stores `Info.plist` plus the `en`/`ru`/`be` `.lproj` localization tables. `Tests/CompactBitmapPNGTests/Features/AppFeature/` covers reducer and rendering behavior with Swift Testing, while `UITests/CompactBitmapPNGUITests/Features/AppFeature/` covers macOS UI flows. This is an Xcode-only app target — no SwiftPM package — and `project.yml` (XcodeGen) is the source of truth that generates `CompactBitmapPNG.xcodeproj`.
 
 ## Build, Test, and Development Commands
 Use Xcode tooling to build and test:
 
 ```bash
-xcodebuild -project PNGCompressorPDFVectorCheck.xcodeproj -scheme PNGCompressorPDFVectorCheck -configuration Debug build
-xcodebuild -project PNGCompressorPDFVectorCheck.xcodeproj -scheme PNGCompressorPDFVectorCheck -configuration Debug test
+xcodebuild -project CompactBitmapPNG.xcodeproj -scheme CompactBitmapPNG -configuration Debug build
+xcodebuild -project CompactBitmapPNG.xcodeproj -scheme CompactBitmapPNG -configuration Debug test
 ```
 
 If `project.yml` changes, regenerate the project with `xcodegen generate` before opening Xcode.

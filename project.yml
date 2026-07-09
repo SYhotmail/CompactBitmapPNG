@@ -1,4 +1,4 @@
-name: PNGCompressorPDFVectorCheck
+name: CompactBitmapPNG
 options:
   minimumXcodeGenVersion: 2.44.1
   deploymentTarget:
@@ -25,15 +25,15 @@ settings:
     MACOSX_DEPLOYMENT_TARGET: 14.0
     ENABLE_HARDENED_RUNTIME: NO
 targets:
-  PNGCompressorPDFVectorCheck:
+  CompactBitmapPNG:
     type: application
     platform: macOS
     sources:
-      - path: Sources/PNGCompressorPDFVectorCheck
+      - path: Sources/CompactBitmapPNG
         excludes:
           - Resources/Info.plist
     info:
-      path: Sources/PNGCompressorPDFVectorCheck/Resources/Info.plist
+      path: Sources/CompactBitmapPNG/Resources/Info.plist
     dependencies:
       - package: ComposableArchitecture
         product: ComposableArchitecture
@@ -45,21 +45,21 @@ targets:
         product: Perception
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.siarheiy.PNGCompressorPDFVectorCheck
+        PRODUCT_BUNDLE_IDENTIFIER: com.siarheiy.CompactBitmapPNG
         GENERATE_INFOPLIST_FILE: NO
         CODE_SIGN_STYLE: Automatic
     scheme:
       testTargets:
-        - PNGCompressorPDFVectorCheckTests
-        - PNGCompressorPDFVectorCheckUITests
+        - CompactBitmapPNGTests
+        - CompactBitmapPNGUITests
 
-  PNGCompressorPDFVectorCheckTests:
+  CompactBitmapPNGTests:
     type: bundle.unit-test
     platform: macOS
     sources:
-      - path: Tests/PNGCompressorPDFVectorCheckTests
+      - path: Tests/CompactBitmapPNGTests
     dependencies:
-      - target: PNGCompressorPDFVectorCheck
+      - target: CompactBitmapPNG
       - package: ComposableArchitecture
         product: ComposableArchitecture
       - package: Dependencies
@@ -70,20 +70,20 @@ targets:
         product: Perception
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.siarheiy.PNGCompressorPDFVectorCheckTests
+        PRODUCT_BUNDLE_IDENTIFIER: com.siarheiy.CompactBitmapPNGTests
         GENERATE_INFOPLIST_FILE: YES
         BUNDLE_LOADER: "$(TEST_HOST)"
-        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/PNGCompressorPDFVectorCheck.app/Contents/MacOS/PNGCompressorPDFVectorCheck"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/CompactBitmapPNG.app/Contents/MacOS/CompactBitmapPNG"
 
-  PNGCompressorPDFVectorCheckUITests:
+  CompactBitmapPNGUITests:
     type: bundle.ui-testing
     platform: macOS
     sources:
-      - path: UITests/PNGCompressorPDFVectorCheckUITests
+      - path: UITests/CompactBitmapPNGUITests
     dependencies:
-      - target: PNGCompressorPDFVectorCheck
+      - target: CompactBitmapPNG
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.siarheiy.PNGCompressorPDFVectorCheckUITests
+        PRODUCT_BUNDLE_IDENTIFIER: com.siarheiy.CompactBitmapPNGUITests
         GENERATE_INFOPLIST_FILE: YES
-        TEST_TARGET_NAME: PNGCompressorPDFVectorCheck
+        TEST_TARGET_NAME: CompactBitmapPNG

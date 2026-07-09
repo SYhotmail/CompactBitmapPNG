@@ -1,4 +1,4 @@
-# PNG Compressor + PDF Vector Check
+# CompactBitmapPNG
 
 Small macOS SwiftUI app for two desktop workflows:
 
@@ -7,10 +7,10 @@ Small macOS SwiftUI app for two desktop workflows:
 
 ## Run
 
-Open `PNGCompressorPDFVectorCheck.xcodeproj` in Xcode and run the macOS target, or build from Terminal:
+Open `CompactBitmapPNG.xcodeproj` in Xcode and run the macOS target, or build from Terminal:
 
 ```bash
-xcodebuild -project PNGCompressorPDFVectorCheck.xcodeproj -scheme PNGCompressorPDFVectorCheck -configuration Debug build
+xcodebuild -project CompactBitmapPNG.xcodeproj -scheme CompactBitmapPNG -configuration Debug build
 ```
 
 If `project.yml` changes, regenerate the project first with `xcodegen generate`.

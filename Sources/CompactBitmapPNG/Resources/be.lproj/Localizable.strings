@@ -1,0 +1,126 @@
+/* App title */
+"app.title" = "CompactBitmapPNG";
+
+/* Header subtitle, depending on which toggles are enabled */
+"header.subtitle.both" = "Выберыце файлы або папку ці перацягніце іх сюды, каб сціснуць PNG і/або праверыць PDF на растравы змест.";
+"header.subtitle.pngOnly" = "Выберыце файлы або папку ці перацягніце іх сюды, каб сціснуць PNG.";
+"header.subtitle.pdfOnly" = "Выберыце файлы або папку ці перацягніце іх сюды, каб праверыць PDF на растравы змест.";
+"header.subtitle.none" = "Уключыце сціск PNG або праверку PDF ніжэй, затым выберыце файлы або папку для апрацоўкі.";
+
+/* Settings bar toggles */
+"compression.sectionLabel" = "Сцісканне";
+"toggle.enablePngCompression" = "PNG";
+"toggle.enablePdfCheck" = "PDF";
+"toggle.overwriteOriginal" = "Перазапісваць зыходныя файлы";
+
+/* Quantization controls */
+"quantization.sectionLabel" = "Квантаванне";
+"quantization.description.enabled" = "Спачатку выконваецца аптымізацыя PNG без страт, затым ужываецца выбраны ўзровень квантавання са стратамі — і захоўваецца, толькі калі файл становіцца меншым.";
+"quantization.description.disabled" = "Будзе выканана толькі аптымізацыя PNG без страт.";
+
+/* Files panel header */
+"files.title" = "Файлы";
+"files.selectHelp" = "Выбраць файлы або папку…";
+"files.clearHelp" = "Ачысціць вынікі";
+
+/* Empty drop-zone state, depending on which toggles are enabled */
+"emptyState.title.both" = "Перацягніце файлы або папкі PNG/PDF альбо націсніце, каб выбраць";
+"emptyState.title.pngOnly" = "Перацягніце файлы або папкі PNG альбо націсніце, каб выбраць";
+"emptyState.title.pdfOnly" = "Перацягніце файлы або папкі PDF альбо націсніце, каб выбраць";
+"emptyState.title.none" = "Ніводны тып файлаў не ўключаны";
+"emptyState.subtitle.both" = "Папкі рэкурсіўна сканіруюцца на файлы `.png` і `.pdf`.";
+"emptyState.subtitle.pngOnly" = "Папкі рэкурсіўна сканіруюцца на файлы `.png`.";
+"emptyState.subtitle.pdfOnly" = "Папкі рэкурсіўна сканіруюцца на файлы `.pdf`.";
+"emptyState.subtitle.none" = "Уключыце «PNG» або «PDF» у раздзеле «Сцісканне» вышэй, каб апрацоўваць перацягнутыя файлы.";
+
+/* Per-file row status labels */
+"status.processing" = "Апрацоўка…";
+"status.png.compressed" = "Сціснута";
+"status.png.noChange" = "Без змен";
+"status.failed" = "Памылка";
+"status.pdf.mixed" = "Вектар + Растр";
+"status.pdf.vectorOnly" = "Вектар/Тэкст";
+"status.pdf.rasterOnly" = "Толькі растр";
+"status.pdf.noDrawingData" = "Няма даных адлюстравання";
+"status.pdf.compressed" = "Сціснута";
+
+/* Status bar processing messages; %@ placeholders are pre-pluralized file-count fragments */
+"status.compressingAndChecking" = "Сціскаем %@ і правяраем %@…";
+"status.compressingOnly" = "Сціскаем %@…";
+"status.checkingOnly" = "Правяраем %@…";
+"status.pngFileCount.one" = "%d файл PNG";
+"status.pngFileCount.few" = "%d файлы PNG";
+"status.pngFileCount.many" = "%d файлаў PNG";
+"status.pdfFileCount.one" = "%d файл PDF";
+"status.pdfFileCount.few" = "%d файлы PDF";
+"status.pdfFileCount.many" = "%d файлаў PDF";
+
+/* Cancel button shown in the status bar while processing is running */
+"processing.cancel" = "Скасаваць";
+"processing.cancelHelp" = "Спыніць бягучы працэс";
+
+/* Intake summary shown in the status bar after a drop/selection */
+"intake.defaultMessage" = "Перацягніце сюды файлы або папкі PNG/PDF альбо выберыце файлы ці папку для апрацоўкі.";
+"intake.cancelled" = "Скасавана.";
+"intake.noneQueued" = "Няма файлаў прыдатнага тыпу для апрацоўкі.";
+"intake.queued" = "У чаргу дададзена: %@.";
+"intake.joiner" = " і ";
+"intake.ignoredUnsupported" = " Праігнаравана %@.";
+"intake.skippedDisabled" = " Прапушчана %@: адпаведная функцыя адключана.";
+"intake.pngCount.one" = "%d PNG-файл";
+"intake.pngCount.few" = "%d PNG-файлы";
+"intake.pngCount.many" = "%d PNG-файлаў";
+"intake.pdfCount.one" = "%d PDF-файл";
+"intake.pdfCount.few" = "%d PDF-файлы";
+"intake.pdfCount.many" = "%d PDF-файлаў";
+"intake.unsupportedCount.one" = "%d непадтрымліваны элемент";
+"intake.unsupportedCount.few" = "%d непадтрымліваныя элементы";
+"intake.unsupportedCount.many" = "%d непадтрымліваных элементаў";
+"intake.disabledCount.one" = "%d файл";
+"intake.disabledCount.few" = "%d файлы";
+"intake.disabledCount.many" = "%d файлаў";
+
+/* PNG optimizer result/strategy messages */
+"optimizer.losslessSuccess" = "Паспяхова аптымізавана з дапамогай пераканвертавання без страт.";
+"optimizer.losslessStrategy" = "Пераканвертаванне без страт";
+"optimizer.quantizedSuccess" = "Паспяхова аптымізавана з дапамогай адаптыўнага квантавання колеру (са стратамі, %@).";
+"optimizer.quantizedStrategy" = "Адаптыўнае квантаванне (%@)";
+"optimizer.noSmaller.quantization" = "Не ўдалося атрымаць файл меншага памеру з бягучымі наладамі квантавання.";
+"optimizer.noSmaller.lossless" = "Не ўдалося атрымаць файл меншага памеру пры сцісканні без страт.";
+"optimizer.bestStrategySuffix" = " Лепшая стратэгія: %@.";
+"quantization.colorsCount.one" = "%d колер";
+"quantization.colorsCount.few" = "%d колеры";
+"quantization.colorsCount.many" = "%d колераў";
+
+/* PNG optimizer errors */
+"error.png.decodeFailed" = "Не ўдалося дэкадаваць PNG-файл.";
+"error.png.destinationFailed" = "Не ўдалося стварыць месца прызначэння для аптымізаванага PNG.";
+"error.png.encodeFailed" = "Не ўдалося закадаваць аптымізаваны PNG.";
+"error.png.bitmapContextFailed" = "Не ўдалося стварыць бітавы кантэкст для апрацоўкі PNG.";
+"error.png.dataProviderFailed" = "Не ўдалося стварыць пастаўшчыка даных PNG.";
+"error.png.imageCreationFailed" = "Не ўдалося стварыць аптымізаваную выяву.";
+
+/* PDF analyzer summary and errors */
+"pdf.summary.mixed" = "Гэты PDF змяшчае вектарны/тэкставы змест і растравыя выявы.";
+"pdf.summary.vectorOnly" = "Гэты PDF змяшчае вектарныя або тэкставыя каманды адлюстравання.";
+"pdf.summary.rasterOnly" = "Падобна, гэты PDF складаецца толькі з растравых выяў.";
+"pdf.summary.none" = "Вектарныя або растравыя аператары адлюстравання не выяўлены.";
+"error.pdf.openFailed" = "Не ўдалося адкрыць PDF-файл.";
+
+/* PDF bitmap compression */
+"pdf.compression.success" = "Убудаваныя растравыя выявы PDF паспяхова сціснуты.";
+"pdf.compression.unchanged.notEligible" = "Гэты PDF не з'яўляецца простым дакументам з адной выявай на старонку, таму яго выявы не былі зменены.";
+"pdf.compression.unchanged.unsupportedFormat" = "Убудаваныя выявы гэтага PDF выкарыстоўваюць непадтрымліваны фармат колеру, таму яны не былі зменены.";
+"pdf.compression.unchanged.noSmaller" = "Сцісканне не дазволіла паменшыць памер PDF.";
+"pdf.pageCount.one" = "%d старонка";
+"pdf.pageCount.few" = "%d старонкі";
+"pdf.pageCount.many" = "%d старонак";
+
+/* File tree item counts */
+"files.itemCount.one" = "%d элемент";
+"files.itemCount.few" = "%d элементы";
+"files.itemCount.many" = "%d элементаў";
+
+/* Alert shown when a selection/drop yields nothing to process */
+"alert.nothingProcessed.title" = "Няма чаго апрацоўваць";
+"alert.ok" = "Добра";
