@@ -1,12 +1,6 @@
 /* App title */
 "app.title" = "CompactBitmapPNG";
 
-/* Header subtitle, depending on which toggles are enabled */
-"header.subtitle.both" = "Выберыце файлы або папку ці перацягніце іх сюды, каб сціснуць PNG і/або праверыць PDF на растравы змест.";
-"header.subtitle.pngOnly" = "Выберыце файлы або папку ці перацягніце іх сюды, каб сціснуць PNG.";
-"header.subtitle.pdfOnly" = "Выберыце файлы або папку ці перацягніце іх сюды, каб праверыць PDF на растравы змест.";
-"header.subtitle.none" = "Уключыце сціск PNG або праверку PDF ніжэй, затым выберыце файлы або папку для апрацоўкі.";
-
 /* Settings bar toggles */
 "compression.sectionLabel" = "Сцісканне";
 "toggle.enablePngCompression" = "PNG";

@@ -16,7 +16,7 @@ final class CompactBitmapPNGUITests: XCTestCase {
     func testMainControlsAreVisible() throws {
         let app = launchApp()
 
-        XCTAssertTrue(app.staticTexts["CompactBitmapPNG"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Compression"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.buttons["clear-results-button"].exists)
         XCTAssertTrue(app.checkBoxes["enable-png-compression-toggle"].exists)
         XCTAssertTrue(app.checkBoxes["enable-pdf-check-toggle"].exists)

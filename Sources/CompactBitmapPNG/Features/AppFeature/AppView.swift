@@ -10,23 +10,12 @@ struct AppView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            header
             settingsBar
             treeWindow
         }
         .padding(24)
         .frame(minWidth: 720, minHeight: 640)
         .alert($store.scope(state: \.alert, action: \.alert))
-    }
-
-    private var header: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(L10n.string("app.title"))
-                .font(.largeTitle.weight(.semibold))
-
-            Text(headerSubtitle)
-                .foregroundStyle(.secondary)
-        }
     }
 
     /// Which file kinds are currently eligible for processing, per the two toggles. Drives all
@@ -44,15 +33,6 @@ struct AppView: View {
         case (true, false): return .pngOnly
         case (false, true): return .pdfOnly
         case (false, false): return .none
-        }
-    }
-
-    private var headerSubtitle: String {
-        switch acceptedFileKinds {
-        case .both: return L10n.string("header.subtitle.both")
-        case .pngOnly: return L10n.string("header.subtitle.pngOnly")
-        case .pdfOnly: return L10n.string("header.subtitle.pdfOnly")
-        case .none: return L10n.string("header.subtitle.none")
         }
     }
 
@@ -94,7 +74,11 @@ struct AppView: View {
         }
         .padding(14)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(.quaternary.opacity(0.35), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .background(.background, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .strokeBorder(Color.secondary.opacity(0.3), lineWidth: 1)
+        )
     }
 
     private var treeNodes: [TreeNode] {

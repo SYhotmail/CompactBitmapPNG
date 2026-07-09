@@ -1,12 +1,6 @@
 /* App title */
 "app.title" = "CompactBitmapPNG";
 
-/* Header subtitle, depending on which toggles are enabled */
-"header.subtitle.both" = "Select files or a folder, or drag them in below, to compress PNGs and/or check PDFs for raster content.";
-"header.subtitle.pngOnly" = "Select files or a folder, or drag them in below, to compress PNGs.";
-"header.subtitle.pdfOnly" = "Select files or a folder, or drag them in below, to check PDFs for raster content.";
-"header.subtitle.none" = "Enable PNG compression or PDF check below, then select files or a folder to process.";
-
 /* Settings bar toggles */
 "compression.sectionLabel" = "Compression";
 "toggle.enablePngCompression" = "PNG";

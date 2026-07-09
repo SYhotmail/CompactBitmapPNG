@@ -1,12 +1,6 @@
 /* App title */
 "app.title" = "CompactBitmapPNG";
 
-/* Header subtitle, depending on which toggles are enabled */
-"header.subtitle.both" = "Выберите файлы или папку либо перетащите их сюда, чтобы сжать PNG и/или проверить PDF на растровое содержимое.";
-"header.subtitle.pngOnly" = "Выберите файлы или папку либо перетащите их сюда, чтобы сжать PNG.";
-"header.subtitle.pdfOnly" = "Выберите файлы или папку либо перетащите их сюда, чтобы проверить PDF на растровое содержимое.";
-"header.subtitle.none" = "Включите сжатие PNG или проверку PDF ниже, затем выберите файлы или папку для обработки.";
-
 /* Settings bar toggles */
 "compression.sectionLabel" = "Сжатие";
 "toggle.enablePngCompression" = "PNG";
