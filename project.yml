@@ -40,6 +40,9 @@ targets:
           - Resources/Info.plist
     info:
       path: Sources/CompactBitmapPNG/Resources/Info.plist
+      properties:
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
     dependencies:
       - package: ComposableArchitecture
         product: ComposableArchitecture
