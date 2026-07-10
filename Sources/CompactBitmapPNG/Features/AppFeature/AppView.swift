@@ -7,6 +7,8 @@ struct AppView: View {
     @Bindable var store: StoreOf<AppFeature>
     @State private var isDropTargeted = false
     @State private var collapsedFolderIDs: Set<String> = []
+    @State private var hasPressedSelectButton = false
+    @State private var isPulsingSelectButton = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -126,11 +128,16 @@ struct AppView: View {
 
     private var treeWindowHeader: some View {
         HStack(spacing: 10) {
-            Button(action: selectFilesOrFolder) {
+            Button(action: handleSelectButtonPressed) {
                 HStack(spacing: 10) {
                     Image(systemName: "folder.fill")
                         .font(.system(size: 16))
                         .foregroundStyle(Color.accentColor)
+                        .scaleEffect(isPulsingSelectButton ? 1.12 : 1.0)
+                        .animation(
+                            hasPressedSelectButton ? nil : .easeInOut(duration: 1.1).repeatForever(autoreverses: true),
+                            value: isPulsingSelectButton
+                        )
 
                     Text(L10n.string("files.title"))
                         .font(.headline)
@@ -140,6 +147,7 @@ struct AppView: View {
             .buttonStyle(.plain)
             .help(L10n.string("files.selectHelp"))
             .accessibilityIdentifier("files-header-select-button")
+            .onAppear(perform: startPulsingSelectButtonIfNeeded)
 
             Spacer()
 
@@ -182,12 +190,11 @@ struct AppView: View {
     }
 
     private var emptyDropState: some View {
-        Button(action: selectFilesOrFolder) {
+        Button(action: handleSelectButtonPressed) {
             VStack(spacing: 10) {
                 Image(systemName: "square.and.arrow.down.on.square")
                     .font(.system(size: 34))
                     .foregroundStyle(isDropTargeted ? Color.accentColor : Color.secondary)
-
                 Text(emptyDropStateTitle)
                     .font(.headline)
                     .foregroundStyle(.primary)
@@ -204,6 +211,20 @@ struct AppView: View {
         }
         .buttonStyle(.plain)
         .accessibilityIdentifier("empty-drop-state-select-button")
+    }
+
+    /// Gently pulses the select-files icons (header and empty-state) to invite the first tap;
+    /// stops for good once the user has pressed either one, whether or not they end up choosing
+    /// files in the panel.
+    private func startPulsingSelectButtonIfNeeded() {
+        guard !hasPressedSelectButton else { return }
+        isPulsingSelectButton = true
+    }
+
+    private func handleSelectButtonPressed() {
+        hasPressedSelectButton = true
+        isPulsingSelectButton = false
+        selectFilesOrFolder()
     }
 
     private var statusBar: some View {
