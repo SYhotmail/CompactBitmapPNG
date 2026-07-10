@@ -23,15 +23,13 @@ The PDF side: exporting a resource as a PDF from a design tool doesn't mean it's
 
 - macOS 14+
 - Xcode (Swift 6 toolchain)
-- [XcodeGen](https://github.com/yonaskolb/XcodeGen) — `brew install xcodegen`
 - [SwiftLint](https://github.com/realm/SwiftLint) (optional but recommended) — `brew install swiftlint`
 
 ## Getting started
 
-This is an Xcode-only app target — there's no SwiftPM executable, only `project.yml` (the [XcodeGen](https://github.com/yonaskolb/XcodeGen) source of truth) and the `.xcodeproj` it generates.
+This is an Xcode-only app target — there's no SwiftPM executable, just `CompactBitmapPNG.xcodeproj` itself.
 
 ```bash
-xcodegen generate
 open CompactBitmapPNG.xcodeproj
 ```
 
@@ -47,8 +45,6 @@ Run a single test (the project uses [Swift Testing](https://developer.apple.com/
 ```bash
 xcodebuild -project CompactBitmapPNG.xcodeproj -scheme CompactBitmapPNG -configuration Debug test -only-testing:CompactBitmapPNGTests/<TestName-or-SuiteName>
 ```
-
-Whenever `project.yml` changes, regenerate the project before opening it: `xcodegen generate`.
 
 ## Architecture
 

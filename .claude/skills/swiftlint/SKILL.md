@@ -8,7 +8,7 @@ description: Lint and auto-fix Swift source in this repo with SwiftLint. Use whe
 This repo has SwiftLint wired in two places:
 
 - `.swiftlint.yml` at the repo root — the rule configuration.
-- An Xcode "SwiftLint" run-script build phase on the `CompactBitmapPNG` target (defined in `project.yml`, regenerate with `xcodegen generate` after editing) — runs on every build and surfaces warnings inline in Xcode.
+- An Xcode "SwiftLint" run-script build phase on the `CompactBitmapPNG` target (defined directly in `CompactBitmapPNG.xcodeproj/project.pbxproj`, editable via Xcode's Build Phases tab) — runs on every build and surfaces warnings inline in Xcode.
 
 ## Running it
 
@@ -42,4 +42,4 @@ swiftlint --fix --quiet
 
 ## Adjusting rules
 
-Rule thresholds (line length, function/type/file length, cyclomatic complexity, etc.) live in `.swiftlint.yml`. `opt_in_rules` lists rules that are off by default in SwiftLint but enabled here. Changes to this file affect every build via the Xcode run-script phase — no `xcodegen generate` needed for `.swiftlint.yml` edits alone, only for changes to `project.yml` itself.
+Rule thresholds (line length, function/type/file length, cyclomatic complexity, etc.) live in `.swiftlint.yml`. `opt_in_rules` lists rules that are off by default in SwiftLint but enabled here. Changes to this file affect every build via the Xcode run-script phase immediately — no project regeneration step needed.

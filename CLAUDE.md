@@ -11,7 +11,7 @@ A macOS SwiftUI app with two independent workflows over user-dropped files:
 
 ## Build, Test, and Development Commands
 
-This is an Xcode-only app target — there is no SwiftPM package/executable here, only `project.yml` (the XcodeGen source of truth) and the generated `.xcodeproj`.
+This is an Xcode-only app target — there is no SwiftPM package/executable here, only `CompactBitmapPNG.xcodeproj` itself, which is the source of truth and is edited directly (in Xcode or by hand).
 
 ```bash
 xcodebuild -project CompactBitmapPNG.xcodeproj -scheme CompactBitmapPNG -configuration Debug build
@@ -23,8 +23,6 @@ Run a single test (Swift Testing, not XCTest):
 ```bash
 xcodebuild -project CompactBitmapPNG.xcodeproj -scheme CompactBitmapPNG -configuration Debug test -only-testing:CompactBitmapPNGTests/<TestName-or-SuiteName>
 ```
-
-If `project.yml` changes, regenerate the Xcode project before opening it: `xcodegen generate`.
 
 ## Architecture
 
@@ -55,4 +53,4 @@ When adding a new file-processing capability, the pattern to follow is: pure `Se
 
 ## Configuration Notes
 
-Targets macOS 14+, Swift 6. Keep bundle identifiers and `Info.plist` settings aligned between `project.yml` and the generated Xcode project — `project.yml` is the source of truth and must be regenerated with `xcodegen generate` after edits.
+Targets macOS 14+, Swift 6. Bundle identifiers, deployment target, and other build settings live directly in `CompactBitmapPNG.xcodeproj/project.pbxproj` — edit them via Xcode's project/target settings UI (or the `.pbxproj` file directly) rather than a generator config.
