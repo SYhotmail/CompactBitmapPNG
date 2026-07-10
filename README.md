@@ -4,6 +4,12 @@ A small macOS SwiftUI app for two independent file-processing workflows: drop in
 
 ![CompactBitmapPNG screenshot](docs/screenshot.png)
 
+## Why
+
+There used to be a TinyPNG desktop app, but it stopped working on Apple Silicon Macs. That's the PNG side.
+
+The PDF side: exporting a resource as a PDF from a design tool doesn't mean it's actually vector. A PDF can just as easily contain an embedded bitmap. That's why this app first checks whether a PDF is vector/text, raster, mixed, or empty, and then, for PDFs that turn out to be raster, compresses the embedded bitmap in place — the same way it would a standalone PNG.
+
 ## Features
 
 - **PNG optimization** — lossless re-encode that only replaces a file if the result is smaller. Optionally tries lossy adaptive color quantization (256/128/64 colors) on top and keeps whichever candidate is smallest.
