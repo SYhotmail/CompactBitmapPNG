@@ -3,3 +3,6 @@
 ./CompactBitmapPNG.xcodeproj/project.xcworkspace/xcuserdata
 CompactBitmapPNG.xcodeproj/project.xcworkspace/xcuserdata
 CompactBitmapPNG.xcodeproj/xcuserdata
+DerivedData/
+.DS_Store
+*.xcuserstate

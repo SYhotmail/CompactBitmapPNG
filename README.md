@@ -1,23 +1,56 @@
 # CompactBitmapPNG
 
-Small macOS SwiftUI app for two desktop workflows:
+A small macOS SwiftUI app for two independent file-processing workflows: drop in PNGs and/or PDFs, and it optimizes what it can.
 
-- Lossless PNG optimization by re-encoding the image and stripping metadata.
-- PDF inspection that checks whether page content streams contain vector or text drawing commands.
+## Features
 
-## Run
+- **PNG optimization** — lossless re-encode that only replaces a file if the result is smaller. Optionally tries lossy adaptive color quantization (256/128/64 colors) on top and keeps whichever candidate is smallest.
+- **PDF vector/raster check** — scans each page's content stream to classify it as vector/text, raster, mixed, or empty. Text counts as "vector" content since it's stored as drawing instructions, not a raster image.
+- **PDF bitmap compression** — for PDFs that are just a single full-page image per page (e.g. scanned documents), recompresses the embedded bitmap and rebuilds the PDF, again only keeping the result if it's smaller.
+- **Click a result row to open it** — opens the optimized/compressed file (or the original, if nothing changed) in the default app.
+- **Settings persist** — the compression toggles, quantization level, and overwrite-original preference are remembered across launches.
+- Localized in English, Russian, and Belarusian, following the system's preferred language.
 
-Open `CompactBitmapPNG.xcodeproj` in Xcode and run the macOS target, or build from Terminal:
+## Requirements
+
+- macOS 14+
+- Xcode (Swift 6 toolchain)
+- [XcodeGen](https://github.com/yonaskolb/XcodeGen) — `brew install xcodegen`
+- [SwiftLint](https://github.com/realm/SwiftLint) (optional but recommended) — `brew install swiftlint`
+
+## Getting started
+
+This is an Xcode-only app target — there's no SwiftPM executable, only `project.yml` (the [XcodeGen](https://github.com/yonaskolb/XcodeGen) source of truth) and the `.xcodeproj` it generates.
+
+```bash
+xcodegen generate
+open CompactBitmapPNG.xcodeproj
+```
+
+Or build/test from the command line:
 
 ```bash
 xcodebuild -project CompactBitmapPNG.xcodeproj -scheme CompactBitmapPNG -configuration Debug build
+xcodebuild -project CompactBitmapPNG.xcodeproj -scheme CompactBitmapPNG -configuration Debug test
 ```
 
-If `project.yml` changes, regenerate the project first with `xcodegen generate`.
+Run a single test (the project uses [Swift Testing](https://developer.apple.com/documentation/testing), not XCTest, for unit/reducer tests):
+
+```bash
+xcodebuild -project CompactBitmapPNG.xcodeproj -scheme CompactBitmapPNG -configuration Debug test -only-testing:CompactBitmapPNGTests/<TestName-or-SuiteName>
+```
+
+Whenever `project.yml` changes, regenerate the project before opening it: `xcodegen generate`.
+
+## Architecture
+
+Built with [The Composable Architecture](https://github.com/pointfreeco/swift-composable-architecture) on Swift 6 strict concurrency — a single reducer (`Features/AppFeature/AppFeature.swift`) owns all app state, with pure, TCA-independent `Services/` types (`PNGOptimizer`, `PDFVectorAnalyzer`, `PDFBitmapCompressor`) doing the actual file processing. See `CLAUDE.md` / `AGENTS.md` for a fuller breakdown of the module layout and conventions.
 
 ## Notes
 
-- PNG optimization is intentionally conservative in this first version. It only writes a new file if the re-encoded PNG is smaller than the original.
-- By default, optimized PNGs overwrite the original file; disabling "Overwrite original files" writes them alongside the original using the `-optimized.png` suffix instead.
-- PDF detection treats text drawing as vector-style content because it is stored as drawing instructions rather than a flat raster image.
-- The app is localized in English, Russian, and Belarusian, following the system's preferred language.
+- By default, optimized/compressed files overwrite the original; disabling "Overwrite original files" writes them alongside the original using an `-optimized.png` / equivalent suffix instead.
+- PNG/PDF processing is intentionally conservative: it only ever writes an output if that output is smaller than the input.
+
+## License
+
+[MIT](LICENSE)
