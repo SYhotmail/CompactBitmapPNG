@@ -3,6 +3,14 @@ import SwiftUI
 
 @main
 struct CompactBitmapPNGApp: App {
+    init() {
+        if ProcessInfo.processInfo.environment["UITesting"] == "true" {
+            prepareDependencies {
+                $0.defaultAppStorage = .inMemory
+            }
+        }
+    }
+
     var body: some Scene {
         WindowGroup {
             AppView(

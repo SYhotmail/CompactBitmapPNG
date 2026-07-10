@@ -32,6 +32,30 @@ struct FileRow: Identifiable {
         }
     }
 
+    /// The file to open when the row is clicked: the optimized/compressed output when one was
+    /// produced, otherwise the original file (still valid to view even when nothing changed or
+    /// compression wasn't attempted). `nil` only when there's no file to point to yet (pending)
+    /// or the operation failed outright.
+    var openableFileURL: URL? {
+        switch status {
+        case .pending:
+            return nil
+
+        case let .png(result):
+            switch result.status {
+            case .optimized: return result.outputURL
+            case .unchanged: return result.sourceURL
+            case .failed: return nil
+            }
+
+        case let .pdf(result, compression):
+            if let compression, compression.status == .compressed {
+                return compression.outputURL
+            }
+            return result.status == .failed ? nil : result.pdfURL
+        }
+    }
+
     var statusPresentation: StatusPresentation {
         switch status {
         case .pending:

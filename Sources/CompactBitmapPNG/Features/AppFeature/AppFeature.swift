@@ -11,9 +11,9 @@ struct AppFeature {
         var pdfCompressionResults = [PDFCompressionResult]()
         var pendingPNGURLs = [URL]()
         var pendingPDFURLs = [URL]()
-        var enablePNGCompression = true
-        var enablePDFCheck = true
-        var compressionSettings = CompressionSettings()
+        @Shared(.appStorage("enablePNGCompression")) var enablePNGCompression = true
+        @Shared(.appStorage("enablePDFCheck")) var enablePDFCheck = true
+        @Shared(.appStorage("compressionSettings")) var compressionSettings = CompressionSettings()
         var intakeMessage = L10n.string("intake.defaultMessage")
         var rootSelections = [URL]()
         @Presents var alert: AlertState<Action.Alert>?

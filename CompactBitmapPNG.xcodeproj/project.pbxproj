@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 63;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,11 +18,13 @@
 		3C16B8D0DA8782CC5CF9E181 /* QuantizationLevelControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E494DAAB532F2CD5C18CC3 /* QuantizationLevelControl.swift */; };
 		549EA74C1432A6C42DDFE853 /* TreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780B03EBE606A04D7D66D4F8 /* TreeNode.swift */; };
 		5A4B3A891AC766C2BB1B3D32 /* ModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8236937A22A830D9B39138 /* ModelsTests.swift */; };
+		5C335F6421B21DF314FDAD4E /* SwiftNavigation in Frameworks */ = {isa = PBXBuildFile; productRef = DEA23CFB56C25969AADFB6B8 /* SwiftNavigation */; };
 		647CE2248226BC06071457ED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6AD685A8C29B4EF96966436C /* Localizable.strings */; };
 		6A19B8DB6569B5537CDEEC8B /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 8A9AAD1416A44F23D3A96A86 /* Dependencies */; };
 		735E517905C4D24215BA0159 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78EA95606AD274A7B62213C1 /* LocalizationTests.swift */; };
 		75B41CC61B242B68E77DCC3E /* PNGOptimizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E48593F6F840E513D1696 /* PNGOptimizerTests.swift */; };
 		83D1CC5E8975E8BD3B005012 /* URL+FileSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC59E29E374F7818FB90BC15 /* URL+FileSize.swift */; };
+		8955801CC2BCBE6D0406D7AA /* Sharing in Frameworks */ = {isa = PBXBuildFile; productRef = 795CE7F43CAEB6E21EB91F32 /* Sharing */; };
 		8A1A5CFCBDC4A8E67C25E1E0 /* CompactBitmapPNGApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E763BE7E65AC4D50C0BC262 /* CompactBitmapPNGApp.swift */; };
 		8D8A387B37FB37D095980E96 /* PDFBitmapCompressorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ACFB2F70B4D5FBB3D5D8AB3 /* PDFBitmapCompressorTests.swift */; };
 		A3381A8930C4EBEAF0303160 /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC235D74EF422FC0793544D /* AppFeature.swift */; };
@@ -34,6 +36,8 @@
 		CCEECF576082F677CB91ED8C /* PDFVectorAnalyzerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEF3C657A83371A7ED0B4E0 /* PDFVectorAnalyzerTests.swift */; };
 		D1F3BAA613503DD965509095 /* TreeNodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A8845E4AE20BFF7910EFBC /* TreeNodeView.swift */; };
 		D3D883E999A81B2C09D2FD1B /* FileRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A500EB45A209B0ACF56A1D19 /* FileRow.swift */; };
+		D9A20CFCACEFA317C5F32333 /* SwiftNavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 1C9DE8513F1E05A99C007603 /* SwiftNavigation */; };
+		DF27844D1E7CA42DA7F2CCE8 /* Sharing in Frameworks */ = {isa = PBXBuildFile; productRef = 41DED4DD5EAF9C65E7041CBA /* Sharing */; };
 		E0F13F56647F44165F0454A2 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 1F50939E00A225CCE91582E5 /* Dependencies */; };
 		E53AFBB51BC5B615839A2976 /* PDFVectorAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D3C46CC9BAE8E3096DB67A /* PDFVectorAnalyzer.swift */; };
 		EA19FC28C70EFE2B1B101A25 /* Perception in Frameworks */ = {isa = PBXBuildFile; productRef = 5243787F913C09465B8411FA /* Perception */; };
@@ -64,7 +68,6 @@
 		0579C75680F51BA9778201E7 /* AppFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeatureTests.swift; sourceTree = "<group>"; };
 		17A4DDC74DB4F3707D28B344 /* ProcessingPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingPipeline.swift; sourceTree = "<group>"; };
 		190FB82D60FD0E841A59A522 /* PDFBitmapCompressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFBitmapCompressor.swift; sourceTree = "<group>"; };
-		21776A553000F1F300751E8E /* CompactBitmapPNG.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CompactBitmapPNG.xctestplan; sourceTree = "<group>"; };
 		24505A11660BFE4E4F31CE50 /* PNGOptimizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNGOptimizer.swift; sourceTree = "<group>"; };
 		24A8845E4AE20BFF7910EFBC /* TreeNodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeNodeView.swift; sourceTree = "<group>"; };
 		26D3C46CC9BAE8E3096DB67A /* PDFVectorAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFVectorAnalyzer.swift; sourceTree = "<group>"; };
@@ -102,6 +105,8 @@
 				6A19B8DB6569B5537CDEEC8B /* Dependencies in Frameworks */,
 				CC20600CB83F6637E9F0528C /* CasePaths in Frameworks */,
 				36861E3E4816EBC7B97B5F7F /* Perception in Frameworks */,
+				DF27844D1E7CA42DA7F2CCE8 /* Sharing in Frameworks */,
+				D9A20CFCACEFA317C5F32333 /* SwiftNavigation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,6 +118,8 @@
 				E0F13F56647F44165F0454A2 /* Dependencies in Frameworks */,
 				141E950B2C4FAEA4D5420619 /* CasePaths in Frameworks */,
 				EA19FC28C70EFE2B1B101A25 /* Perception in Frameworks */,
+				8955801CC2BCBE6D0406D7AA /* Sharing in Frameworks */,
+				5C335F6421B21DF314FDAD4E /* SwiftNavigation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,7 +170,6 @@
 		247E0ACD1E03C0F229F7B1E7 = {
 			isa = PBXGroup;
 			children = (
-				21776A553000F1F300751E8E /* CompactBitmapPNG.xctestplan */,
 				1FDEBE659BF8DE8F20C48B8A /* CompactBitmapPNG */,
 				4C7A5AD7EDE28BCECAF9347B /* CompactBitmapPNGTests */,
 				1C33D3AC5D727B970657D01B /* CompactBitmapPNGUITests */,
@@ -338,6 +344,8 @@
 				1F50939E00A225CCE91582E5 /* Dependencies */,
 				E4DCC3FAD753EB1AED5BF0A9 /* CasePaths */,
 				5243787F913C09465B8411FA /* Perception */,
+				795CE7F43CAEB6E21EB91F32 /* Sharing */,
+				DEA23CFB56C25969AADFB6B8 /* SwiftNavigation */,
 			);
 			productName = CompactBitmapPNGTests;
 			productReference = 848B15BE6B269689061AAA13 /* CompactBitmapPNGTests.xctest */;
@@ -362,6 +370,8 @@
 				8A9AAD1416A44F23D3A96A86 /* Dependencies */,
 				37FDF58D659DE971F8C1FAF8 /* CasePaths */,
 				696AD7E6F28BF08132F99CA0 /* Perception */,
+				41DED4DD5EAF9C65E7041CBA /* Sharing */,
+				1C9DE8513F1E05A99C007603 /* SwiftNavigation */,
 			);
 			productName = CompactBitmapPNG;
 			productReference = 77B489D75032F03513CB6CFB /* CompactBitmapPNG.app */;
@@ -419,7 +429,10 @@
 				6C581A1FA59810B52524FE36 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				5A0A2DF02775F6E661C20BF8 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
 				C6C839F94E25EF8353E46BD3 /* XCRemoteSwiftPackageReference "swift-perception" */,
+				3A5D3A3852C516B8A6C5A57D /* XCRemoteSwiftPackageReference "swift-sharing" */,
+				8022BF81A14A639B06CA4E14 /* XCRemoteSwiftPackageReference "swift-navigation" */,
 			);
+			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -807,6 +820,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3A5D3A3852C516B8A6C5A57D /* XCRemoteSwiftPackageReference "swift-sharing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-sharing";
+			requirement = {
+				kind = exactVersion;
+				version = 2.9.1;
+			};
+		};
 		5A0A2DF02775F6E661C20BF8 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-dependencies";
@@ -821,6 +842,14 @@
 			requirement = {
 				kind = exactVersion;
 				version = 1.26.0;
+			};
+		};
+		8022BF81A14A639B06CA4E14 /* XCRemoteSwiftPackageReference "swift-navigation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-navigation";
+			requirement = {
+				kind = exactVersion;
+				version = 2.10.3;
 			};
 		};
 		C4EA244240E41AFA2F0536D5 /* XCRemoteSwiftPackageReference "swift-case-paths" */ = {
@@ -842,6 +871,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1C9DE8513F1E05A99C007603 /* SwiftNavigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8022BF81A14A639B06CA4E14 /* XCRemoteSwiftPackageReference "swift-navigation" */;
+			productName = SwiftNavigation;
+		};
 		1F50939E00A225CCE91582E5 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5A0A2DF02775F6E661C20BF8 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
@@ -851,6 +885,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C4EA244240E41AFA2F0536D5 /* XCRemoteSwiftPackageReference "swift-case-paths" */;
 			productName = CasePaths;
+		};
+		41DED4DD5EAF9C65E7041CBA /* Sharing */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3A5D3A3852C516B8A6C5A57D /* XCRemoteSwiftPackageReference "swift-sharing" */;
+			productName = Sharing;
 		};
 		5243787F913C09465B8411FA /* Perception */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -862,10 +901,20 @@
 			package = C6C839F94E25EF8353E46BD3 /* XCRemoteSwiftPackageReference "swift-perception" */;
 			productName = Perception;
 		};
+		795CE7F43CAEB6E21EB91F32 /* Sharing */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3A5D3A3852C516B8A6C5A57D /* XCRemoteSwiftPackageReference "swift-sharing" */;
+			productName = Sharing;
+		};
 		8A9AAD1416A44F23D3A96A86 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5A0A2DF02775F6E661C20BF8 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
 			productName = Dependencies;
+		};
+		DEA23CFB56C25969AADFB6B8 /* SwiftNavigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8022BF81A14A639B06CA4E14 /* XCRemoteSwiftPackageReference "swift-navigation" */;
+			productName = SwiftNavigation;
 		};
 		E4DCC3FAD753EB1AED5BF0A9 /* CasePaths */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -16,6 +16,12 @@ packages:
   Perception:
     url: https://github.com/pointfreeco/swift-perception
     exactVersion: 2.0.10
+  Sharing:
+    url: https://github.com/pointfreeco/swift-sharing
+    exactVersion: 2.9.1
+  SwiftNavigation:
+    url: https://github.com/pointfreeco/swift-navigation
+    exactVersion: 2.10.3
 settings:
   base:
     SWIFT_VERSION: 6.0
@@ -43,6 +49,10 @@ targets:
         product: CasePaths
       - package: Perception
         product: Perception
+      - package: Sharing
+        product: Sharing
+      - package: SwiftNavigation
+        product: SwiftNavigation
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.siarheiy.CompactBitmapPNG
@@ -62,6 +72,9 @@ targets:
       testTargets:
         - CompactBitmapPNGTests
         - CompactBitmapPNGUITests
+      testPlans:
+        - path: CompactBitmapPNG.xctestplan
+          defaultPlan: true
 
   CompactBitmapPNGTests:
     type: bundle.unit-test
@@ -78,6 +91,10 @@ targets:
         product: CasePaths
       - package: Perception
         product: Perception
+      - package: Sharing
+        product: Sharing
+      - package: SwiftNavigation
+        product: SwiftNavigation
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.siarheiy.CompactBitmapPNGTests

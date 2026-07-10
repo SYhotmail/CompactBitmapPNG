@@ -118,3 +118,6 @@
 /* Alert shown when a selection/drop yields nothing to process */
 "alert.nothingProcessed.title" = "Нечего обрабатывать";
 "alert.ok" = "ОК";
+
+/* Help text shown when hovering a clickable result row */
+"fileRow.openHelp" = "Открыть файл";

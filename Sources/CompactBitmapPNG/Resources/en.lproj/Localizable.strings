@@ -109,3 +109,6 @@
 /* Alert shown when a selection/drop yields nothing to process */
 "alert.nothingProcessed.title" = "Nothing to Process";
 "alert.ok" = "OK";
+
+/* Help text shown when hovering a clickable result row */
+"fileRow.openHelp" = "Open File";

@@ -11,7 +11,7 @@ enum PNGCompressionStatus: Sendable, Equatable {
     case failed
 }
 
-enum QuantizationLevel: Int, CaseIterable, Identifiable, Sendable, Equatable {
+enum QuantizationLevel: Int, CaseIterable, Identifiable, Sendable, Equatable, Codable {
     case colors256 = 256
     case colors128 = 128
     case colors64 = 64
@@ -25,8 +25,9 @@ enum QuantizationLevel: Int, CaseIterable, Identifiable, Sendable, Equatable {
 
 /// Shared by both the PNG optimizer and the PDF bitmap compressor — both write a smaller output
 /// file only when the quantized/re-encoded candidate beats the original, using the same
-/// quantization levels and overwrite behavior.
-struct CompressionSettings: Sendable, Equatable {
+/// quantization levels and overwrite behavior. `Codable` so it can be persisted via
+/// `@Shared(.appStorage(...))` in `AppFeature.State`.
+struct CompressionSettings: Sendable, Equatable, Codable {
     var quantizationLevel: QuantizationLevel? = .colors256
     var overwriteOriginal = true
 }

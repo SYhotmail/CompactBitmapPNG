@@ -7,8 +7,11 @@ final class CompactBitmapPNGUITests: XCTestCase {
         continueAfterFailure = false
     }
 
+    /// Launches with in-memory `UserDefaults` (see `CompactBitmapPNGApp.init()`) so these tests
+    /// never read or write the real app's persisted compression settings.
     private func launchApp() -> XCUIApplication {
         let app = XCUIApplication()
+        app.launchEnvironment["UITesting"] = "true"
         app.launch()
         return app
     }

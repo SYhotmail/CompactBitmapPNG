@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 
 /// Renders a tree node, recursing into a `DisclosureGroup` for folders. Expansion state is
@@ -63,50 +64,69 @@ struct TreeNodeRowView: View {
             .accessibilityIdentifier("tree-folder-\(node.name)")
 
         case let .file(row):
-            let presentation = row.statusPresentation
-
-            HStack(spacing: 10) {
-                Image(systemName: row.kindIcon)
-                    .font(.system(size: 13))
-                    .foregroundStyle(.secondary)
-                    .frame(width: 16)
-
-                Text(row.displayName)
-                    .font(.callout)
-                    .lineLimit(1)
-                    .truncationMode(.middle)
-
-                Text(row.kindLabel)
-                    .font(.caption2.weight(.medium))
-                    .foregroundStyle(.secondary)
-
-                Spacer(minLength: 12)
-
-                HStack(spacing: 6) {
-                    if presentation.isPending {
-                        ProgressView()
-                            .controlSize(.small)
-                    } else if let symbolName = presentation.symbolName {
-                        Image(systemName: symbolName)
-                            .foregroundStyle(presentation.tint)
-                    }
-
-                    Text(presentation.label)
-                        .font(.caption.weight(.semibold))
-                        .foregroundStyle(presentation.tint)
-                        .lineLimit(1)
-                }
-                .frame(width: 130, alignment: .leading)
-
-                Text(presentation.detail)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .lineLimit(1)
-                    .truncationMode(.tail)
-                    .frame(minWidth: 100, maxWidth: 220, alignment: .leading)
-            }
-            .padding(.vertical, 4)
-            .accessibilityIdentifier("file-row-\(row.displayName)")
+            fileRow(for: row)
         }
+    }
+
+    private func fileRow(for row: FileRow) -> some View {
+        let presentation = row.statusPresentation
+
+        let content = HStack(spacing: 10) {
+            Image(systemName: row.kindIcon)
+                .font(.system(size: 13))
+                .foregroundStyle(.secondary)
+                .frame(width: 16)
+
+            Text(row.displayName)
+                .font(.callout)
+                .lineLimit(1)
+                .truncationMode(.middle)
+
+            Text(row.kindLabel)
+                .font(.caption2.weight(.medium))
+                .foregroundStyle(.secondary)
+
+            Spacer(minLength: 12)
+
+            HStack(spacing: 6) {
+                if presentation.isPending {
+                    ProgressView()
+                        .controlSize(.small)
+                } else if let symbolName = presentation.symbolName {
+                    Image(systemName: symbolName)
+                        .foregroundStyle(presentation.tint)
+                }
+
+                Text(presentation.label)
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(presentation.tint)
+                    .lineLimit(1)
+            }
+            .frame(width: 130, alignment: .leading)
+
+            Text(presentation.detail)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+                .truncationMode(.tail)
+                .frame(minWidth: 100, maxWidth: 220, alignment: .leading)
+        }
+        .padding(.vertical, 4)
+        .contentShape(Rectangle())
+
+        return Group {
+            if let openableFileURL = row.openableFileURL {
+                Button {
+                    NSWorkspace.shared.open(openableFileURL)
+                } label: {
+                    content
+                }
+                .buttonStyle(.plain)
+                .help(L10n.string("fileRow.openHelp"))
+            } else {
+                content
+            }
+        }
+        .accessibilityIdentifier("file-row-\(row.displayName)")
     }
 }
