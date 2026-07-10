@@ -43,10 +43,8 @@ struct LocalizationTests {
     }
 
     private func pluralBase(_ key: String) -> String {
-        for suffix in [".one", ".few", ".many", ".other"] {
-            if key.hasSuffix(suffix) {
-                return String(key.dropLast(suffix.count))
-            }
+        for suffix in [".one", ".few", ".many", ".other"] where key.hasSuffix(suffix) {
+            return String(key.dropLast(suffix.count))
         }
         return key
     }

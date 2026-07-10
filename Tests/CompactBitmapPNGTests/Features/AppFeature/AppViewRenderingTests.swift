@@ -1,8 +1,8 @@
 import AppKit
+@testable import CompactBitmapPNG
 import ComposableArchitecture
 import SwiftUI
 import Testing
-@testable import CompactBitmapPNG
 
 @Suite("AppView Rendering")
 @MainActor

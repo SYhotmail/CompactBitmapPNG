@@ -319,6 +319,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BFA0334BD8C4EC2B177501D2 /* Build configuration list for PBXNativeTarget "CompactBitmapPNG" */;
 			buildPhases = (
+				CA1F2FA317A75EB87FCCEF91 /* SwiftLint */,
 				37827564517E2180385343D7 /* Sources */,
 				A90FBDF7EE2F594621F04568 /* Resources */,
 				7B43238D50F7593B917E1153 /* Frameworks */,
@@ -412,6 +413,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CA1F2FA317A75EB87FCCEF91 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin:/usr/local/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint lint --quiet\nelse\n  echo \"warning: SwiftLint not installed. Run 'brew install swiftlint'.\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2F9F4DD0ECA8D498276AE3E6 /* Sources */ = {

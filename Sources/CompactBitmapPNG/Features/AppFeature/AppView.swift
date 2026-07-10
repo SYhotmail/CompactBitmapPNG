@@ -63,9 +63,11 @@ struct AppView: View {
                             .accessibilityIdentifier("quantization-target-picker")
                     }
 
-                    Text(store.compressionSettings.quantizationLevel != nil
-                         ? L10n.string("quantization.description.enabled")
-                         : L10n.string("quantization.description.disabled"))
+                    Text(
+                        store.compressionSettings.quantizationLevel != nil
+                            ? L10n.string("quantization.description.enabled")
+                            : L10n.string("quantization.description.disabled")
+                    )
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .accessibilityIdentifier("quantization-mode-description")
@@ -380,14 +382,21 @@ private struct FileRow: Identifiable {
             case .optimized:
                 let detail: String
                 if let compressedBytes = result.compressedBytes, let percent = result.savingsPercent {
-                    detail = "\(byteCountDescription(result.originalBytes)) → \(byteCountDescription(compressedBytes)) (-\(percent.formatted(.number.precision(.fractionLength(1))))%)"
+                    let percentText = percent.formatted(.number.precision(.fractionLength(1)))
+                    detail = "\(byteCountDescription(result.originalBytes)) → \(byteCountDescription(compressedBytes)) (-\(percentText)%)"
                 } else {
                     detail = result.message
                 }
                 return StatusPresentation(label: result.statusLabel, tint: .green, symbolName: "checkmark.circle.fill", isPending: false, detail: detail)
 
             case .unchanged:
-                return StatusPresentation(label: result.statusLabel, tint: .orange, symbolName: "minus.circle.fill", isPending: false, detail: byteCountDescription(result.originalBytes))
+                return StatusPresentation(
+                    label: result.statusLabel,
+                    tint: .orange,
+                    symbolName: "minus.circle.fill",
+                    isPending: false,
+                    detail: byteCountDescription(result.originalBytes)
+                )
 
             case .failed:
                 return StatusPresentation(label: result.statusLabel, tint: .red, symbolName: "xmark.circle.fill", isPending: false, detail: result.message)
@@ -396,7 +405,8 @@ private struct FileRow: Identifiable {
         case let .pdf(result, compression):
             let detail: String
             if let compression, compression.status == .compressed, let compressedBytes = compression.compressedBytes {
-                detail = "\(byteCountDescription(compression.originalBytes)) → \(byteCountDescription(compressedBytes)) (-\(compression.savingsPercent?.formatted(.number.precision(.fractionLength(1))) ?? "0")%)"
+                let percentText = compression.savingsPercent?.formatted(.number.precision(.fractionLength(1))) ?? "0"
+                detail = "\(byteCountDescription(compression.originalBytes)) → \(byteCountDescription(compressedBytes)) (-\(percentText)%)"
             } else {
                 detail = L10n.plural("pdf.pageCount", result.pageCount)
             }

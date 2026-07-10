@@ -6,7 +6,7 @@ final class CompactBitmapPNGUITests: XCTestCase {
         try super.setUpWithError()
         continueAfterFailure = false
     }
-    
+
     private func launchApp() -> XCUIApplication {
         let app = XCUIApplication()
         app.launch()

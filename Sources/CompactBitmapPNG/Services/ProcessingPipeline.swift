@@ -1,7 +1,7 @@
 import Foundation
 
 struct ProcessingPipeline: @unchecked Sendable {
-    
+
     let fileManager: FileManager = .default
 
     @concurrent
@@ -9,10 +9,10 @@ struct ProcessingPipeline: @unchecked Sendable {
         let task = Task {
             discoverSupportedFilesCore(from: urls)
         }
-        
+
         return await task.value
     }
-    
+
     private func discoverSupportedFilesCore(from urls: [URL]) -> [DiscoveredFile] {
         var results: [DiscoveredFile] = []
         var seen: Set<URL> = []
@@ -49,7 +49,7 @@ struct ProcessingPipeline: @unchecked Sendable {
                         result = try PNGOptimizer.optimize(url: url, settings: settings)
                     } catch {
                         let originalBytes = (try? url.fileSizeInBytes(fileManager: fileManager)) ?? UInt64((try? Data(contentsOf: url).count) ?? 0)
-                                             
+
                         result = PNGCompressionResult(
                             sourceURL: url,
                             outputURL: nil,
@@ -64,7 +64,7 @@ struct ProcessingPipeline: @unchecked Sendable {
                 }
             }
 
-            var ordered = Array<PNGCompressionResult?>(repeating: nil, count: urls.count)
+            var ordered = [PNGCompressionResult?](repeating: nil, count: urls.count)
             for await (index, result) in group {
                 ordered[index] = result
             }
@@ -100,7 +100,7 @@ struct ProcessingPipeline: @unchecked Sendable {
                 }
             }
 
-            var ordered = Array<PDFAnalysisResult?>(repeating: nil, count: urls.count)
+            var ordered = [PDFAnalysisResult?](repeating: nil, count: urls.count)
             for await (index, result) in group {
                 ordered[index] = result
             }
@@ -137,7 +137,7 @@ struct ProcessingPipeline: @unchecked Sendable {
                 }
             }
 
-            var ordered = Array<PDFCompressionResult?>(repeating: nil, count: urls.count)
+            var ordered = [PDFCompressionResult?](repeating: nil, count: urls.count)
             for await (index, result) in group {
                 ordered[index] = result
             }
@@ -167,20 +167,20 @@ struct ProcessingPipeline: @unchecked Sendable {
 
     private static func makeDiscoveredFile(for url: URL) -> DiscoveredFile? {
         let ext = url.pathExtension.lowercased()
-        
+
         guard let kind = SupportedFileKind(rawValue: ext) else {
             return nil
         }
-        
+
         guard !isDirectory(url) else { return nil }
-        
+
         return DiscoveredFile(url: url, kind: kind)
     }
 
     private static func isDirectoryCore(_ url: URL) throws -> Bool? {
         try url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory
     }
-    
+
     private static func isDirectory(_ url: URL) -> Bool {
         (try? isDirectoryCore(url)) == true
     }

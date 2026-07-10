@@ -1,8 +1,8 @@
+@testable import CompactBitmapPNG
 import ComposableArchitecture
 import CoreGraphics
 import Foundation
 import Testing
-@testable import CompactBitmapPNG
 
 @Suite("CompactBitmapPNG")
 struct CompactBitmapPNGTests {

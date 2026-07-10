@@ -48,6 +48,16 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.siarheiy.CompactBitmapPNG
         GENERATE_INFOPLIST_FILE: NO
         CODE_SIGN_STYLE: Automatic
+    prebuildScripts:
+      - name: SwiftLint
+        script: |
+          export PATH="$PATH:/opt/homebrew/bin:/usr/local/bin"
+          if which swiftlint > /dev/null; then
+            swiftlint lint --quiet
+          else
+            echo "warning: SwiftLint not installed. Run 'brew install swiftlint'."
+          fi
+        basedOnDependencyAnalysis: false
     scheme:
       testTargets:
         - CompactBitmapPNGTests
