@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,9 +15,13 @@
 		36861E3E4816EBC7B97B5F7F /* Perception in Frameworks */ = {isa = PBXBuildFile; productRef = 696AD7E6F28BF08132F99CA0 /* Perception */; };
 		377D67128B9F12B0677D0BAB /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F014F41C043896FEFB4200 /* Localization.swift */; };
 		38EE9DEFD7082810DD6727A9 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CC78EE26501771B8F6977F /* AppView.swift */; };
+		3C16B8D0DA8782CC5CF9E181 /* QuantizationLevelControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E494DAAB532F2CD5C18CC3 /* QuantizationLevelControl.swift */; };
+		549EA74C1432A6C42DDFE853 /* TreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780B03EBE606A04D7D66D4F8 /* TreeNode.swift */; };
+		5A4B3A891AC766C2BB1B3D32 /* ModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8236937A22A830D9B39138 /* ModelsTests.swift */; };
 		647CE2248226BC06071457ED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6AD685A8C29B4EF96966436C /* Localizable.strings */; };
 		6A19B8DB6569B5537CDEEC8B /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 8A9AAD1416A44F23D3A96A86 /* Dependencies */; };
 		735E517905C4D24215BA0159 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78EA95606AD274A7B62213C1 /* LocalizationTests.swift */; };
+		75B41CC61B242B68E77DCC3E /* PNGOptimizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E48593F6F840E513D1696 /* PNGOptimizerTests.swift */; };
 		83D1CC5E8975E8BD3B005012 /* URL+FileSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC59E29E374F7818FB90BC15 /* URL+FileSize.swift */; };
 		8A1A5CFCBDC4A8E67C25E1E0 /* CompactBitmapPNGApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E763BE7E65AC4D50C0BC262 /* CompactBitmapPNGApp.swift */; };
 		8D8A387B37FB37D095980E96 /* PDFBitmapCompressorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ACFB2F70B4D5FBB3D5D8AB3 /* PDFBitmapCompressorTests.swift */; };
@@ -28,6 +32,8 @@
 		C037F96513B55B7984F1A77D /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF799A5A765DF0D52127FA /* Models.swift */; };
 		CC20600CB83F6637E9F0528C /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = 37FDF58D659DE971F8C1FAF8 /* CasePaths */; };
 		CCEECF576082F677CB91ED8C /* PDFVectorAnalyzerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEF3C657A83371A7ED0B4E0 /* PDFVectorAnalyzerTests.swift */; };
+		D1F3BAA613503DD965509095 /* TreeNodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A8845E4AE20BFF7910EFBC /* TreeNodeView.swift */; };
+		D3D883E999A81B2C09D2FD1B /* FileRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A500EB45A209B0ACF56A1D19 /* FileRow.swift */; };
 		E0F13F56647F44165F0454A2 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 1F50939E00A225CCE91582E5 /* Dependencies */; };
 		E53AFBB51BC5B615839A2976 /* PDFVectorAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D3C46CC9BAE8E3096DB67A /* PDFVectorAnalyzer.swift */; };
 		EA19FC28C70EFE2B1B101A25 /* Perception in Frameworks */ = {isa = PBXBuildFile; productRef = 5243787F913C09465B8411FA /* Perception */; };
@@ -58,14 +64,19 @@
 		0579C75680F51BA9778201E7 /* AppFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeatureTests.swift; sourceTree = "<group>"; };
 		17A4DDC74DB4F3707D28B344 /* ProcessingPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingPipeline.swift; sourceTree = "<group>"; };
 		190FB82D60FD0E841A59A522 /* PDFBitmapCompressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFBitmapCompressor.swift; sourceTree = "<group>"; };
+		21776A553000F1F300751E8E /* CompactBitmapPNG.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CompactBitmapPNG.xctestplan; sourceTree = "<group>"; };
 		24505A11660BFE4E4F31CE50 /* PNGOptimizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNGOptimizer.swift; sourceTree = "<group>"; };
+		24A8845E4AE20BFF7910EFBC /* TreeNodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeNodeView.swift; sourceTree = "<group>"; };
 		26D3C46CC9BAE8E3096DB67A /* PDFVectorAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFVectorAnalyzer.swift; sourceTree = "<group>"; };
+		37E494DAAB532F2CD5C18CC3 /* QuantizationLevelControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantizationLevelControl.swift; sourceTree = "<group>"; };
 		3CEF3C657A83371A7ED0B4E0 /* PDFVectorAnalyzerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFVectorAnalyzerTests.swift; sourceTree = "<group>"; };
 		469C3B9061343C1800C0FE0A /* AppFeatureUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeatureUITests.swift; sourceTree = "<group>"; };
 		5E763BE7E65AC4D50C0BC262 /* CompactBitmapPNGApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactBitmapPNGApp.swift; sourceTree = "<group>"; };
 		65665B5D462B9EE1590A656D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6D8236937A22A830D9B39138 /* ModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelsTests.swift; sourceTree = "<group>"; };
 		77B489D75032F03513CB6CFB /* CompactBitmapPNG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CompactBitmapPNG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77CC78EE26501771B8F6977F /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
+		780B03EBE606A04D7D66D4F8 /* TreeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeNode.swift; sourceTree = "<group>"; };
 		78EA95606AD274A7B62213C1 /* LocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
 		7ACFB2F70B4D5FBB3D5D8AB3 /* PDFBitmapCompressorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFBitmapCompressorTests.swift; sourceTree = "<group>"; };
 		848B15BE6B269689061AAA13 /* CompactBitmapPNGTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CompactBitmapPNGTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,10 +84,12 @@
 		89EB0E19F1E4E67F2141CE83 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90F014F41C043896FEFB4200 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		9B1ED710663D82A72B7DCD76 /* ProcessingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingClient.swift; sourceTree = "<group>"; };
+		A500EB45A209B0ACF56A1D19 /* FileRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileRow.swift; sourceTree = "<group>"; };
 		BCC235D74EF422FC0793544D /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
 		BFAD860C26F06C9BAAE61589 /* CompactBitmapPNGUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CompactBitmapPNGUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9D80AA189DCBA83C5293381 /* PDFFixtureBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFFixtureBuilder.swift; sourceTree = "<group>"; };
 		CBF2ED4261CBB3FE6A85DDA3 /* AppViewRenderingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewRenderingTests.swift; sourceTree = "<group>"; };
+		E51E48593F6F840E513D1696 /* PNGOptimizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNGOptimizerTests.swift; sourceTree = "<group>"; };
 		EC59E29E374F7818FB90BC15 /* URL+FileSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+FileSize.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -150,6 +163,7 @@
 		247E0ACD1E03C0F229F7B1E7 = {
 			isa = PBXGroup;
 			children = (
+				21776A553000F1F300751E8E /* CompactBitmapPNG.xctestplan */,
 				1FDEBE659BF8DE8F20C48B8A /* CompactBitmapPNG */,
 				4C7A5AD7EDE28BCECAF9347B /* CompactBitmapPNGTests */,
 				1C33D3AC5D727B970657D01B /* CompactBitmapPNGUITests */,
@@ -189,6 +203,7 @@
 			children = (
 				78EA95606AD274A7B62213C1 /* LocalizationTests.swift */,
 				C1CBE0DDE57924F5D207EDFF /* Features */,
+				954ADE085D27D82B40575F34 /* Models */,
 				99EB25238C5028B156ECAC64 /* Services */,
 				CC1746996CB01D3DD25EA66A /* Support */,
 			);
@@ -206,6 +221,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		954ADE085D27D82B40575F34 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6D8236937A22A830D9B39138 /* ModelsTests.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		97147C59CB0D07546BB04A52 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -219,6 +242,7 @@
 			children = (
 				7ACFB2F70B4D5FBB3D5D8AB3 /* PDFBitmapCompressorTests.swift */,
 				3CEF3C657A83371A7ED0B4E0 /* PDFVectorAnalyzerTests.swift */,
+				E51E48593F6F840E513D1696 /* PNGOptimizerTests.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -277,6 +301,10 @@
 			children = (
 				BCC235D74EF422FC0793544D /* AppFeature.swift */,
 				77CC78EE26501771B8F6977F /* AppView.swift */,
+				A500EB45A209B0ACF56A1D19 /* FileRow.swift */,
+				37E494DAAB532F2CD5C18CC3 /* QuantizationLevelControl.swift */,
+				780B03EBE606A04D7D66D4F8 /* TreeNode.swift */,
+				24A8845E4AE20BFF7910EFBC /* TreeNodeView.swift */,
 			);
 			path = AppFeature;
 			sourceTree = "<group>";
@@ -392,7 +420,6 @@
 				5A0A2DF02775F6E661C20BF8 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
 				C6C839F94E25EF8353E46BD3 /* XCRemoteSwiftPackageReference "swift-perception" */,
 			);
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -444,9 +471,11 @@
 				B57499699EE1BB9C59A20D44 /* AppFeatureTests.swift in Sources */,
 				ED1590DF0B55F96136FB72B3 /* AppViewRenderingTests.swift in Sources */,
 				735E517905C4D24215BA0159 /* LocalizationTests.swift in Sources */,
+				5A4B3A891AC766C2BB1B3D32 /* ModelsTests.swift in Sources */,
 				8D8A387B37FB37D095980E96 /* PDFBitmapCompressorTests.swift in Sources */,
 				FF588BD3C8A0B413C3D4A2C3 /* PDFFixtureBuilder.swift in Sources */,
 				CCEECF576082F677CB91ED8C /* PDFVectorAnalyzerTests.swift in Sources */,
+				75B41CC61B242B68E77DCC3E /* PNGOptimizerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,6 +486,7 @@
 				A3381A8930C4EBEAF0303160 /* AppFeature.swift in Sources */,
 				38EE9DEFD7082810DD6727A9 /* AppView.swift in Sources */,
 				8A1A5CFCBDC4A8E67C25E1E0 /* CompactBitmapPNGApp.swift in Sources */,
+				D3D883E999A81B2C09D2FD1B /* FileRow.swift in Sources */,
 				377D67128B9F12B0677D0BAB /* Localization.swift in Sources */,
 				C037F96513B55B7984F1A77D /* Models.swift in Sources */,
 				BF0FF6E984493B3B8E12381D /* PDFBitmapCompressor.swift in Sources */,
@@ -464,6 +494,9 @@
 				F4EFE255D200704E84252A36 /* PNGOptimizer.swift in Sources */,
 				005265A64522231F1E94B823 /* ProcessingClient.swift in Sources */,
 				28F9B3452D53D88A2C80B9D8 /* ProcessingPipeline.swift in Sources */,
+				3C16B8D0DA8782CC5CF9E181 /* QuantizationLevelControl.swift in Sources */,
+				549EA74C1432A6C42DDFE853 /* TreeNode.swift in Sources */,
+				D1F3BAA613503DD965509095 /* TreeNodeView.swift in Sources */,
 				83D1CC5E8975E8BD3B005012 /* URL+FileSize.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

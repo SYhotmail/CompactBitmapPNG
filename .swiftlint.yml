@@ -33,11 +33,11 @@ function_body_length:
   error: 150
 
 type_body_length:
-  warning: 400
+  warning: 300
   error: 600
 
 file_length:
-  warning: 700
+  warning: 400
   error: 900
 
 cyclomatic_complexity:

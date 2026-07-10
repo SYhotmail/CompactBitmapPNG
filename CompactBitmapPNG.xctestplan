@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "E82E43A1-7DC0-406D-A5FF-8346792E6602",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:CompactBitmapPNG.xcodeproj",
+      "identifier" : "948F2A6B31DE01BFD5085684",
+      "name" : "CompactBitmapPNG"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:CompactBitmapPNG.xcodeproj",
+        "identifier" : "1ADBE1E6B67B9DD060CFB6F2",
+        "name" : "CompactBitmapPNGTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:CompactBitmapPNG.xcodeproj",
+        "identifier" : "BA8F3B17EE9FF147D6A3BB8F",
+        "name" : "CompactBitmapPNGUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
