@@ -2,6 +2,8 @@
 
 A small macOS SwiftUI app for two independent file-processing workflows: drop in PNGs and/or PDFs, and it optimizes what it can.
 
+![CompactBitmapPNG screenshot](docs/screenshot.png)
+
 ## Features
 
 - **PNG optimization** — lossless re-encode that only replaces a file if the result is smaller. Optionally tries lossy adaptive color quantization (256/128/64 colors) on top and keeps whichever candidate is smallest.
